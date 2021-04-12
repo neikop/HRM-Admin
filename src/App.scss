@@ -1,0 +1,19 @@
+// @import "~antd/dist/antd.min.css";
+
+body {
+  margin: 0;
+  font-family: "Roboto", "Ubuntu", sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code,
+pre,
+input[type="code"],
+textarea[type="code"] {
+  font-family: "Source Code Pro", monospace !important;
+}
+
+* {
+  outline: none;
+}

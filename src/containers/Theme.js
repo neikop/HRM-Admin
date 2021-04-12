@@ -12,6 +12,11 @@ const Theme = ({ children }) => {
         variant: "outlined",
       },
     },
+    palette: {
+      primary: {
+        main: "#009688",
+      },
+    },
   });
 
   return <ThemeProvider theme={theme}>{children}</ThemeProvider>;

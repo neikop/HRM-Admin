@@ -1,0 +1,29 @@
+.App {
+  position: absolute;
+  top: 0px;
+  bottom: 0px;
+  left: 0px;
+  right: 0px;
+}
+
+.Auth-Layout {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  > .MuiPaper-root {
+    padding: 24px;
+    min-width: 420px;
+    display: flex;
+    flex-direction: column;
+  }
+}
+
+.Private-Layout {
+}
+
+.App-Header {
+  height: 60px;
+  display: flex;
+  align-items: center;
+}

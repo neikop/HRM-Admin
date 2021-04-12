@@ -1,11 +1,10 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import App from "App";
-import { ApplicationTheme } from "containers";
 
 ReactDOM.render(
-  <ApplicationTheme>
+  <React.StrictMode>
     <App />
-  </ApplicationTheme>,
+  </React.StrictMode>,
   document.getElementById("root"),
 );

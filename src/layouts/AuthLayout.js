@@ -1,8 +1,18 @@
 import React from "react";
+import { useSelector } from "react-redux";
 import { Redirect, Route, Switch } from "react-router";
-import { authRoute } from "routes";
+import { browserHistory } from "utils/history";
+import { authRoute, privateRoute } from "routes";
 
 const AuthLayout = () => {
+  const { token } = useSelector(({ profile }) => profile);
+
+  React.useEffect(() => {
+    if (token) {
+      browserHistory.replace(privateRoute.home.path);
+    }
+  }, [token]);
+
   return (
     <div className="App Auth-Layout">
       <Switch>

@@ -1,16 +1,18 @@
 import React from "react";
 import { Button, Paper } from "@material-ui/core";
-import { browserHistory } from "utils/history";
-import { authRoute } from "routes";
+import { profileAction } from "actions/profile";
+import { AppMenu } from "containers";
 
 const Header = () => {
   const handleClickLogout = () => {
-    browserHistory.replace(authRoute.login.path);
+    profileAction.logout();
+    localStorage.removeItem("hrm.admin.user");
   };
 
   return (
     <Paper square className="App-Header">
-      <Button style={{ marginLeft: "auto" }} onClick={handleClickLogout}>
+      <AppMenu />
+      <Button style={{ margin: "0px 24px 0px auto" }} onClick={handleClickLogout}>
         LOGOUT
       </Button>
     </Paper>

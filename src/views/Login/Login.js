@@ -1,15 +1,71 @@
 import React from "react";
-import { Link } from "react-router-dom";
 import { Button, Paper, TextField, Typography } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
-import { browserHistory } from "utils/history";
-import { privateRoute } from "routes";
+import { profileAction } from "actions/profile";
+import { userService } from "services/user";
+import { Loading } from "components";
 
 const LoginForm = () => {
   const classes = useStyles();
 
-  const handleClickLogin = () => {
-    browserHistory.replace(privateRoute.home.path);
+  const [username, setUsername] = React.useState("admin123");
+  const [usernameError, setUsernameError] = React.useState("");
+  const [password, setPassword] = React.useState("admin12366949");
+  const [passwordError, setPasswordError] = React.useState("");
+
+  const [isLoading, setIsLoading] = React.useState(false);
+
+  const validateUsername = (value) => {
+    if (value.trim() === "") {
+      return "Username cannot be empty";
+    }
+    return "";
+  };
+
+  const handleChangeUsername = (event) => {
+    const { value } = event.target;
+    setUsername(value);
+    setUsernameError(validateUsername(value));
+  };
+
+  const validatePassword = (value) => {
+    if (value.trim() === "") {
+      return "Password cannot be empty";
+    }
+    return "";
+  };
+
+  const handleChangePassword = (event) => {
+    const { value } = event.target;
+    setPassword(value);
+    setPasswordError(validatePassword(value));
+  };
+
+  const handleClickSubmit = () => {
+    const usernameError = validateUsername(username);
+    setUsernameError(usernameError);
+    const passwordError = validatePassword(password);
+    setPasswordError(passwordError);
+    if (usernameError || passwordError) return;
+
+    setIsLoading(true);
+    const body = { username, password };
+    userService
+      .login(body)
+      .then(({ status = 1, data }) => {
+        if (status) {
+          profileAction.login(data);
+          localStorage.setItem("hrm.admin.user", JSON.stringify(data));
+        }
+      })
+      .catch(console.error)
+      .finally(() => {
+        setIsLoading(false);
+      });
+  };
+
+  const handlePressKey = (event) => {
+    if (event.key === "Enter") handleClickSubmit();
   };
 
   return (
@@ -17,13 +73,27 @@ const LoginForm = () => {
       <Typography variant="h5" className={classes.header}>
         Login
       </Typography>
-      <TextField variant="outlined" label="Username" className={classes.input}></TextField>
-      <TextField type="password" variant="outlined" label="Password" className={classes.input}></TextField>
-      <Typography component={Link} to="#" className={classes.link} style={{ alignSelf: "flex-end" }}>
-        Forgot password?
-      </Typography>
-      <Button variant="contained" color="primary" className={classes.button} onClick={handleClickLogin}>
-        Login
+      <TextField
+        variant="outlined"
+        label="Username"
+        className={classes.input}
+        value={username}
+        error={Boolean(usernameError)}
+        onChange={handleChangeUsername}
+        onKeyPress={handlePressKey}
+      />
+      <TextField
+        type="password"
+        variant="outlined"
+        label="Password"
+        className={classes.input}
+        value={password}
+        error={Boolean(passwordError)}
+        onChange={handleChangePassword}
+        onKeyPress={handlePressKey}
+      />
+      <Button variant="contained" color="primary" className={classes.button} onClick={handleClickSubmit}>
+        <Loading visible={isLoading} /> Login
       </Button>
     </Paper>
   );
@@ -32,7 +102,7 @@ const LoginForm = () => {
 const useStyles = makeStyles((theme) => ({
   header: {
     alignSelf: "center",
-    marginBottom: theme.spacing(4),
+    marginBottom: theme.spacing(2),
   },
   input: {
     marginTop: theme.spacing(2),
@@ -41,14 +111,6 @@ const useStyles = makeStyles((theme) => ({
   button: {
     marginTop: theme.spacing(2),
     marginBottom: theme.spacing(2),
-  },
-  link: {
-    marginTop: theme.spacing(1),
-    marginBottom: theme.spacing(1),
-    color: theme.palette.primary.main,
-    "&:hover": {
-      color: theme.palette.primary.dark,
-    },
   },
 }));
 

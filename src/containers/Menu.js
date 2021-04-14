@@ -1,21 +1,41 @@
-import { Tab, Tabs } from "@material-ui/core";
 import React from "react";
+import { Link, useLocation } from "react-router-dom";
+import { ListItem, ListItemIcon, ListItemText } from "@material-ui/core";
+import { makeStyles } from "@material-ui/core/styles";
+import { privateRoute } from "routes";
+
+import DashboardOutlinedIcon from "@material-ui/icons/DashboardOutlined";
+import WorkOutlineOutlinedIcon from "@material-ui/icons/WorkOutlineOutlined";
+
+const MenuItem = ({ name, icon, path }) => {
+  const classes = useStyles();
+  const location = useLocation();
+
+  return (
+    <ListItem button component={Link} to={path} className={classes.item} selected={location.pathname === path}>
+      <ListItemIcon className={classes.icon}>{icon}</ListItemIcon>
+      <ListItemText primary={name} />
+    </ListItem>
+  );
+};
 
 const Menu = () => {
-  const [activeTab, setActiveTab] = React.useState("/");
   return (
     <>
-      <Tabs
-        scrollButtons="auto"
-        value={activeTab}
-        onChange={(_, value) => setActiveTab(value)}
-        aria-label="simple tabs example">
-        <Tab label="Item One" value="/" />
-        <Tab label="Item Two" value="/two" />
-        <Tab label="Item Three" value="/three" />
-      </Tabs>
+      <MenuItem {...privateRoute.home} name="Home" icon={<DashboardOutlinedIcon />} />
+      <MenuItem {...privateRoute.job} name="Jobs" icon={<WorkOutlineOutlinedIcon />} />
     </>
   );
 };
+
+const useStyles = makeStyles((theme) => ({
+  item: {
+    width: "unset",
+  },
+  icon: {
+    minWidth: "unset",
+    marginRight: theme.spacing(1),
+  },
+}));
 
 export default Menu;

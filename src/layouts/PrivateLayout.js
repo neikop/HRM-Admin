@@ -19,11 +19,9 @@ const PrivateLayout = () => {
     <div className="App Private-Layout">
       <AppHeader />
       <Switch>
-        {Object.values(privateRoute)
-          .filter((item) => item.component)
-          .map(({ path, component }) => (
-            <Route exact key={path} path={path} component={component} />
-          ))}
+        {Object.values(privateRoute).map(({ path, component }) => (
+          <Route exact key={path} path={path} component={component} />
+        ))}
         <Redirect from="/" to={privateRoute.home.path} />
       </Switch>
     </div>

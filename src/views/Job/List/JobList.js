@@ -107,9 +107,11 @@ const JobList = () => {
           </Paper>
         ))}
       </Spin>
-      <div className="justify-content-center">
-        <TablePagination />
-      </div>
+      {dataCount > 0 && (
+        <div className="justify-content-center">
+          <TablePagination />
+        </div>
+      )}
     </>
   );
 };

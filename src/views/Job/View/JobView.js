@@ -4,7 +4,7 @@ import { Avatar, IconButton, Paper, Typography } from "@material-ui/core";
 import { ColorLink } from "components";
 import { jobService } from "services/job";
 import { privateRoute } from "routes";
-import { AllHtmlEntities as Entities } from "html-entities";
+import { decode } from "html-entities";
 import { unix } from "moment";
 
 import NavigateBeforeOutlinedIcon from "@material-ui/icons/NavigateBeforeOutlined";
@@ -63,15 +63,15 @@ const JobView = () => {
         <Typography variant="h6" color="primary">
           Description:
         </Typography>
-        <Typography dangerouslySetInnerHTML={{ __html: new Entities().decode(item.description) }} />
+        <Typography dangerouslySetInnerHTML={{ __html: decode(item.description) }} />
         <Typography variant="h6" color="primary">
           Requirement:
         </Typography>
-        <Typography dangerouslySetInnerHTML={{ __html: new Entities().decode(item.requirement) }} />
+        <Typography dangerouslySetInnerHTML={{ __html: decode(item.requirement) }} />
         <Typography variant="h6" color="primary">
           Welfare:
         </Typography>
-        <Typography dangerouslySetInnerHTML={{ __html: new Entities().decode(item.welfare) }} />
+        <Typography dangerouslySetInnerHTML={{ __html: decode(item.welfare) }} />
       </Paper>
     </>
   );

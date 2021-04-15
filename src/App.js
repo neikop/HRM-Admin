@@ -6,7 +6,6 @@ import { AppTheme } from "containers";
 import { store } from "reducers";
 import { profileAction } from "actions/profile";
 import { browserHistory } from "utils/history";
-import "App.scss";
 
 const App = () => {
   const [isReady, setIsReady] = React.useState(false);

@@ -1,9 +1,7 @@
+import { Translation } from "react-i18next";
 import { store } from "reducers";
 
-export const getCurrentUser = () => {
-  const { profile } = store.getState();
-  return profile;
-};
+export const t = (message) => <Translation>{(t) => t(message)}</Translation>;
 
 export const getCurrentToken = () => {
   const { profile } = store.getState();

@@ -2,6 +2,7 @@ import React from "react";
 import { Button, Paper } from "@material-ui/core";
 import { profileAction } from "actions/profile";
 import { AppMenu } from "containers";
+import { t } from "utils/common";
 
 const Header = () => {
   const handleClickLogout = () => {
@@ -13,7 +14,7 @@ const Header = () => {
     <Paper square className="App-Header">
       <AppMenu />
       <div className="flex-1" />
-      <Button onClick={handleClickLogout}>LOGOUT</Button>
+      <Button onClick={handleClickLogout}>{t("Logout")}</Button>
     </Paper>
   );
 };

@@ -1,5 +1,5 @@
 .App {
-  min-height: 100vh;
+  height: 100vh;
   background-color: aliceblue;
 }
 
@@ -7,10 +7,11 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  padding: 24px;
 
   > .MuiPaper-root {
     padding: 24px;
-    min-width: 420px;
+    width: 420px;
     display: flex;
     flex-direction: column;
   }

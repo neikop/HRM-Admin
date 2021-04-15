@@ -12,9 +12,8 @@ const Header = () => {
   return (
     <Paper square className="App-Header">
       <AppMenu />
-      <Button style={{ margin: "0px 24px 0px auto" }} onClick={handleClickLogout}>
-        LOGOUT
-      </Button>
+      <div className="flex-1" />
+      <Button onClick={handleClickLogout}>LOGOUT</Button>
     </Paper>
   );
 };

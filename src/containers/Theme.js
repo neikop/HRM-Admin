@@ -4,14 +4,18 @@ import { createMuiTheme, ThemeProvider } from "@material-ui/core/styles";
 const Theme = ({ children }) => {
   const theme = createMuiTheme({
     props: {
-      MuiTextField: {
-        InputLabelProps: { shrink: true },
-        fullWidth: true,
+      MuiTextField: {},
+      MuiChip: {},
+      MuiTypography: {
+        component: "div",
       },
-      MuiChip: {
-        variant: "outlined",
+      MuiInputBase: {
+        style: {
+          backgroundColor: "#FFF",
+        },
       },
     },
+    overrides: {},
     palette: {
       primary: {
         main: "#009688",

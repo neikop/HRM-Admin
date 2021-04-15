@@ -1,9 +1,6 @@
 .App {
-  position: absolute;
-  top: 0px;
-  bottom: 0px;
-  left: 0px;
-  right: 0px;
+  min-height: 100vh;
+  background-color: aliceblue;
 }
 
 .Auth-Layout {
@@ -20,10 +17,21 @@
 }
 
 .Private-Layout {
+  padding-top: 60px;
 }
 
 .App-Header {
-  height: 60px;
   display: flex;
   align-items: center;
+  height: 60px;
+  position: fixed;
+  top: 0px;
+  left: 0px;
+  right: 0px;
+  z-index: 2;
+  padding: 0px 24px;
+}
+
+.App-Body {
+  padding: 24px;
 }

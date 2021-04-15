@@ -18,12 +18,14 @@ const PrivateLayout = () => {
   return (
     <div className="App Private-Layout">
       <AppHeader />
-      <Switch>
-        {Object.values(privateRoute).map(({ path, component }) => (
-          <Route exact key={path} path={path} component={component} />
-        ))}
-        <Redirect from="/" to={privateRoute.home.path} />
-      </Switch>
+      <div className="App-Body">
+        <Switch>
+          {Object.values(privateRoute).map(({ path, component }) => (
+            <Route exact key={path} path={path} component={component} />
+          ))}
+          <Redirect from="/" to={privateRoute.home.path} />
+        </Switch>
+      </div>
     </div>
   );
 };

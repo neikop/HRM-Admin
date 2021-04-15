@@ -12,7 +12,7 @@ const MenuItem = ({ name, icon, path }) => {
   const location = useLocation();
 
   return (
-    <ListItem button component={Link} to={path} className={classes.item} selected={location.pathname === path}>
+    <ListItem button component={Link} to={path} className={classes.item} selected={location.pathname.startsWith(path)}>
       <ListItemIcon className={classes.icon}>{icon}</ListItemIcon>
       <ListItemText primary={name} />
     </ListItem>

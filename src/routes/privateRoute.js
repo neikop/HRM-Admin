@@ -1,15 +1,22 @@
 import { Home } from "views/Home";
 import { JobList } from "views/Job/List";
+import { JobView } from "views/Job/View";
 
 const privateRoute = {
   home: {
-    path: "/",
+    path: "/home",
     component: Home,
   },
   job: {
     path: "/jobs",
     component: JobList,
   },
+  jobItem: {
+    path: "/jobs/detail/:id",
+    url: (id) => `/jobs/detail/${id}`,
+    component: JobView,
+  },
+
   jobFollow: {
     path: "/jobs-follow",
     component: Home,

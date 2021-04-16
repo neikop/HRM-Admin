@@ -15,7 +15,7 @@ const DON_VI = [
   { id: 3, code: "USD", name: "$" },
 ];
 
-const JobSearch = ({ onSearch }) => {
+const CandidateSearch = ({ onSearch }) => {
   const handleClickSearch = () => {
     onSearch({});
   };
@@ -93,4 +93,4 @@ const JobSearch = ({ onSearch }) => {
   );
 };
 
-export default JobSearch;
+export default CandidateSearch;

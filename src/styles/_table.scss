@@ -1,0 +1,86 @@
+.Table-Paper-container {
+  position: relative;
+
+  .MuiTableHead-root,
+  .MuiTableBody-root {
+    .MuiTableCell-root {
+      padding: 12px;
+
+      .TableCell-info .MuiTypography-root {
+        white-space: nowrap;
+      }
+    }
+
+    .MuiTableCell-paddingCheckbox {
+      padding: 0 0 0 4px;
+    }
+  }
+
+  .MuiTableBody-root > .MuiTableRow-root:last-child {
+    .MuiTableCell-root {
+      border-bottom: 0px;
+    }
+  }
+
+  .Table-Loading-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #aaa1;
+
+    z-index: 2;
+    position: absolute;
+    top: 0px;
+    bottom: 0px;
+    left: 0px;
+    right: 0px;
+
+    .MuiTableCell-root {
+      border-bottom: none;
+    }
+  }
+
+  .Table-Empty-container {
+    .MuiTableCell-root {
+      text-align: center;
+      padding: 36px;
+      border-bottom: 0px;
+    }
+  }
+
+  .MuiTablePagination-root {
+    min-width: 400px;
+  }
+
+  .MuiTableHead-root {
+    .MuiTableCell-root,
+    .MuiTableSortLabel-root {
+      white-space: nowrap;
+      flex-wrap: nowrap;
+    }
+
+    .MuiTableSortLabel-root .MuiTableSortLabel-icon {
+      opacity: 0 !important;
+    }
+
+    .MuiTableSortLabel-root.MuiTableSortLabel-active .MuiTableSortLabel-icon {
+      opacity: 1 !important;
+    }
+  }
+
+  .MuiTablePagination-root {
+    display: flex;
+    justify-content: flex-end;
+
+    .MuiInputBase-input {
+      padding-top: 6px;
+      padding-bottom: 6px;
+      border: 1px solid #0002;
+      border-radius: 4px;
+    }
+  }
+
+  .MuiTableCell-paddingNone:last-child {
+    padding-right: 8px;
+  }
+}

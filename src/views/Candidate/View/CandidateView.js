@@ -2,21 +2,21 @@ import React from "react";
 import { Link, useParams } from "react-router-dom";
 import { Avatar, IconButton, Paper, Typography } from "@material-ui/core";
 import { ColorLink } from "components";
-import { jobService } from "services/job";
+import { candidateService } from "services/candidate";
 import { privateRoute } from "routes";
 import { decode } from "html-entities";
 import { unix } from "moment";
 
 import NavigateBeforeOutlinedIcon from "@material-ui/icons/NavigateBeforeOutlined";
 
-const JobView = () => {
+const CandidateView = () => {
   const { id } = useParams();
   const [item, setItem] = React.useState({});
 
   const fetchData = React.useCallback(() => {
-    jobService
-      .getInfoJob({
-        params_request: { idJob: Number(id) },
+    candidateService
+      .getInfoCv({
+        params_request: { id },
       })
       .then((response) => {
         const { status = 1, data } = response;
@@ -39,7 +39,7 @@ const JobView = () => {
           </IconButton>
         </Link>
         <ColorLink variant="h6" onClick={fetchData}>
-          {item.title}
+          Thông tin Ứng viên
         </ColorLink>
       </Paper>
 
@@ -80,4 +80,4 @@ const JobView = () => {
     </>
   );
 };
-export default JobView;
+export default CandidateView;

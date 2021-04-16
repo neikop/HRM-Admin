@@ -4,9 +4,11 @@ import { Spin } from "antd";
 import { Avatar, Grid, IconButton, Paper, Typography } from "@material-ui/core";
 import { Pagination } from "@material-ui/lab";
 import { jobService } from "services/job";
+import { t } from "utils/common";
 import { privateRoute } from "routes";
 import JobSearch from "./JobSearch";
 
+import WorkOutlineOutlinedIcon from "@material-ui/icons/WorkOutlineOutlined";
 import DirectionsOutlinedIcon from "@material-ui/icons/DirectionsOutlined";
 import BookmarkBorderOutlinedIcon from "@material-ui/icons/BookmarkBorderOutlined";
 
@@ -19,7 +21,9 @@ const JobList = () => {
   const fetchData = React.useCallback(() => {
     setDataLoading(true);
     jobService
-      .getListInfoJob({ ...dataSearch })
+      .getListInfoJob({
+        search: dataSearch,
+      })
       .then((response) => {
         const { status = 1, data } = response;
         if (status) {
@@ -34,9 +38,13 @@ const JobList = () => {
       });
   }, [dataSearch]);
 
-  React.useEffect(() => {
-    fetchData();
-  }, [fetchData]);
+  const handleClickSearch = (nextSearch) => {
+    setDataSearch((search) => ({
+      ...search,
+      ...nextSearch,
+      page: 0,
+    }));
+  };
 
   const TablePagination = () => (
     <Pagination
@@ -54,13 +62,23 @@ const JobList = () => {
     />
   );
 
+  React.useEffect(() => {
+    fetchData();
+  }, [fetchData]);
+
   return (
     <>
-      <JobSearch />
+      <Typography variant="h6" className="align-items-center mb-24">
+        <WorkOutlineOutlinedIcon className="mr-8" />
+        {t("Danh sách Job")}
+      </Typography>
+      <JobSearch onSearch={handleClickSearch} />
+
       <Paper className="justify-content-between align-items-center p-16 mb-24">
         <Typography>{dataCount} việc làm phù hợp</Typography>
         <TablePagination />
       </Paper>
+
       <Spin spinning={dataLoading}>
         {dataList.map((item) => (
           <Paper className="flex-row p-16 mb-24" key={item.idJob}>
@@ -69,7 +87,7 @@ const JobList = () => {
             </div>
             <div className="flex-1">
               <Typography>Công ty: {item.company}</Typography>
-              <Link to={privateRoute.jobItem.url(item.idJob)}>
+              <Link to={privateRoute.jobView.url(item.idJob)}>
                 <Typography component="span" color="primary">
                   {item.title}
                 </Typography>

@@ -1,6 +1,7 @@
 @import "~antd/dist/antd.min.css";
 @import "styles/layout";
 @import "styles/bootstrap";
+@import "styles/table";
 
 body {
   margin: 0;
@@ -17,5 +18,5 @@ textarea[type="code"] {
 }
 
 * {
-  outline: none;
+  outline: none !important;
 }

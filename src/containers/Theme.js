@@ -23,7 +23,10 @@ const Theme = ({ children }) => {
     overrides: {},
     palette: {
       primary: {
-        main: "#009688",
+        main: "#fbc02d",
+      },
+      secondary: {
+        main: "#1890ff",
       },
     },
   });

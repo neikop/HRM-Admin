@@ -59,7 +59,7 @@ const CandidateList = () => {
     <Pagination
       shape="rounded"
       variant="outlined"
-      color="primary"
+      color="secondary"
       count={Math.ceil(dataCount / 10)}
       page={dataSearch.page + 1}
       onChange={(event, nextPage) => {

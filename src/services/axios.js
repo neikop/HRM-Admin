@@ -1,4 +1,5 @@
 import { Alert } from "components";
+import { profileAction } from "actions/profile";
 import { getCurrentToken } from "utils/common";
 import axios from "axios";
 import env from "env";
@@ -6,8 +7,12 @@ import env from "env";
 const onError = ({ response }) => {
   if (response) {
     const { data, status, statusText } = response;
-    const { message = `${status} - ${statusText}` } = data;
-    Alert.error({ message });
+    if (status === 401) {
+      profileAction.logout();
+    } else {
+      const { message = `${status} - ${statusText}` } = data;
+      Alert.error({ message });
+    }
   } else {
     Alert.error({ message: `Cannot connect to Server` });
   }

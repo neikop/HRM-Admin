@@ -1,12 +1,13 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { Table } from "antd";
-import { Avatar, Paper, Typography } from "@material-ui/core";
+import { IconButton, Paper, Typography } from "@material-ui/core";
 import { Pagination } from "@material-ui/lab";
 import { candidateService } from "services/candidate";
 import { t } from "utils/common";
 import { privateRoute } from "routes";
 import CandidateSearch from "./CandidateSearch";
+import CandidateItem from "./CandidateItem";
 
 import AssignmentIndOutlinedIcon from "@material-ui/icons/AssignmentIndOutlined";
 import InfoOutlinedIcon from "@material-ui/icons/InfoOutlined";
@@ -77,8 +78,10 @@ const CandidateList = () => {
   return (
     <>
       <Typography variant="h6" className="align-items-center mb-24">
-        <AssignmentIndOutlinedIcon className="mr-8" />
-        Danh sách Ứng viên
+        <IconButton>
+          <AssignmentIndOutlinedIcon />
+        </IconButton>
+        {t("Danh sách Ứng viên")}
       </Typography>
       <CandidateSearch onSearch={handleClickSearch} />
 
@@ -91,7 +94,7 @@ const CandidateList = () => {
         <Table
           bordered={false}
           loading={dataLoading}
-          rowKey={(item) => item.id}
+          rowKey={(record) => record.id}
           dataSource={dataList}
           pagination={false}
           onChange={handleTableChange}
@@ -118,11 +121,7 @@ const CandidateList = () => {
             },
           ]}
           expandable={{
-            expandedRowRender: (record) => (
-              <Paper className="p-12">
-                <Avatar src={record.avatar} />
-              </Paper>
-            ),
+            expandedRowRender: (record) => <CandidateItem candidate={record} />,
           }}
         />
       </Paper>

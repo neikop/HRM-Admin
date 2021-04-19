@@ -25,7 +25,6 @@ const CandidateSearch = ({ onSearch }) => {
       <Paper elevation={0} className="flex-row mb-24" style={{ backgroundColor: "transparent" }}>
         <TextField
           fullWidth
-          variant="outlined"
           label="Tìm công việc theo từ khóa"
           InputProps={{
             startAdornment: (
@@ -45,7 +44,7 @@ const CandidateSearch = ({ onSearch }) => {
         <FilterListOutlinedIcon className="mr-8" />
         <Typography className="mr-24">Lọc theo</Typography>
 
-        <TextField select variant="outlined" label="Khu vực" style={{ width: 240, marginRight: 24 }}>
+        <TextField select label="Khu vực" style={{ width: 240, marginRight: 24 }}>
           {KHU_VUC.map((item) => (
             <MenuItem key={item.id} value={item.code}>
               {item.name}
@@ -54,13 +53,12 @@ const CandidateSearch = ({ onSearch }) => {
         </TextField>
 
         <TextField
-          variant="outlined"
           label="Mức lương"
           InputProps={{
             startAdornment: <InputAdornment position="start">≥</InputAdornment>,
             endAdornment: (
               <InputAdornment position="end">
-                <TextField select defaultValue={DON_VI[0].code}>
+                <TextField select variant="standard" defaultValue={DON_VI[0].code}>
                   {DON_VI.map((item) => (
                     <MenuItem key={item.id} value={item.code}>
                       {item.name}
@@ -73,7 +71,7 @@ const CandidateSearch = ({ onSearch }) => {
           style={{ width: 240, marginRight: 24 }}
         />
 
-        <TextField select variant="outlined" label="Công ty" style={{ width: 240, marginRight: 24 }}>
+        <TextField select label="Công ty" style={{ width: 240, marginRight: 24 }}>
           {KHU_VUC.map((item) => (
             <MenuItem key={item.id} value={item.code}>
               {item.name}
@@ -81,7 +79,7 @@ const CandidateSearch = ({ onSearch }) => {
           ))}
         </TextField>
 
-        <TextField select variant="outlined" label="Trạng thái" style={{ width: 240 }}>
+        <TextField select label="Trạng thái" style={{ width: 240 }}>
           {KHU_VUC.map((item) => (
             <MenuItem key={item.id} value={item.code}>
               {item.name}

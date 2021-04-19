@@ -69,7 +69,9 @@ const JobList = () => {
   return (
     <>
       <Typography variant="h6" className="align-items-center mb-24">
-        <WorkOutlineOutlinedIcon className="mr-8" />
+        <IconButton>
+          <WorkOutlineOutlinedIcon />
+        </IconButton>
         {t("Danh sách Job")}
       </Typography>
       <JobSearch onSearch={handleClickSearch} />
@@ -80,37 +82,37 @@ const JobList = () => {
       </Paper>
 
       <Spin spinning={dataLoading}>
-        {dataList.map((item) => (
-          <Paper className="flex-row p-16 mb-24" key={item.idJob}>
+        {dataList.map((job) => (
+          <Paper className="flex-row p-16 mb-24" key={job.idJob}>
             <div style={{ padding: "6px 12px 12px 0px" }}>
-              <Avatar variant="rounded" src={item.avatar} className="bordered" style={{ width: 72, height: 72 }} />
+              <Avatar variant="rounded" src={job.avatar} className="bordered" style={{ width: 72, height: 72 }} />
             </div>
             <div className="flex-1">
-              <Typography>Công ty: {item.company}</Typography>
-              <Link to={privateRoute.jobView.url(item.idJob)}>
+              <Typography>Công ty: {job.company}</Typography>
+              <Link to={privateRoute.jobView.url(job.idJob)}>
                 <Typography component="span" color="primary">
-                  {item.title}
+                  {job.title}
                 </Typography>
               </Link>
 
-              <Typography>Số lượng tuyển: {item.numberOfVacancies}</Typography>
+              <Typography>Số lượng tuyển: {job.numberOfVacancies}</Typography>
 
               <Grid container spacing={4}>
-                {item.bonus > 0 && (
+                {job.bonus > 0 && (
                   <Grid item style={{ width: 240 }}>
                     <Typography>Thưởng</Typography>
-                    <Typography>{item.bonus}</Typography>
+                    <Typography>{job.bonus}</Typography>
                   </Grid>
                 )}
                 <Grid item style={{ width: 240 }}>
                   <Typography>Mức lương</Typography>
                   <Typography>
-                    {item.fromSalary} - {item.toSalary}
+                    {job.fromSalary} - {job.toSalary}
                   </Typography>
                 </Grid>
                 <Grid item>
                   <Typography>Địa chỉ</Typography>
-                  <Typography>{item.workplace}</Typography>
+                  <Typography>{job.workplace}</Typography>
                 </Grid>
               </Grid>
             </div>

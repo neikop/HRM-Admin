@@ -1,0 +1,22 @@
+.ant-form {
+  .MuiOutlinedInput-root legend {
+    width: unset;
+    font-size: 12px;
+  }
+}
+
+.ant-form-large .ant-form-item-label {
+  padding-bottom: 4px;
+
+  > label {
+    height: unset;
+  }
+}
+
+.CV-Preview {
+  height: 100%;
+
+  .ant-tabs-content {
+    height: 100%;
+  }
+}

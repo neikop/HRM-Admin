@@ -1,7 +1,6 @@
 import React from "react";
 import { Link, useParams } from "react-router-dom";
 import { Avatar, IconButton, Paper, Typography } from "@material-ui/core";
-import { ColorLink } from "components";
 import { jobService } from "services/job";
 import { privateRoute } from "routes";
 import { decode } from "html-entities";
@@ -11,7 +10,7 @@ import NavigateBeforeOutlinedIcon from "@material-ui/icons/NavigateBeforeOutline
 
 const JobView = () => {
   const { id } = useParams();
-  const [item, setItem] = React.useState({});
+  const [job, setJob] = React.useState({});
 
   const fetchData = React.useCallback(() => {
     jobService
@@ -21,7 +20,7 @@ const JobView = () => {
       .then((response) => {
         const { status = 1, data } = response;
         if (status) {
-          setItem(data);
+          setJob(data);
         }
       });
   }, [id]);
@@ -34,48 +33,50 @@ const JobView = () => {
     <>
       <Paper elevation={0} className="align-items-center mb-24" style={{ backgroundColor: "transparent" }}>
         <Link to={privateRoute.job.path}>
-          <IconButton variant="outlined">
+          <IconButton>
             <NavigateBeforeOutlinedIcon />
           </IconButton>
         </Link>
-        <ColorLink variant="h6" onClick={fetchData}>
-          {item.title}
-        </ColorLink>
+        <Typography variant="h6">{job.title}</Typography>
       </Paper>
 
       <Paper className="p-16">
         <div className="flex-row">
-          <div style={{ padding: "0px 24px 12px 0px" }}>
-            <Avatar variant="rounded" src={item.avatar} className="bordered" style={{ width: 144, height: 144 }} />
-          </div>
+          <Avatar
+            variant="rounded"
+            src={job.avatar}
+            className="bordered"
+            style={{ width: 144, height: 144, margin: "0px 24px 12px 0px" }}
+          />
+
           <div style={{ width: 420 }}>
-            <Typography>Ngày đăng: {unix(item.createTime).format("DD-MM-YYYY")}</Typography>
-            <Typography>Hạn cuối: {unix(item.deadline).format("DD-MM-YYYY")}</Typography>
-            <Typography>Số lượng tuyển: {item.numberOfVacancies} </Typography>
-            <Typography>Tiền thưởng: {item.bonus}</Typography>
+            <Typography>Ngày đăng: {unix(job.createTime).format("DD-MM-YYYY")}</Typography>
+            <Typography>Hạn cuối: {unix(job.deadline).format("DD-MM-YYYY")}</Typography>
+            <Typography>Số lượng tuyển: {job.numberOfVacancies} </Typography>
+            <Typography>Tiền thưởng: {job.bonus}</Typography>
           </div>
           <div>
-            <Typography>Công ty: {item.company} </Typography>
-            <Typography>Địa điểm làm việc: {item.workplace} </Typography>
+            <Typography>Công ty: {job.company} </Typography>
+            <Typography>Địa điểm làm việc: {job.workplace} </Typography>
             <Typography>
-              Mức lương: {item.fromSalary} - {item.toSalary}
+              Mức lương: {job.fromSalary} - {job.toSalary}
             </Typography>
-            <Typography>Hình thức: {item.form}</Typography>
+            <Typography>Hình thức: {job.form}</Typography>
           </div>
         </div>
 
         <Typography variant="h6" color="primary">
           Description:
         </Typography>
-        <Typography dangerouslySetInnerHTML={{ __html: decode(item.description) }} />
+        <Typography dangerouslySetInnerHTML={{ __html: decode(job.description) }} />
         <Typography variant="h6" color="primary">
           Requirement:
         </Typography>
-        <Typography dangerouslySetInnerHTML={{ __html: decode(item.requirement) }} />
+        <Typography dangerouslySetInnerHTML={{ __html: decode(job.requirement) }} />
         <Typography variant="h6" color="primary">
           Welfare:
         </Typography>
-        <Typography dangerouslySetInnerHTML={{ __html: decode(item.welfare) }} />
+        <Typography dangerouslySetInnerHTML={{ __html: decode(job.welfare) }} />
       </Paper>
     </>
   );

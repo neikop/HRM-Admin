@@ -74,7 +74,6 @@ const LoginForm = () => {
         Login
       </Typography>
       <TextField
-        variant="outlined"
         label="Username"
         className={classes.input}
         value={username}
@@ -84,7 +83,6 @@ const LoginForm = () => {
       />
       <TextField
         type="password"
-        variant="outlined"
         label="Password"
         className={classes.input}
         value={password}

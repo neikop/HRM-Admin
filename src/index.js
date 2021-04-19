@@ -4,9 +4,4 @@ import App from "App";
 import "i18n";
 import "App.scss";
 
-ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
-  document.getElementById("root"),
-);
+ReactDOM.render(<App />, document.getElementById("root"));

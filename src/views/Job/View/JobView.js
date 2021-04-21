@@ -1,16 +1,19 @@
 import React from "react";
 import { Link, useParams } from "react-router-dom";
-import { Avatar, IconButton, Paper, Typography } from "@material-ui/core";
+import { Avatar, Button, Dialog, IconButton, Paper, Typography } from "@material-ui/core";
 import { jobService } from "services/job";
 import { privateRoute } from "routes";
 import { decode } from "html-entities";
 import { unix } from "moment";
+import CandidatePopup from "views/Job/CandidatePopup";
 
 import NavigateBeforeOutlinedIcon from "@material-ui/icons/NavigateBeforeOutlined";
 
 const JobView = () => {
   const { id } = useParams();
   const [job, setJob] = React.useState({});
+
+  const [isOpenPopup, setIsOpenPopup] = React.useState(false);
 
   const fetchData = React.useCallback(() => {
     jobService
@@ -77,6 +80,19 @@ const JobView = () => {
           Welfare:
         </Typography>
         <Typography dangerouslySetInnerHTML={{ __html: decode(job.welfare) }} />
+
+        <Paper elevation={0} style={{ position: "sticky", bottom: 0, margin: -16, padding: 16 }}>
+          <Button variant="contained" color="primary" className="mr-12">
+            Tải JD
+          </Button>
+          <Button variant="contained" color="secondary" onClick={() => setIsOpenPopup(true)}>
+            Giới thiệu ứng viên
+          </Button>
+
+          <Dialog fullWidth maxWidth="xl" open={isOpenPopup} onClose={() => setIsOpenPopup(false)}>
+            <CandidatePopup job={job} onClose={() => setIsOpenPopup(false)} />
+          </Dialog>
+        </Paper>
       </Paper>
     </>
   );

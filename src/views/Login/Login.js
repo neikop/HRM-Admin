@@ -1,9 +1,9 @@
 import React from "react";
 import { Button, Paper, TextField, Typography } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
+import { Loading } from "components";
 import { profileAction } from "actions/profile";
 import { userService } from "services/user";
-import { Loading } from "components";
 
 const LoginForm = () => {
   const classes = useStyles();

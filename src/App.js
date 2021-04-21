@@ -7,9 +7,6 @@ import { store } from "reducers";
 import { ConfigProvider } from "antd";
 import { profileAction } from "actions/profile";
 import { browserHistory } from "utils/history";
-import { pdfjs } from "react-pdf";
-
-pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.min.js`;
 
 const App = () => {
   const [isReady, setIsReady] = React.useState(false);

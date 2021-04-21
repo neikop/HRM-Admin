@@ -17,15 +17,11 @@
   }
 }
 
-.Private-Layout {
-  padding-top: 60px;
-}
-
 .App-Header {
   display: flex;
   align-items: center;
   height: 60px;
-  position: fixed;
+  position: sticky;
   top: 0px;
   left: 0px;
   right: 0px;

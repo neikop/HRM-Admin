@@ -55,7 +55,6 @@ const LoginForm = () => {
       .then(({ status = 1, data }) => {
         if (status) {
           profileAction.login(data);
-          localStorage.setItem("hrm.admin.user", JSON.stringify(data));
         }
       })
       .catch(console.error)

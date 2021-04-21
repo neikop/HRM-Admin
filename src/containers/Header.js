@@ -7,7 +7,6 @@ import { t } from "utils/common";
 const Header = () => {
   const handleClickLogout = () => {
     profileAction.logout();
-    localStorage.removeItem("hrm.admin.user");
   };
 
   return (

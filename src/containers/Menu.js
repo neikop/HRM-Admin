@@ -2,6 +2,7 @@ import React from "react";
 import { Link, useLocation } from "react-router-dom";
 import { ListItem, ListItemIcon, ListItemText } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
+import { t } from "utils/common";
 import { privateRoute } from "routes";
 
 import DashboardOutlinedIcon from "@material-ui/icons/DashboardOutlined";
@@ -23,9 +24,9 @@ const MenuItem = ({ name, icon, path }) => {
 const Menu = () => {
   return (
     <>
-      <MenuItem {...privateRoute.home} name="Home" icon={<DashboardOutlinedIcon />} />
-      <MenuItem {...privateRoute.job} name="Jobs" icon={<WorkOutlineOutlinedIcon />} />
-      <MenuItem {...privateRoute.candidate} name="Candidate" icon={<AssignmentIndOutlinedIcon />} />
+      <MenuItem {...privateRoute.home} name={t("Home")} icon={<DashboardOutlinedIcon />} />
+      <MenuItem {...privateRoute.job} name={t("Job")} icon={<WorkOutlineOutlinedIcon />} />
+      <MenuItem {...privateRoute.candidate} name={t("Candidate")} icon={<AssignmentIndOutlinedIcon />} />
     </>
   );
 };

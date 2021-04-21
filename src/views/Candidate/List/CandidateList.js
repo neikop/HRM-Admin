@@ -5,12 +5,13 @@ import { IconButton, Paper, Typography } from "@material-ui/core";
 import { Pagination } from "@material-ui/lab";
 import { candidateService } from "services/candidate";
 import { t } from "utils/common";
+import { unix } from "moment";
 import { privateRoute } from "routes";
 import CandidateSearch from "./CandidateSearch";
 import CandidateItem from "./CandidateItem";
 
 import AssignmentIndOutlinedIcon from "@material-ui/icons/AssignmentIndOutlined";
-import InfoOutlinedIcon from "@material-ui/icons/InfoOutlined";
+import DirectionsOutlinedIcon from "@material-ui/icons/DirectionsOutlined";
 
 const CandidateList = () => {
   const [dataList, setDataList] = React.useState([]);
@@ -81,12 +82,14 @@ const CandidateList = () => {
         <IconButton>
           <AssignmentIndOutlinedIcon />
         </IconButton>
-        {t("Danh sách Ứng viên")}
+        {t("Candidate list")}
       </Typography>
       <CandidateSearch onSearch={handleClickSearch} />
 
       <Paper className="justify-content-between align-items-center p-16 mb-24">
-        <Typography>{dataCount} ứng viên</Typography>
+        <Typography>
+          {dataCount} {t("Candidates")}
+        </Typography>
         <TablePagination />
       </Paper>
 
@@ -103,19 +106,24 @@ const CandidateList = () => {
             { title: t("Skill"), dataIndex: "skill" },
             { title: t("Language"), dataIndex: "language" },
             { title: t("Level"), dataIndex: "level", sorter: true },
-            { title: t("Time"), dataIndex: "time", sorter: true, render: (_, record) => record.updateTime },
+            {
+              title: t("Time"),
+              dataIndex: "time",
+              sorter: true,
+              render: (_, record) => unix(record.updateTime / 1000).format("DD-MM-YYYY"),
+            },
             {
               title: t("Calendar"),
               dataIndex: "calendar",
               sorter: true,
-              render: (_, record) => record.calendarReminder,
+              render: (_, record) => unix(record.calendarReminder / 1000).format("DD-MM-YYYY"),
             },
             { title: t("Status"), dataIndex: "status", sorter: true },
             {
               dataIndex: "",
               render: (_, record) => (
                 <Link to={privateRoute.candidateView.url(record.id)}>
-                  <InfoOutlinedIcon />
+                  <DirectionsOutlinedIcon />
                 </Link>
               ),
             },

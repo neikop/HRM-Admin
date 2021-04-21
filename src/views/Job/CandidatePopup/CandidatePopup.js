@@ -5,12 +5,14 @@ import { Pagination } from "@material-ui/lab";
 import { Loading } from "components";
 import { candidateService } from "services/candidate";
 import { t } from "utils/common";
+import { unix } from "moment";
 import { privateRoute } from "routes";
 import { CandidateItem, CandidateSearch } from "views/Candidate/List";
 
 import AssignmentIndOutlinedIcon from "@material-ui/icons/AssignmentIndOutlined";
+import CloseOutlinedIcon from "@material-ui/icons/CloseOutlined";
 
-const CandidatePopup = ({ job: { idJob } }, onClose) => {
+const CandidatePopup = ({ job: { idJob }, onClose }) => {
   const [dataList, setDataList] = React.useState([]);
   const [dataCount, setDataCount] = React.useState(0);
   const [dataSearch, setDataSearch] = React.useState({ page: 0, idJob });
@@ -55,7 +57,7 @@ const CandidatePopup = ({ job: { idJob } }, onClose) => {
     else setDataSort();
   };
 
-  const handleClickChose = (item) => {
+  const handleClickSelect = (item) => {
     setIsLoadingRecord(item.id);
     candidateService
       .applyCvToJob({
@@ -102,13 +104,18 @@ const CandidatePopup = ({ job: { idJob } }, onClose) => {
         <IconButton>
           <AssignmentIndOutlinedIcon />
         </IconButton>
-        {t("Danh sách Ứng viên")}
+        {t("Candidate list")}
+
+        <div className="flex-1" />
+        <IconButton onClick={onClose}>
+          <CloseOutlinedIcon />
+        </IconButton>
       </Typography>
       <CandidateSearch onSearch={handleClickSearch} />
 
       <Paper className="mb-24">
         <Table
-          scroll={{ y: 420 }}
+          scroll={{ y: 480 }}
           bordered={false}
           loading={dataLoading}
           rowKey={(record) => record.id}
@@ -117,22 +124,26 @@ const CandidatePopup = ({ job: { idJob } }, onClose) => {
           onChange={handleTableChange}
           columns={[
             { title: t("Name"), dataIndex: "name", sorter: true, render: (_, record) => record.candidateName },
-            { title: t("Skill"), dataIndex: "skill" },
             { title: t("Language"), dataIndex: "language" },
             { title: t("Level"), dataIndex: "level", sorter: true },
-            { title: t("Time"), dataIndex: "time", sorter: true, render: (_, record) => record.updateTime },
+            {
+              title: t("Time"),
+              dataIndex: "time",
+              sorter: true,
+              render: (_, record) => unix(record.updateTime / 1000).format("DD-MM-YYYY"),
+            },
             {
               title: t("Calendar"),
               dataIndex: "calendar",
               sorter: true,
-              render: (_, record) => record.calendarReminder,
+              render: (_, record) => unix(record.calendarReminder / 1000).format("DD-MM-YYYY"),
             },
             { title: t("Status"), dataIndex: "status", sorter: true },
             {
               dataIndex: "",
               render: (_, record) => (
-                <Button variant="primary" onClick={() => handleClickChose(record)}>
-                  <Loading visible={isLoadingRecord === record.id} /> Chọn
+                <Button color="secondary" onClick={() => handleClickSelect(record)}>
+                  <Loading visible={isLoadingRecord === record.id} /> {t("Select")}
                 </Button>
               ),
             },

@@ -4,6 +4,7 @@ import { Spin } from "antd";
 import { Avatar, Grid, IconButton, Paper, Typography } from "@material-ui/core";
 import { Pagination } from "@material-ui/lab";
 import { jobService } from "services/job";
+import { formatCurrency, formatBonus, normalizeJob } from "utils/converter";
 import { t } from "utils/common";
 import { privateRoute } from "routes";
 import JobSearch from "./JobSearch";
@@ -28,7 +29,7 @@ const JobList = () => {
         const { status = 1, data } = response;
         if (status) {
           const { jobs, total } = data;
-          setDataList(jobs);
+          setDataList(jobs.map(normalizeJob));
           setDataCount(total);
         }
       })
@@ -72,12 +73,14 @@ const JobList = () => {
         <IconButton>
           <WorkOutlineOutlinedIcon />
         </IconButton>
-        {t("Danh sách Job")}
+        {t("Jobs list")}
       </Typography>
       <JobSearch onSearch={handleClickSearch} />
 
       <Paper className="justify-content-between align-items-center p-16 mb-24">
-        <Typography>{dataCount} việc làm phù hợp</Typography>
+        <Typography>
+          {dataCount} {t("jobs matched")}
+        </Typography>
         <TablePagination />
       </Paper>
 
@@ -88,38 +91,43 @@ const JobList = () => {
               <Avatar variant="rounded" src={job.avatar} className="bordered" style={{ width: 72, height: 72 }} />
             </div>
             <div className="flex-1">
-              <Typography>Công ty: {job.company}</Typography>
               <Link to={privateRoute.jobView.url(job.idJob)}>
-                <Typography component="span" color="primary">
+                <Typography component="span" variant="h6" color="primary">
                   {job.title}
                 </Typography>
               </Link>
+              <Typography variant="subtitle2">
+                {t("Company")}: {job.company}
+              </Typography>
 
-              <Typography>Số lượng tuyển: {job.numberOfVacancies}</Typography>
+              <Typography variant="body2" color="textSecondary">
+                {t("Number of vacancies")}: <span style={{ color: "black" }}>{job.numberOfVacancies}</span>
+              </Typography>
+
+              <Typography variant="h6" color="textSecondary">
+                {t("Bonus")}:{" "}
+                <span style={{ color: job.bonus > 0 ? "green" : "silver" }}>{formatBonus(job.bonus)}</span>
+              </Typography>
 
               <Grid container spacing={4}>
-                {job.bonus > 0 && (
-                  <Grid item style={{ width: 240 }}>
-                    <Typography>Thưởng</Typography>
-                    <Typography>{job.bonus}</Typography>
-                  </Grid>
-                )}
                 <Grid item style={{ width: 240 }}>
-                  <Typography>Mức lương</Typography>
+                  <Typography>{t("Salary range")}</Typography>
                   <Typography>
-                    {job.fromSalary} - {job.toSalary}
+                    {formatCurrency(job.currency, job.fromSalary)} - {formatCurrency(job.currency, job.toSalary)}
                   </Typography>
                 </Grid>
                 <Grid item>
-                  <Typography>Địa chỉ</Typography>
+                  <Typography>{t("Workplace")}</Typography>
                   <Typography>{job.workplace}</Typography>
                 </Grid>
               </Grid>
             </div>
             <div>
-              <IconButton color="primary">
-                <DirectionsOutlinedIcon />
-              </IconButton>
+              <Link to={privateRoute.jobView.url(job.idJob)}>
+                <IconButton color="secondary">
+                  <DirectionsOutlinedIcon />
+                </IconButton>
+              </Link>
               <IconButton>
                 <BookmarkBorderOutlinedIcon />
               </IconButton>

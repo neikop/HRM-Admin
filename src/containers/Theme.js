@@ -10,7 +10,9 @@ const Theme = ({ children }) => {
         inputProps: { autoSave: "false" },
       },
       MuiButton: {},
-      MuiChip: {},
+      MuiChip: {
+        variant: "outlined",
+      },
       MuiTypography: {
         component: "div",
       },

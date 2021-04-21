@@ -44,12 +44,12 @@ const CandidateView = () => {
   return (
     <>
       <Paper elevation={0} className="align-items-center mb-24" style={{ backgroundColor: "transparent" }}>
-        <Link to={privateRoute.job.path}>
+        <Link to={privateRoute.candidate.path}>
           <IconButton>
             <NavigateBeforeOutlinedIcon />
           </IconButton>
         </Link>
-        <Typography variant="h6">{t("Thông tin Ứng viên")}</Typography>
+        <Typography variant="h6">{t("Update candidate")}</Typography>
       </Paper>
 
       <Paper className="p-16">
@@ -64,13 +64,13 @@ const CandidateView = () => {
               />
               <Row gutter={24}>
                 <Col span={12}>
-                  <Form.Item name="candidateName" label="Name">
+                  <Form.Item name="candidateName" label={t("Name")}>
                     <Input />
                   </Form.Item>
-                  <Form.Item name="address" label="Address">
+                  <Form.Item name="address" label={t("Address")}>
                     <Input />
                   </Form.Item>
-                  <Form.Item name="level" label="Level">
+                  <Form.Item name="level" label={t("Level")}>
                     <Select>
                       {LEVEL.map((item) => (
                         <Select.Option key={item.id} value={item.code}>
@@ -79,27 +79,27 @@ const CandidateView = () => {
                       ))}
                     </Select>
                   </Form.Item>
-                  <Form.Item name="email" label="Email">
+                  <Form.Item name="email" label={t("Email")}>
                     <Input />
                   </Form.Item>
-                  <Form.Item name="phone" label="Phone">
+                  <Form.Item name="phone" label={t("Phone")}>
                     <Input />
                   </Form.Item>
                 </Col>
                 <Col span={12}>
-                  <Form.Item name="dayOfBirth" label="Date of Birth">
+                  <Form.Item name="dayOfBirth" label={t("Date of Birth")}>
                     <Input />
                   </Form.Item>
-                  <Form.Item name="language" label="Language">
+                  <Form.Item name="language" label={t("Language")}>
                     <Input />
                   </Form.Item>
-                  <Form.Item name="calendarReminder" label="Calendar Reminder">
+                  <Form.Item name="calendarReminder" label={t("Calendar Reminder")}>
                     <Input />
                   </Form.Item>
-                  <Form.Item name="position" label="Position">
+                  <Form.Item name="position" label={t("Position")}>
                     <Input />
                   </Form.Item>
-                  <Form.Item name="note" label="Note">
+                  <Form.Item name="note" label={t("Note")}>
                     <Input />
                   </Form.Item>
                 </Col>
@@ -119,7 +119,7 @@ const CandidateView = () => {
         </Form>
 
         <Button variant="outlined" onClick={handleClickSubmit}>
-          Update
+          {t("Update")}
         </Button>
       </Paper>
     </>

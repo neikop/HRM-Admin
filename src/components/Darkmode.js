@@ -34,7 +34,7 @@ const Darkmode = () => {
   const themeChoose = THEME_BARS.find((item) => item.code === darkmode) || THEME_BARS[0];
   const isDark = themeChoose.code === THEME_BARS[1].code;
   return (
-    <Tooltip title={t(themeChoose.name)}>
+    <Tooltip title={t("Toggle Dark Mode")}>
       <IconButton onClick={handleClickBar(isDark)}>
         {isDark ? <Brightness4OutlinedIcon /> : <Brightness5OutlinedIcon />}
       </IconButton>

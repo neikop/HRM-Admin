@@ -34,7 +34,7 @@ const JobList = () => {
         }
       })
       .catch(console.warn)
-      .then(() => {
+      .finally(() => {
         setDataLoading(false);
       });
   }, [dataSearch]);
@@ -124,8 +124,8 @@ const JobList = () => {
             </div>
             <div>
               <Link to={privateRoute.jobView.url(job.idJob)}>
-                <IconButton color="secondary">
-                  <DirectionsOutlinedIcon />
+                <IconButton>
+                  <DirectionsOutlinedIcon color="secondary" />
                 </IconButton>
               </Link>
               <IconButton>

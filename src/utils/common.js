@@ -7,3 +7,5 @@ export const getCurrentToken = () => {
   const { profile } = store.getState();
   return profile.token;
 };
+
+export const getUnix = (moment) => (moment && moment.isValid() ? moment.unix() * 1000 : null);

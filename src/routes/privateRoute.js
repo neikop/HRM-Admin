@@ -2,6 +2,7 @@ import { Home } from "views/Home";
 import { JobList } from "views/Job/List";
 import { JobView } from "views/Job/View";
 import { CandidateList } from "views/Candidate/List";
+import { CandidateCreate } from "views/Candidate/Create";
 import { CandidateView } from "views/Candidate/View";
 
 const privateRoute = {
@@ -22,6 +23,10 @@ const privateRoute = {
   candidate: {
     path: "/candidates",
     component: CandidateList,
+  },
+  candidateCreate: {
+    path: "/candidates/create",
+    component: CandidateCreate,
   },
   candidateView: {
     path: "/candidates/detail/:id",

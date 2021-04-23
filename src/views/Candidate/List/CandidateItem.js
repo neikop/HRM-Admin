@@ -1,6 +1,7 @@
 import { Paper, Avatar, Typography } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import { unix } from "moment";
+import { DDMMYYYY } from "utils/constants";
 
 import CallOutlinedIcon from "@material-ui/icons/CallOutlined";
 import EmailOutlinedIcon from "@material-ui/icons/EmailOutlined";
@@ -26,7 +27,7 @@ const CandidateItem = ({ candidate }) => {
         </Typography>
         <Typography className={classes.line}>
           <CakeOutlinedIcon className={classes.icon} />
-          {candidate.dayOfBirth ? unix(candidate.dayOfBirth / 1000).format("DD-MM-YYYY") : "-"}
+          {candidate.dayOfBirth ? unix(candidate.dayOfBirth / 1000).format(DDMMYYYY) : "-"}
         </Typography>
       </div>
       <div>

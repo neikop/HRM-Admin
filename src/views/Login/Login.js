@@ -1,7 +1,7 @@
 import React from "react";
+import { Loading } from "components";
 import { Button, Paper, TextField, Typography } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
-import { Loading } from "components";
 import { profileAction } from "actions/profile";
 import { userService } from "services/user";
 
@@ -57,7 +57,7 @@ const LoginForm = () => {
           profileAction.login(data);
         }
       })
-      .catch(console.error)
+      .catch(console.warn)
       .finally(() => {
         setIsLoading(false);
       });
@@ -89,8 +89,13 @@ const LoginForm = () => {
         onChange={handleChangePassword}
         onKeyPress={handlePressKey}
       />
-      <Button variant="contained" color="primary" className={classes.button} onClick={handleClickSubmit}>
-        <Loading visible={isLoading} /> Login
+      <Button
+        variant="contained"
+        color="primary"
+        className={classes.button}
+        startIcon={<Loading visible={isLoading} />}
+        onClick={handleClickSubmit}>
+        Login
       </Button>
     </Paper>
   );

@@ -1,13 +1,7 @@
-import React from 'react';
-import { CircularProgress } from '@material-ui/core';
+import React from "react";
+import { CircularProgress } from "@material-ui/core";
 
-const Loading = ({ visible, size = 18, Icon }) =>
-  visible ? (
-    <CircularProgress size={size} style={{ marginRight: 12, marginLeft: 2 }} color='inherit' />
-  ) : Icon ? (
-    <Icon style={{ marginRight: 8 }} />
-  ) : (
-    ''
-  );
+const Loading = ({ visible, size = 20, icon, ...props }) =>
+  visible ? <CircularProgress {...props} size={size} color="inherit" /> : icon ?? null;
 
 export default Loading;

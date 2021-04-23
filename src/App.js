@@ -6,6 +6,8 @@ import { AuthLayout, PrivateLayout } from "layouts";
 import { AppTheme } from "containers";
 import { store } from "reducers";
 import { ConfigProvider } from "antd";
+import { MuiPickersUtilsProvider } from "@material-ui/pickers";
+import { default as MomentUtils } from "@date-io/moment";
 import { profileAction } from "actions/profile";
 import { coreuiAction } from "actions/coreui";
 import { browserHistory } from "utils/history";
@@ -43,16 +45,18 @@ const App = () => {
   return (
     <Provider store={store}>
       <ConfigProvider componentSize="large">
-        <AppTheme>
-          <Router history={browserHistory}>
-            {isReady && (
-              <Switch>
-                <Route path="/login" component={AuthLayout} />
-                <Route path="/" component={PrivateLayout} />
-              </Switch>
-            )}
-          </Router>
-        </AppTheme>
+        <MuiPickersUtilsProvider utils={MomentUtils}>
+          <AppTheme>
+            <Router history={browserHistory}>
+              {isReady && (
+                <Switch>
+                  <Route path="/login" component={AuthLayout} />
+                  <Route path="/" component={PrivateLayout} />
+                </Switch>
+              )}
+            </Router>
+          </AppTheme>
+        </MuiPickersUtilsProvider>
       </ConfigProvider>
     </Provider>
   );

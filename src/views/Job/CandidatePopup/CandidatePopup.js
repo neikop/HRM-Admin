@@ -1,12 +1,12 @@
 import React from "react";
 import { Table } from "antd";
+import { Loading } from "components";
 import { Button, IconButton, Paper, Typography } from "@material-ui/core";
 import { Pagination } from "@material-ui/lab";
-import { Loading } from "components";
 import { candidateService } from "services/candidate";
 import { t } from "utils/common";
 import { unix } from "moment";
-import { privateRoute } from "routes";
+import { DDMMYYYY } from "utils/constants";
 import { CandidateItem, CandidateSearch } from "views/Candidate/List";
 
 import AssignmentIndOutlinedIcon from "@material-ui/icons/AssignmentIndOutlined";
@@ -19,7 +19,7 @@ const CandidatePopup = ({ job: { idJob }, onClose }) => {
   const [dataSort, setDataSort] = React.useState();
   const [dataLoading, setDataLoading] = React.useState(false);
 
-  const [isLoadingRecord, setIsLoadingRecord] = React.useState();
+  const [isLoadingSelect, setIsLoadingSelect] = React.useState();
 
   const fetchData = React.useCallback(() => {
     setDataLoading(true);
@@ -37,7 +37,7 @@ const CandidatePopup = ({ job: { idJob }, onClose }) => {
         }
       })
       .catch(console.warn)
-      .then(() => {
+      .finally(() => {
         setDataLoading(false);
       });
   }, [dataSearch, dataSort]);
@@ -58,7 +58,7 @@ const CandidatePopup = ({ job: { idJob }, onClose }) => {
   };
 
   const handleClickSelect = (item) => {
-    setIsLoadingRecord(item.id);
+    setIsLoadingSelect(item.id);
     candidateService
       .applyCvToJob({
         params_request: {
@@ -67,14 +67,11 @@ const CandidatePopup = ({ job: { idJob }, onClose }) => {
         },
       })
       .then((response) => {
-        const { status = 1, data } = response;
-        if (status) {
-          console.log(data);
-        }
+        onClose();
       })
       .catch(console.warn)
-      .then(() => {
-        setIsLoadingRecord();
+      .finally(() => {
+        setIsLoadingSelect();
       });
   };
 
@@ -130,20 +127,23 @@ const CandidatePopup = ({ job: { idJob }, onClose }) => {
               title: t("Time"),
               dataIndex: "time",
               sorter: true,
-              render: (_, record) => unix(record.updateTime / 1000).format("DD-MM-YYYY"),
+              render: (_, record) => unix(record.updateTime / 1000).format(DDMMYYYY),
             },
             {
               title: t("Calendar"),
               dataIndex: "calendar",
               sorter: true,
-              render: (_, record) => unix(record.calendarReminder / 1000).format("DD-MM-YYYY"),
+              render: (_, record) => unix(record.calendarReminder / 1000).format(DDMMYYYY),
             },
             { title: t("Status"), dataIndex: "status", sorter: true },
             {
               dataIndex: "",
               render: (_, record) => (
-                <Button color="secondary" onClick={() => handleClickSelect(record)}>
-                  <Loading visible={isLoadingRecord === record.id} /> {t("Select")}
+                <Button
+                  color="secondary"
+                  startIcon={<Loading visible={isLoadingSelect === record.id} />}
+                  onClick={() => handleClickSelect(record)}>
+                  {t("Select")}
                 </Button>
               ),
             },

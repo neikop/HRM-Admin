@@ -39,3 +39,17 @@ h5,
 h6 {
   color: inherit;
 }
+
+.ant-form-item .MuiFormControl-root {
+  .MuiOutlinedInput-root {
+    border-radius: 2px;
+  }
+
+  .MuiOutlinedInput-input {
+    padding: 11px 0px 10px 10px;
+  }
+
+  .MuiOutlinedInput-notchedOutline {
+    top: -9px;
+  }
+}

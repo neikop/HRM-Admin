@@ -30,7 +30,8 @@ const JobView = () => {
         if (status) {
           setJob(normalizeJob(data));
         }
-      });
+      })
+      .catch(console.warn);
   }, [id]);
 
   React.useEffect(() => {

@@ -1,17 +1,21 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { Table } from "antd";
-import { IconButton, Paper, Typography } from "@material-ui/core";
+import { Alert, Loading } from "components";
+import { Popconfirm, Table } from "antd";
+import { Button, IconButton, Paper, Typography } from "@material-ui/core";
 import { Pagination } from "@material-ui/lab";
 import { candidateService } from "services/candidate";
 import { t } from "utils/common";
 import { unix } from "moment";
 import { privateRoute } from "routes";
+import { DDMMYYYY } from "utils/constants";
 import CandidateSearch from "./CandidateSearch";
 import CandidateItem from "./CandidateItem";
 
 import AssignmentIndOutlinedIcon from "@material-ui/icons/AssignmentIndOutlined";
 import DirectionsOutlinedIcon from "@material-ui/icons/DirectionsOutlined";
+import AddOutlinedIcon from "@material-ui/icons/AddOutlined";
+import DeleteOutlineOutlinedIcon from "@material-ui/icons/DeleteOutlineOutlined";
 
 const CandidateList = () => {
   const [dataList, setDataList] = React.useState([]);
@@ -19,6 +23,8 @@ const CandidateList = () => {
   const [dataSearch, setDataSearch] = React.useState({ page: 0 });
   const [dataSort, setDataSort] = React.useState();
   const [dataLoading, setDataLoading] = React.useState(false);
+
+  const [isLoadingDelete, setIsLoadingDelete] = React.useState();
 
   const fetchData = React.useCallback(() => {
     setDataLoading(true);
@@ -36,10 +42,29 @@ const CandidateList = () => {
         }
       })
       .catch(console.warn)
-      .then(() => {
+      .finally(() => {
         setDataLoading(false);
       });
   }, [dataSearch, dataSort]);
+
+  const handleConfirmDelete = (item) => {
+    setIsLoadingDelete(item.id);
+    candidateService
+      .deleteCv({
+        params_request: {
+          id: item.id,
+        },
+      })
+      .then((response) => {
+        Alert.success({ message: t("Delete candidate successfully") });
+
+        fetchData();
+      })
+      .catch(console.warn)
+      .finally(() => {
+        setIsLoadingDelete();
+      });
+  };
 
   const handleClickSearch = (nextSearch) => {
     setDataSearch((search) => ({
@@ -83,6 +108,13 @@ const CandidateList = () => {
           <AssignmentIndOutlinedIcon />
         </IconButton>
         {t("Candidate list")}
+
+        <div className="flex-1" />
+        <Link to={privateRoute.candidateCreate.path}>
+          <Button variant="contained" color="secondary" startIcon={<AddOutlinedIcon />}>
+            {t("Create candidate")}
+          </Button>
+        </Link>
       </Typography>
       <CandidateSearch onSearch={handleClickSearch} />
 
@@ -110,21 +142,36 @@ const CandidateList = () => {
               title: t("Time"),
               dataIndex: "time",
               sorter: true,
-              render: (_, record) => unix(record.updateTime / 1000).format("DD-MM-YYYY"),
+              render: (_, record) => unix(record.updateTime / 1000).format(DDMMYYYY),
             },
             {
               title: t("Calendar"),
               dataIndex: "calendar",
               sorter: true,
-              render: (_, record) => unix(record.calendarReminder / 1000).format("DD-MM-YYYY"),
+              render: (_, record) => unix(record.calendarReminder / 1000).format(DDMMYYYY),
             },
             { title: t("Status"), dataIndex: "status", sorter: true },
             {
               dataIndex: "",
               render: (_, record) => (
-                <Link to={privateRoute.candidateView.url(record.id)}>
-                  <DirectionsOutlinedIcon />
-                </Link>
+                <Typography noWrap>
+                  <Link to={privateRoute.candidateView.url(record.id)}>
+                    <IconButton>
+                      <DirectionsOutlinedIcon color="secondary" />
+                    </IconButton>
+                  </Link>
+                  <Popconfirm
+                    placement="topRight"
+                    title={<Typography>{t("Are you sure?")}</Typography>}
+                    onConfirm={() => handleConfirmDelete(record)}>
+                    <IconButton>
+                      <Loading
+                        visible={isLoadingDelete === record.id}
+                        icon={<DeleteOutlineOutlinedIcon color="error" />}
+                      />
+                    </IconButton>
+                  </Popconfirm>
+                </Typography>
               ),
             },
           ]}

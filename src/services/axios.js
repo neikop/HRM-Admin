@@ -10,8 +10,8 @@ const onError = ({ response }) => {
     if (status === 401) {
       profileAction.logout();
     } else {
-      const { message = `${status} - ${statusText}` } = data;
-      Alert.error({ message });
+      const { message } = data;
+      Alert.error({ message: message ?? `${status} - ${statusText}` });
     }
   } else {
     Alert.error({ message: `Cannot connect to Server` });
@@ -19,14 +19,20 @@ const onError = ({ response }) => {
   return Promise.reject(response);
 };
 
-const client = axios.create({ baseURL: env.API_URL });
-client.interceptors.response.use(({ data }) => data, onError);
-client.interceptors.request.use((config) => {
+const beforeRequest = (config) => {
   Object.assign(config.headers, { Authorization: getCurrentToken() });
   if (config.data instanceof FormData) {
     Object.assign(config.headers, { "Content-Type": "multipart/form-data" });
   }
   return config;
+};
+
+const client = axios.create({ baseURL: env.API_URL });
+const clientFile = axios.create({ baseURL: env.API_FILE_URL });
+
+[client, clientFile].forEach((client) => {
+  client.interceptors.response.use(({ data }) => data, onError);
+  client.interceptors.request.use(beforeRequest);
 });
 
-export { client };
+export { client, clientFile };

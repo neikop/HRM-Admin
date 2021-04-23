@@ -2,26 +2,10 @@ import React from "react";
 import { NumberFormat } from "components";
 import { Button, InputAdornment, MenuItem, Paper, TextField, Typography } from "@material-ui/core";
 import { t } from "utils/common";
+import { CURRENCY_TYPES, JOB_STATUS_TYPES, WORKPLACE_TYPES } from "utils/constants";
 
 import SearchOutlinedIcon from "@material-ui/icons/SearchOutlined";
 import FilterListOutlinedIcon from "@material-ui/icons/FilterListOutlined";
-
-export const WORKPLACE_TYPES = [
-  { id: 1, code: "Hà Nội", name: "Ha Noi" },
-  { id: 2, code: "Đà Nẵng", name: "Da Nang" },
-  { id: 3, code: "Hồ Chí Minh", name: "Ho Chi Minh" },
-];
-
-export const CURRENCY_TYPES = [
-  { id: 1, code: "VND", name: "Đ" },
-  { id: 2, code: "USD", name: "$" },
-  { id: 3, code: "JPY", name: "¥" },
-];
-
-export const JOB_STATUS_TYPES = [
-  { id: 1, code: 1, name: t("Active") },
-  { id: 2, code: 0, name: t("Close") },
-];
 
 const JobSearch = ({ onSearch }) => {
   const [keyword, setKeyword] = React.useState("");

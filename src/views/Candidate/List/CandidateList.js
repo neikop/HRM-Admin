@@ -15,7 +15,7 @@ import CandidateItem from "./CandidateItem";
 import AssignmentIndOutlinedIcon from "@material-ui/icons/AssignmentIndOutlined";
 import DirectionsOutlinedIcon from "@material-ui/icons/DirectionsOutlined";
 import AddOutlinedIcon from "@material-ui/icons/AddOutlined";
-import DeleteOutlineOutlinedIcon from "@material-ui/icons/DeleteOutlineOutlined";
+import DeleteOutlinedIcon from "@material-ui/icons/DeleteOutlined";
 
 const CandidateList = () => {
   const [dataList, setDataList] = React.useState([]);
@@ -155,20 +155,17 @@ const CandidateList = () => {
               dataIndex: "",
               render: (_, record) => (
                 <Typography noWrap>
-                  <Link to={privateRoute.candidateView.url(record.id)}>
+                  <Link to={privateRoute.candidateUpdate.url(record.id)}>
                     <IconButton>
                       <DirectionsOutlinedIcon color="secondary" />
                     </IconButton>
                   </Link>
                   <Popconfirm
                     placement="topRight"
-                    title={<Typography>{t("Are you sure?")}</Typography>}
+                    title={t("Are you sure?")}
                     onConfirm={() => handleConfirmDelete(record)}>
                     <IconButton>
-                      <Loading
-                        visible={isLoadingDelete === record.id}
-                        icon={<DeleteOutlineOutlinedIcon color="error" />}
-                      />
+                      <Loading visible={isLoadingDelete === record.id} icon={<DeleteOutlinedIcon color="error" />} />
                     </IconButton>
                   </Popconfirm>
                 </Typography>

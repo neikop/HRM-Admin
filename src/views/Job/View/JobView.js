@@ -1,8 +1,10 @@
 import React from "react";
 import { Link, useParams } from "react-router-dom";
+import { Alert, ColorButton, Loading } from "components";
 import { Avatar, Button, Dialog, Divider, IconButton, Paper, Typography } from "@material-ui/core";
-import {} from "antd";
+import { Popconfirm } from "antd";
 import { jobService } from "services/job";
+import { browserHistory } from "utils/history";
 import { formatCurrency, formatBonus, normalizeJob } from "utils/converter";
 import { t } from "utils/common";
 import { unix } from "moment";
@@ -13,10 +15,13 @@ import CandidatePopup from "views/Job/CandidatePopup";
 import NavigateBeforeOutlinedIcon from "@material-ui/icons/NavigateBeforeOutlined";
 import CloudDownloadOutlinedIcon from "@material-ui/icons/CloudDownloadOutlined";
 import PersonAddOutlinedIcon from "@material-ui/icons/PersonAddOutlined";
+import EditOutlinedIcon from "@material-ui/icons/EditOutlined";
+import DeleteOutlinedIcon from "@material-ui/icons/DeleteOutlined";
 
 const JobView = () => {
   const { id } = useParams();
   const [job, setJob] = React.useState({});
+  const [isLoadingDelete, setIsLoadingDelete] = React.useState(false);
 
   const [isOpenPopup, setIsOpenPopup] = React.useState(false);
 
@@ -34,6 +39,23 @@ const JobView = () => {
       .catch(console.warn);
   }, [id]);
 
+  const handleConfirmDelete = () => {
+    setIsLoadingDelete(true);
+    jobService
+      .deleteJob({
+        params_request: { idJob: Number(id) },
+      })
+      .then((response) => {
+        Alert.success({ message: t("Delete job successfully") });
+
+        browserHistory.replace(privateRoute.jobList.path);
+      })
+      .catch(console.warn)
+      .finally(() => {
+        setIsLoadingDelete(false);
+      });
+  };
+
   React.useEffect(() => {
     fetchData();
   }, [fetchData]);
@@ -41,7 +63,7 @@ const JobView = () => {
   return (
     <>
       <Paper elevation={0} className="align-items-center mb-24" style={{ backgroundColor: "transparent" }}>
-        <Link to={privateRoute.job.path}>
+        <Link to={privateRoute.jobList.path}>
           <IconButton>
             <NavigateBeforeOutlinedIcon />
           </IconButton>
@@ -49,12 +71,21 @@ const JobView = () => {
         <Typography variant="h6" color="secondary">
           {job.title}
         </Typography>
+
+        <div className="flex-1" />
+        <Popconfirm placement="topRight" title={t("Are you sure?")} onConfirm={() => handleConfirmDelete()}>
+          <ColorButton
+            variant="outlined"
+            color="#d32f2f"
+            startIcon={<Loading visible={isLoadingDelete} icon={<DeleteOutlinedIcon />} />}>
+            {t("Delete job")}
+          </ColorButton>
+        </Popconfirm>
       </Paper>
 
       <Paper className="p-16">
         <div className="flex-row">
           <Avatar
-            variant="rounded"
             src={job.avatar}
             className="bordered"
             style={{ width: 120, height: 120, margin: "0px 24px 12px 0px" }}
@@ -67,13 +98,16 @@ const JobView = () => {
             <Typography>
               {t("Workplace")}: {job.workplace}
             </Typography>
-            <Typography>
-              {t("Type")}: {job.form}
+            <Typography color="textSecondary">
+              {t("Type")}: <span style={{ color: "black" }}>{job.form}</span>
             </Typography>
-            <Typography variant="subtitle1" style={{ fontWeight: 500 }}>
-              {t("Salary")}: {formatCurrency(job.currency, job.fromSalary)}
-              {" - "}
-              {formatCurrency(job.currency, job.toSalary)}
+            <Typography variant="h6" color="textSecondary">
+              {t("Salary")}:{" "}
+              <span style={{ color: "black" }}>
+                {formatCurrency(job.currency, job.fromSalary)}
+                {" - "}
+                {formatCurrency(job.currency, job.toSalary)}
+              </span>
             </Typography>
           </div>
           <div>
@@ -96,24 +130,28 @@ const JobView = () => {
         <Typography variant="h6" color="primary">
           {t("Description")}:
         </Typography>
-        <Typography dangerouslySetInnerHTML={{ __html: decode(job.description) }} />
+        <Typography paragraph dangerouslySetInnerHTML={{ __html: decode(job.description) }} />
 
         <Divider />
         <Typography variant="h6" color="primary">
           {t("Requirement")}:
         </Typography>
-        <Typography dangerouslySetInnerHTML={{ __html: decode(job.requirement) }} />
+        <Typography paragraph dangerouslySetInnerHTML={{ __html: decode(job.requirement) }} />
 
         <Divider />
         <Typography variant="h6" color="primary">
           {t("Welfare")}:
         </Typography>
-        <Typography dangerouslySetInnerHTML={{ __html: decode(job.welfare) }} />
+        <Typography paragraph dangerouslySetInnerHTML={{ __html: decode(job.welfare) }} />
 
-        <Paper elevation={0} style={{ position: "sticky", bottom: 0, margin: -16, padding: 16 }}>
-          <Button variant="contained" color="primary" className="mr-12" startIcon={<CloudDownloadOutlinedIcon />}>
+        <Paper
+          elevation={0}
+          className="Button-Line"
+          style={{ position: "sticky", bottom: 0, margin: -16, padding: 16 }}>
+          <Button variant="contained" color="primary" startIcon={<CloudDownloadOutlinedIcon />}>
             {t("Download JD")}
           </Button>
+
           <Button
             variant="contained"
             color="secondary"
@@ -121,6 +159,12 @@ const JobView = () => {
             onClick={() => setIsOpenPopup(true)}>
             {t("Refer Candidates")}
           </Button>
+
+          <Link to={privateRoute.jobUpdate.url(id)}>
+            <ColorButton variant="contained" color="#388e3c" startIcon={<EditOutlinedIcon />}>
+              {t("Edit job")}
+            </ColorButton>
+          </Link>
 
           <Dialog fullWidth maxWidth="xl" open={isOpenPopup} onClose={() => setIsOpenPopup(false)}>
             <CandidatePopup job={job} onClose={() => setIsOpenPopup(false)} />

@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { Spin } from "antd";
-import { Avatar, Grid, IconButton, Paper, Typography } from "@material-ui/core";
+import { Avatar, Button, Grid, IconButton, Paper, Typography } from "@material-ui/core";
 import { Pagination } from "@material-ui/lab";
 import { jobService } from "services/job";
 import { formatCurrency, formatBonus, normalizeJob } from "utils/converter";
@@ -11,6 +11,7 @@ import JobSearch from "./JobSearch";
 
 import WorkOutlineOutlinedIcon from "@material-ui/icons/WorkOutlineOutlined";
 import DirectionsOutlinedIcon from "@material-ui/icons/DirectionsOutlined";
+import AddOutlinedIcon from "@material-ui/icons/AddOutlined";
 import BookmarkBorderOutlinedIcon from "@material-ui/icons/BookmarkBorderOutlined";
 
 const JobList = () => {
@@ -74,6 +75,13 @@ const JobList = () => {
           <WorkOutlineOutlinedIcon />
         </IconButton>
         {t("Jobs list")}
+
+        <div className="flex-1" />
+        <Link to={privateRoute.jobCreate.path}>
+          <Button variant="contained" color="secondary" startIcon={<AddOutlinedIcon />}>
+            {t("Create job")}
+          </Button>
+        </Link>
       </Typography>
       <JobSearch onSearch={handleClickSearch} />
 
@@ -88,7 +96,7 @@ const JobList = () => {
         {dataList.map((job) => (
           <Paper className="flex-row p-16 mb-24" key={job.idJob}>
             <div style={{ padding: "6px 12px 12px 0px" }}>
-              <Avatar variant="rounded" src={job.avatar} className="bordered" style={{ width: 72, height: 72 }} />
+              <Avatar src={job.avatar} className="bordered" style={{ width: 72, height: 72 }} />
             </div>
             <div className="flex-1">
               <Link to={privateRoute.jobView.url(job.idJob)}>

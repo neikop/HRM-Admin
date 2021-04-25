@@ -1,0 +1,36 @@
+.MuiPagination-root {
+  .MuiPaginationItem-root {
+    line-height: 1;
+  }
+}
+
+.CV-Preview {
+  height: 100%;
+
+  .ant-tabs-content {
+    height: 100%;
+  }
+}
+
+.Job-Avatar {
+  .ant-upload.ant-upload-select-picture-card {
+    width: 132px;
+    height: 132px;
+    margin: 0px;
+    border-style: solid;
+
+    .MuiAvatar-root {
+      width: 100%;
+      height: 100%;
+    }
+  }
+}
+
+.Button-Line {
+  > button:not(:last-child) {
+    margin-right: 12px;
+  }
+  > a:not(:last-child) {
+    margin-right: 12px;
+  }
+}

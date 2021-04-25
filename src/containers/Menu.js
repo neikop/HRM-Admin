@@ -25,8 +25,8 @@ const Menu = () => {
   return (
     <>
       <MenuItem {...privateRoute.home} name={t("Home")} icon={<DashboardOutlinedIcon />} />
-      <MenuItem {...privateRoute.job} name={t("Job")} icon={<WorkOutlineOutlinedIcon />} />
-      <MenuItem {...privateRoute.candidate} name={t("Candidate")} icon={<AssignmentIndOutlinedIcon />} />
+      <MenuItem {...privateRoute.jobList} name={t("Job")} icon={<WorkOutlineOutlinedIcon />} />
+      <MenuItem {...privateRoute.candidateList} name={t("Candidate")} icon={<AssignmentIndOutlinedIcon />} />
     </>
   );
 };

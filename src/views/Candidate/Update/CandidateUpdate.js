@@ -13,7 +13,7 @@ import { CANDIDATE_LEVELS, DDMMYYYY, DDMMYYYY_HHMM } from "utils/constants";
 import NavigateBeforeOutlinedIcon from "@material-ui/icons/NavigateBeforeOutlined";
 import CheckOutlinedIcon from "@material-ui/icons/CheckOutlined";
 
-const CandidateView = () => {
+const CandidateUpdate = () => {
   const { id } = useParams();
   const [form] = Form.useForm();
   const [candidate, setCandidate] = React.useState({});
@@ -47,6 +47,7 @@ const CandidateView = () => {
       candidateService
         .updateCv({
           params_request: {
+            id,
             ...values,
             dayOfBirth: getUnix(dayOfBirth),
             calendarReminder: getUnix(calendarReminder),
@@ -71,7 +72,7 @@ const CandidateView = () => {
   return (
     <>
       <Paper elevation={0} className="align-items-center mb-24" style={{ backgroundColor: "transparent" }}>
-        <Link to={privateRoute.candidate.path}>
+        <Link to={privateRoute.candidateList.path}>
           <IconButton>
             <NavigateBeforeOutlinedIcon />
           </IconButton>
@@ -171,4 +172,4 @@ const CandidateView = () => {
     </>
   );
 };
-export default CandidateView;
+export default CandidateUpdate;

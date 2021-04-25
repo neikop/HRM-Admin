@@ -77,7 +77,7 @@ const CandidateCreate = () => {
         .then((response) => {
           Alert.success({ message: t("Create candidate successfully") });
 
-          browserHistory.push(privateRoute.candidate.path);
+          browserHistory.push(privateRoute.candidateList.path);
         })
         .catch(console.warn)
         .finally(() => {
@@ -89,7 +89,7 @@ const CandidateCreate = () => {
   return (
     <>
       <Paper elevation={0} className="align-items-center mb-24" style={{ backgroundColor: "transparent" }}>
-        <Link to={privateRoute.candidate.path}>
+        <Link to={privateRoute.candidateList.path}>
           <IconButton>
             <NavigateBeforeOutlinedIcon />
           </IconButton>
@@ -98,7 +98,7 @@ const CandidateCreate = () => {
       </Paper>
 
       {isUpload ? (
-        <Upload.Dragger accept="application/pdf" fileList={[]} customRequest={handleFileParser}>
+        <Upload.Dragger accept="application/pdf" showUploadList={false} customRequest={handleFileParser}>
           <Typography variant="h4" color="textSecondary">
             {t("Upload candidate profile here")}
           </Typography>

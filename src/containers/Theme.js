@@ -13,6 +13,9 @@ const Theme = ({ children }) => {
       MuiChip: {
         variant: "outlined",
       },
+      MuiAvatar: {
+        variant: "rounded",
+      },
       MuiTypography: {
         component: "div",
       },

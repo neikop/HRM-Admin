@@ -7,14 +7,19 @@ export const WORKPLACE_TYPES = [
 ];
 
 export const CURRENCY_TYPES = [
-  { id: 1, code: "VND", name: "Đ" },
-  { id: 2, code: "USD", name: "$" },
-  { id: 3, code: "JPY", name: "¥" },
+  { id: 1, code: "VND", name: "VND" },
+  { id: 2, code: "USD", name: "USD" },
+  { id: 3, code: "JPY", name: "JPY" },
 ];
 
 export const JOB_STATUS_TYPES = [
   { id: 1, code: 1, name: t("Active") },
   { id: 2, code: 0, name: t("Close") },
+];
+
+export const JOB_FORMS = [
+  { id: 1, code: "Full Time", name: "Full Time" },
+  { id: 2, code: "Part Time", name: "Part Time" },
 ];
 
 export const CANDIDATE_LEVELS = [

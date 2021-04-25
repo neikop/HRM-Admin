@@ -85,17 +85,11 @@ const JobSearch = ({ onSearch }) => {
         />
 
         <TextField
-          select
           label={t("Company")}
           value={company}
           onChange={(event) => setCompany(event.target.value)}
-          style={{ width: 240, marginRight: 24 }}>
-          {[].map((item) => (
-            <MenuItem key={item.id} value={item.code}>
-              {item.name}
-            </MenuItem>
-          ))}
-        </TextField>
+          style={{ width: 240, marginRight: 24 }}
+        />
 
         <TextField
           select

@@ -13,8 +13,10 @@ export const CURRENCY_TYPES = [
 ];
 
 export const JOB_STATUS_TYPES = [
-  { id: 1, code: 1, name: t("Active") },
-  { id: 2, code: 0, name: t("Close") },
+  { id: 1, code: 2, name: t("Open") },
+  { id: 2, code: 1, name: t("Processing") },
+  { id: 3, code: 3, name: t("Urgent") },
+  { id: 4, code: -1, name: t("Close") },
 ];
 
 export const JOB_FORMS = [

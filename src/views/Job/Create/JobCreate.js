@@ -3,7 +3,7 @@ import { Link, useParams } from "react-router-dom";
 import { Alert, InputNumberFormat, Loading, RichTextEditor } from "components";
 import { Avatar, Button, IconButton, Paper, Typography } from "@material-ui/core";
 import { KeyboardDatePicker } from "@material-ui/pickers";
-import { Col, Form, Input, Radio, Row, Select, Upload } from "antd";
+import { Col, Form, Input, Row, Select, Upload } from "antd";
 import { fileService } from "services/file";
 import { jobService } from "services/job";
 import { browserHistory } from "utils/history";
@@ -17,6 +17,7 @@ import { DDMMYYYY, JOB_STATUS_TYPES, JOB_FORMS, CURRENCY_TYPES } from "utils/con
 import NavigateBeforeOutlinedIcon from "@material-ui/icons/NavigateBeforeOutlined";
 import AddOutlinedIcon from "@material-ui/icons/AddOutlined";
 import EditOutlinedIcon from "@material-ui/icons/EditOutlined";
+import CloudUploadOutlinedIcon from "@material-ui/icons/CloudUploadOutlined";
 
 const JobCreate = () => {
   const { id } = useParams();
@@ -40,10 +41,12 @@ const JobCreate = () => {
           const { status = 1, data } = response;
           if (status) {
             const { deadline, description, requirement, welfare, ...job } = normalizeJob(data);
-            if (deadline) setDeadline(unix(deadline));
-            if (description) setDescription(decode(description));
-            if (requirement) setRequirement(decode(requirement));
-            if (welfare) setWelfare(decode(welfare));
+            setTimeout(() => {
+              if (deadline) setDeadline(unix(deadline));
+              if (description) setDescription(decode(description));
+              if (requirement) setRequirement(decode(requirement));
+              if (welfare) setWelfare(decode(welfare));
+            }, 0);
 
             form.setFieldsValue({ ...job });
           }
@@ -51,7 +54,7 @@ const JobCreate = () => {
         .catch(console.warn);
   }, [id, form]);
 
-  const handleUploadFile = async ({ file, onSuccess, onError }) => {
+  const handleUploadAvatar = async ({ file, onSuccess, onError }) => {
     const formData = new FormData();
     formData.append("image_job", file);
 
@@ -69,6 +72,23 @@ const JobCreate = () => {
       .finally(() => {
         setIsLoadingUpload(false);
       });
+  };
+
+  const handleUploadJob = async ({ file, onSuccess, onError }) => {
+    const formData = new FormData();
+    formData.append("jd_job", file);
+
+    fileService
+      .uploadFile(formData)
+      .then((response) => {
+        const { status = 1, data } = response;
+        if (status) {
+          const { url: jobDescription } = data;
+          form.setFieldsValue({ jobDescription });
+          onSuccess();
+        }
+      })
+      .catch(onError);
   };
 
   const handleClickCreate = () => {
@@ -161,7 +181,7 @@ const JobCreate = () => {
                       accept="image/*"
                       listType="picture-card"
                       showUploadList={false}
-                      customRequest={handleUploadFile}>
+                      customRequest={handleUploadAvatar}>
                       {avatar ? (
                         <Avatar variant="square" src={avatar} />
                       ) : (
@@ -196,12 +216,8 @@ const JobCreate = () => {
                   <Form.Item name="position" label={t("Position")}>
                     <Input />
                   </Form.Item>
-                  <Form.Item
-                    name="form"
-                    label={t("Type")}
-                    initialValue={JOB_FORMS[0].code}
-                    rules={[{ required: true, message: t("Type is required") }]}>
-                    <Select allowClear>
+                  <Form.Item name="form" label={t("Type")} initialValue={JOB_FORMS[0].code}>
+                    <Select>
                       {JOB_FORMS.map((item) => (
                         <Select.Option key={item.id} value={item.code}>
                           {item.name}
@@ -226,16 +242,24 @@ const JobCreate = () => {
                     <InputNumberFormat customInput={Input} />
                   </Form.Item>
                   <Form.Item name="bonus" label={t("Bonus")}>
-                    <InputNumberFormat customInput={Input} thousandSeparator addonAfter="VND" />
+                    <InputNumberFormat
+                      customInput={Input}
+                      thousandSeparator
+                      addonAfter={
+                        <Select defaultValue={CURRENCY_TYPES[0].code}>
+                          <Select.Option value={CURRENCY_TYPES[0].code}>{CURRENCY_TYPES[0].name}</Select.Option>
+                        </Select>
+                      }
+                    />
                   </Form.Item>
                   <Form.Item name="status" label={t("Status")} initialValue={JOB_STATUS_TYPES[0].code}>
-                    <Radio.Group>
+                    <Select>
                       {JOB_STATUS_TYPES.map((item) => (
-                        <Radio.Button key={item.id} value={item.code}>
+                        <Select.Option key={item.id} value={item.code}>
                           {item.name}
-                        </Radio.Button>
+                        </Select.Option>
                       ))}
-                    </Radio.Group>
+                    </Select>
                   </Form.Item>
                 </Col>
               </Row>
@@ -249,11 +273,8 @@ const JobCreate = () => {
                       customInput={Input}
                       thousandSeparator
                       addonAfter={
-                        <Form.Item
-                          name="currency"
-                          initialValue={CURRENCY_TYPES[0].code}
-                          style={{ marginBottom: -1, marginTop: -1 }}>
-                          <Select className="select-before">
+                        <Form.Item name="currency" initialValue={CURRENCY_TYPES[0].code} style={{ margin: -1 }}>
+                          <Select>
                             {CURRENCY_TYPES.map((item) => (
                               <Select.Option key={item.id} value={item.code}>
                                 {item.name}
@@ -271,8 +292,8 @@ const JobCreate = () => {
                       customInput={Input}
                       thousandSeparator
                       addonAfter={
-                        <Form.Item name="currency" style={{ marginBottom: -1, marginTop: -1 }}>
-                          <Select className="select-before">
+                        <Form.Item name="currency" style={{ margin: -1 }}>
+                          <Select>
                             {CURRENCY_TYPES.map((item) => (
                               <Select.Option key={item.id} value={item.code}>
                                 {item.name}
@@ -282,6 +303,20 @@ const JobCreate = () => {
                         </Form.Item>
                       }
                     />
+                  </Form.Item>
+                </Col>
+              </Row>
+              <Row>
+                <Col>
+                  <Form.Item name="jobDescription" hidden>
+                    <Input />
+                  </Form.Item>
+                  <Form.Item label={t("Job description")}>
+                    <Upload accept="application/pdf" listType="picture" maxCount={1} customRequest={handleUploadJob}>
+                      <Button variant="outlined" startIcon={<CloudUploadOutlinedIcon />}>
+                        Upload
+                      </Button>
+                    </Upload>
                   </Form.Item>
                 </Col>
               </Row>

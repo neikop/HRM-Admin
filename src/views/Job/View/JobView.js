@@ -13,7 +13,7 @@ import { privateRoute } from "routes";
 import CandidatePopup from "views/Job/CandidatePopup";
 
 import NavigateBeforeOutlinedIcon from "@material-ui/icons/NavigateBeforeOutlined";
-import CloudDownloadOutlinedIcon from "@material-ui/icons/CloudDownloadOutlined";
+import OpenInNewIcon from "@material-ui/icons/OpenInNew";
 import PersonAddOutlinedIcon from "@material-ui/icons/PersonAddOutlined";
 import EditOutlinedIcon from "@material-ui/icons/EditOutlined";
 import DeleteOutlinedIcon from "@material-ui/icons/DeleteOutlined";
@@ -148,8 +148,13 @@ const JobView = () => {
           elevation={0}
           className="Button-Line"
           style={{ position: "sticky", bottom: 0, margin: -16, padding: 16 }}>
-          <Button variant="contained" color="primary" startIcon={<CloudDownloadOutlinedIcon />}>
-            {t("Download JD")}
+          <Button
+            variant="contained"
+            color="primary"
+            disabled={!job.jobDescription}
+            onClick={() => window.open(job.jobDescription)}
+            startIcon={<OpenInNewIcon />}>
+            {t("View JD")}
           </Button>
 
           <Button

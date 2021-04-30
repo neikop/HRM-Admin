@@ -6,7 +6,6 @@ const getListInfoCv = (body) => client.post(api, { constructor: "getListInfoCv",
 const getInfoCv = (body) => client.post(api, { constructor: "getInfoCv", ...body });
 
 const getReferralCv = (body) => client.post(api, { constructor: "getReferralCv", ...body });
-const applyCvToJob = (body) => client.post(api, { constructor: "applyCvToJob", ...body });
 
 const createCv = (body) => client.post(api, { constructor: "createCv", ...body });
 const deleteCv = (body) => client.post(api, { constructor: "deleteCv", ...body });
@@ -17,7 +16,6 @@ export const candidateService = {
   getInfoCv,
 
   getReferralCv,
-  applyCvToJob,
 
   createCv,
   deleteCv,

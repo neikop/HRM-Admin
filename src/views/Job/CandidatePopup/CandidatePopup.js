@@ -4,6 +4,7 @@ import { Loading } from "components";
 import { Button, IconButton, Paper, Typography } from "@material-ui/core";
 import { Pagination } from "@material-ui/lab";
 import { candidateService } from "services/candidate";
+import { jobService } from "services/job";
 import { t } from "utils/common";
 import { unix } from "moment";
 import { DDMMYYYY } from "utils/constants";
@@ -59,7 +60,7 @@ const CandidatePopup = ({ job: { idJob }, onClose }) => {
 
   const handleClickSelect = (item) => {
     setIsLoadingSelect(item.id);
-    candidateService
+    jobService
       .applyCvToJob({
         params_request: {
           idJob,

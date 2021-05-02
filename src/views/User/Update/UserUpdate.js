@@ -84,13 +84,14 @@ const UserUpdate = () => {
           <Row gutter={24}>
             <Col span={6}>
               <Form.Item name="fullName" label={t("Name")}>
-                <Input />
+                <Input disabled />
               </Form.Item>
               <Form.Item name="phone" label={t("Phone")}>
-                <Input />
+                <Input disabled />
               </Form.Item>
               <Form.Item label={t("Date of Birth")}>
                 <KeyboardDatePicker
+                  disabled
                   clearable
                   color="secondary"
                   helperText=""
@@ -122,6 +123,7 @@ const UserUpdate = () => {
         </Form>
 
         <Button
+          disabled
           variant="outlined"
           startIcon={<Loading visible={isLoadingCreate} icon={<CheckOutlinedIcon />} />}
           onClick={handleClickSubmit}>

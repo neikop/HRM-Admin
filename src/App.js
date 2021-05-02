@@ -50,7 +50,7 @@ const App = () => {
             <Router history={browserHistory}>
               {isReady && (
                 <Switch>
-                  <Route path="/login" component={AuthLayout} />
+                  <Route path="/auth" component={AuthLayout} />
                   <Route path="/" component={PrivateLayout} />
                 </Switch>
               )}

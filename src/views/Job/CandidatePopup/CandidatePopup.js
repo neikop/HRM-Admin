@@ -1,6 +1,6 @@
 import React from "react";
 import { Table } from "antd";
-import { Loading } from "components";
+import { Alert, Loading } from "components";
 import { Button, IconButton, Paper, Typography } from "@material-ui/core";
 import { Pagination } from "@material-ui/lab";
 import { candidateService } from "services/candidate";
@@ -68,6 +68,8 @@ const CandidatePopup = ({ job: { idJob }, onClose }) => {
         },
       })
       .then((response) => {
+        Alert.success({ message: t("Refer candidate successfully") });
+
         onClose();
       })
       .catch(console.warn)

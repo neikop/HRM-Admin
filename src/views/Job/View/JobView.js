@@ -162,7 +162,7 @@ const JobView = () => {
             color="secondary"
             startIcon={<PersonAddOutlinedIcon />}
             onClick={() => setIsOpenPopup(true)}>
-            {t("Refer Candidates")}
+            {t("Refer candidates")}
           </Button>
 
           <Link to={privateRoute.jobUpdate.url(id)}>

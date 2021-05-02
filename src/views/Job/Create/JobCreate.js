@@ -97,7 +97,6 @@ const JobCreate = () => {
     form
       .validateFields()
       .then((values) => {
-        console.log(getUnix(deadline), values.numberOfVacancies);
         setIsLoadingCreate(true);
         jobService
           .createJob({

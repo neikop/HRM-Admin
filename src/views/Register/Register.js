@@ -106,15 +106,13 @@ const RegisterForm = () => {
       .signup(body)
       .then(({ status = 1 }) => {
         if (status) {
-          Alert.success({ message: t("Sign up successfully"), placement: "topRight" });
+          Alert.success({ message: t("Sign up successfully"), placement: "topRight", top: 72 });
 
           return userService.login({ username, password });
         }
       })
       .then(({ status = 1, data }) => {
         if (status) {
-          Alert.success({ message: t("Welcome"), placement: "topRight" });
-
           profileAction.login(data);
         }
       })

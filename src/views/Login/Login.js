@@ -57,7 +57,7 @@ const LoginForm = () => {
       .login(body)
       .then(({ status = 1, data }) => {
         if (status) {
-          Alert.success({ message: t("Welcome"), placement: "topRight" });
+          Alert.success({ message: t("Welcome"), placement: "topRight", top: 72 });
 
           profileAction.login(data);
         }

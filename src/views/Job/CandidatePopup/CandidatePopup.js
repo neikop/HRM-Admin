@@ -20,7 +20,7 @@ const CandidatePopup = ({ job: { idJob }, onClose }) => {
   const [dataSort, setDataSort] = React.useState();
   const [dataLoading, setDataLoading] = React.useState(false);
 
-  const [isLoadingSelect, setIsLoadingSelect] = React.useState();
+  const [isLoadingSelect, setIsLoadingSelect] = React.useState(0);
 
   const fetchData = React.useCallback(() => {
     setDataLoading(true);
@@ -141,6 +141,7 @@ const CandidatePopup = ({ job: { idJob }, onClose }) => {
             { title: t("Status"), dataIndex: "status", sorter: true },
             {
               dataIndex: "",
+              align: "right",
               render: (_, record) => (
                 <Button
                   color="secondary"

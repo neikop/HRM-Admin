@@ -8,6 +8,7 @@ import { privateRoute } from "routes";
 import DashboardOutlinedIcon from "@material-ui/icons/DashboardOutlined";
 import WorkOutlineOutlinedIcon from "@material-ui/icons/WorkOutlineOutlined";
 import AssignmentIndOutlinedIcon from "@material-ui/icons/AssignmentIndOutlined";
+import GroupOutlinedIcon from "@material-ui/icons/GroupOutlined";
 
 const MenuItem = ({ name, icon, path }) => {
   const classes = useStyles();
@@ -22,11 +23,13 @@ const MenuItem = ({ name, icon, path }) => {
 };
 
 const Menu = () => {
+  const { home, jobList, candidateList, userList } = privateRoute;
   return (
     <>
-      <MenuItem {...privateRoute.home} name={t("Home")} icon={<DashboardOutlinedIcon />} />
-      <MenuItem {...privateRoute.jobList} name={t("Job")} icon={<WorkOutlineOutlinedIcon />} />
-      <MenuItem {...privateRoute.candidateList} name={t("Candidate")} icon={<AssignmentIndOutlinedIcon />} />
+      <MenuItem {...home} name={t("Home")} icon={<DashboardOutlinedIcon />} />
+      <MenuItem {...jobList} name={t("Job")} icon={<WorkOutlineOutlinedIcon />} />
+      <MenuItem {...candidateList} name={t("Candidate")} icon={<AssignmentIndOutlinedIcon />} />
+      <MenuItem {...userList} name={t("User")} icon={<GroupOutlinedIcon />} />
     </>
   );
 };

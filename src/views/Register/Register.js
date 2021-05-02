@@ -113,6 +113,8 @@ const RegisterForm = () => {
       })
       .then(({ status = 1, data }) => {
         if (status) {
+          Alert.success({ message: t("Welcome"), placement: "topRight" });
+
           profileAction.login(data);
         }
       })

@@ -24,7 +24,7 @@ const CandidateList = () => {
   const [dataSort, setDataSort] = React.useState();
   const [dataLoading, setDataLoading] = React.useState(false);
 
-  const [isLoadingDelete, setIsLoadingDelete] = React.useState();
+  const [isLoadingDelete, setIsLoadingDelete] = React.useState(0);
 
   const fetchData = React.useCallback(() => {
     setDataLoading(true);
@@ -153,6 +153,7 @@ const CandidateList = () => {
             { title: t("Status"), dataIndex: "status", sorter: true },
             {
               dataIndex: "",
+              align: "right",
               render: (_, record) => (
                 <Typography noWrap>
                   <Link to={privateRoute.candidateUpdate.url(record.id)}>

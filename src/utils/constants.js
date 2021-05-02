@@ -30,5 +30,16 @@ export const CANDIDATE_LEVELS = [
   { id: 3, code: "Senior", name: t("Senior") },
 ];
 
+export const USER_ROLES = [
+  { id: 1, code: 1000, name: t("Super Admin") },
+  { id: 2, code: 1005, name: t("Admin") },
+  { id: 3, code: 1010, name: t("User") },
+];
+
+export const USER_TYPES = [
+  { id: 1, code: 0, name: t("Recruiter") },
+  { id: 2, code: 1, name: t("Employer") },
+];
+
 export const DDMMYYYY = "DD/MM/YYYY";
 export const DDMMYYYY_HHMM = "DD/MM/YYYY HH:mm";

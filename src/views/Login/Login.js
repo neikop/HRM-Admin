@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { Loading } from "components";
+import { Alert, Loading } from "components";
 import { Button, Paper, TextField, Typography } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import { profileAction } from "actions/profile";
@@ -57,6 +57,8 @@ const LoginForm = () => {
       .login(body)
       .then(({ status = 1, data }) => {
         if (status) {
+          Alert.success({ message: t("Welcome"), placement: "topRight" });
+
           profileAction.login(data);
         }
       })

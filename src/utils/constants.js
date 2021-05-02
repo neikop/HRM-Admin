@@ -13,9 +13,9 @@ export const CURRENCY_TYPES = [
 ];
 
 export const JOB_STATUS_TYPES = [
-  { id: 1, code: 2, name: t("Open") },
-  { id: 2, code: 1, name: t("Processing") },
-  { id: 3, code: 3, name: t("Urgent") },
+  { id: 1, code: 2, name: t("Open"), color: "green" },
+  { id: 2, code: 1, name: t("Processing"), color: "blue" },
+  { id: 3, code: 3, name: t("Urgent"), color: "volcano" },
   { id: 4, code: -1, name: t("Close") },
 ];
 
@@ -28,6 +28,11 @@ export const CANDIDATE_LEVELS = [
   { id: 1, code: "Fresher", name: t("Fresher") },
   { id: 2, code: "Junior", name: t("Junior") },
   { id: 3, code: "Senior", name: t("Senior") },
+];
+
+export const CANDIDATE_STATUS_TYPES = [
+  { id: 1, code: 0, name: t("Open") },
+  { id: 2, code: 1, name: t("Close") },
 ];
 
 export const USER_ROLES = [

@@ -1,4 +1,5 @@
 import React from "react";
+import { useSelector } from "react-redux";
 import { Link, useParams } from "react-router-dom";
 import { Alert, InputNumberFormat, Loading, RichTextEditor } from "components";
 import { Avatar, Button, IconButton, Paper, Typography } from "@material-ui/core";
@@ -21,6 +22,7 @@ import CloudUploadOutlinedIcon from "@material-ui/icons/CloudUploadOutlined";
 
 const JobCreate = () => {
   const { id } = useParams();
+  const { isSuper, isAdmin } = useSelector(({ profile }) => profile);
 
   const [form] = Form.useForm();
   const [deadline, setDeadline] = React.useState(null);
@@ -95,6 +97,7 @@ const JobCreate = () => {
     form
       .validateFields()
       .then((values) => {
+        console.log(getUnix(deadline), values.numberOfVacancies);
         setIsLoadingCreate(true);
         jobService
           .createJob({
@@ -238,7 +241,10 @@ const JobCreate = () => {
                       onChange={setDeadline}
                     />
                   </Form.Item>
-                  <Form.Item name="numberOfVacancies" label={t("Number of vacancies")}>
+                  <Form.Item
+                    name="numberOfVacancies"
+                    label={t("Number of vacancies")}
+                    rules={[{ required: true, message: t("Number is required") }]}>
                     <InputNumberFormat customInput={Input} />
                   </Form.Item>
                   <Form.Item name="bonus" label={t("Bonus")}>
@@ -252,8 +258,8 @@ const JobCreate = () => {
                       }
                     />
                   </Form.Item>
-                  <Form.Item name="status" label={t("Status")} initialValue={JOB_STATUS_TYPES[0].code}>
-                    <Select>
+                  <Form.Item name="status" label={t("Status")} initialValue={JOB_STATUS_TYPES[1].code}>
+                    <Select disabled={!(isSuper || isAdmin)}>
                       {JOB_STATUS_TYPES.map((item) => (
                         <Select.Option key={item.id} value={item.code}>
                           {item.name}

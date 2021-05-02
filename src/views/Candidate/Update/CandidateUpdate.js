@@ -8,7 +8,7 @@ import { candidateService } from "services/candidate";
 import { getUnix, t } from "utils/common";
 import { unix } from "moment";
 import { privateRoute } from "routes";
-import { CANDIDATE_LEVELS, DDMMYYYY, DDMMYYYY_HHMM } from "utils/constants";
+import { CANDIDATE_LEVELS, CANDIDATE_STATUS_TYPES, DDMMYYYY, DDMMYYYY_HHMM } from "utils/constants";
 
 import NavigateBeforeOutlinedIcon from "@material-ui/icons/NavigateBeforeOutlined";
 import CheckOutlinedIcon from "@material-ui/icons/CheckOutlined";
@@ -130,7 +130,13 @@ const CandidateUpdate = () => {
                     <Input />
                   </Form.Item>
                   <Form.Item name="status" label={t("Status")}>
-                    <Input />
+                    <Select>
+                      {CANDIDATE_STATUS_TYPES.map((item) => (
+                        <Select.Option key={item.id} value={item.code}>
+                          {item.name}
+                        </Select.Option>
+                      ))}
+                    </Select>
                   </Form.Item>
                   <Form.Item label={t("Calendar Reminder")}>
                     <KeyboardDateTimePicker

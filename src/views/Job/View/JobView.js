@@ -2,7 +2,7 @@ import React from "react";
 import { Link, useParams } from "react-router-dom";
 import { Alert, ColorButton, Loading } from "components";
 import { Avatar, Button, Dialog, Divider, IconButton, Paper, Typography } from "@material-ui/core";
-import { Popconfirm } from "antd";
+import { Popconfirm, Tag } from "antd";
 import { jobService } from "services/job";
 import { browserHistory } from "utils/history";
 import { formatCurrency, formatBonus, normalizeJob } from "utils/converter";
@@ -10,6 +10,7 @@ import { t } from "utils/common";
 import { unix } from "moment";
 import { decode } from "html-entities";
 import { privateRoute } from "routes";
+import { JOB_STATUS_TYPES } from "utils/constants";
 import CandidatePopup from "views/Job/CandidatePopup";
 
 import NavigateBeforeOutlinedIcon from "@material-ui/icons/NavigateBeforeOutlined";
@@ -71,6 +72,9 @@ const JobView = () => {
         <Typography variant="h6" color="secondary">
           {job.title}
         </Typography>
+        <Tag color={JOB_STATUS_TYPES.find((item) => item.code === job.status)?.color} style={{ marginLeft: 8 }}>
+          {JOB_STATUS_TYPES.find((item) => item.code === job.status)?.name}
+        </Tag>
 
         <div className="flex-1" />
         <Popconfirm placement="topRight" title={t("Are you sure?")} onConfirm={() => handleConfirmDelete()}>

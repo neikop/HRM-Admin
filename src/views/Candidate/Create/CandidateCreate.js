@@ -9,7 +9,7 @@ import { candidateService } from "services/candidate";
 import { browserHistory } from "utils/history";
 import { getUnix, t } from "utils/common";
 import { privateRoute } from "routes";
-import { CANDIDATE_LEVELS, DDMMYYYY, DDMMYYYY_HHMM } from "utils/constants";
+import { CANDIDATE_LEVELS, CANDIDATE_STATUS_TYPES, DDMMYYYY, DDMMYYYY_HHMM } from "utils/constants";
 
 import NavigateBeforeOutlinedIcon from "@material-ui/icons/NavigateBeforeOutlined";
 import AddOutlinedIcon from "@material-ui/icons/AddOutlined";
@@ -167,8 +167,14 @@ const CandidateCreate = () => {
                     <Form.Item name="position" label={t("Position")}>
                       <Input />
                     </Form.Item>
-                    <Form.Item name="status" label={t("Status")}>
-                      <Input />
+                    <Form.Item name="status" label={t("Status")} initialValue={CANDIDATE_STATUS_TYPES[0].code}>
+                      <Select>
+                        {CANDIDATE_STATUS_TYPES.map((item) => (
+                          <Select.Option key={item.id} value={item.code}>
+                            {item.name}
+                          </Select.Option>
+                        ))}
+                      </Select>
                     </Form.Item>
                     <Form.Item label={t("Calendar Reminder")}>
                       <KeyboardDateTimePicker

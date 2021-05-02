@@ -1,12 +1,14 @@
 import React from "react";
+import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import { Spin } from "antd";
+import { Spin, Tag } from "antd";
 import { Avatar, Button, Grid, IconButton, Paper, Typography } from "@material-ui/core";
 import { Pagination } from "@material-ui/lab";
 import { jobService } from "services/job";
 import { formatCurrency, formatBonus, normalizeJob } from "utils/converter";
 import { t } from "utils/common";
 import { privateRoute } from "routes";
+import { JOB_STATUS_TYPES } from "utils/constants";
 import JobSearch from "./JobSearch";
 
 import WorkOutlineOutlinedIcon from "@material-ui/icons/WorkOutlineOutlined";
@@ -15,6 +17,8 @@ import AddOutlinedIcon from "@material-ui/icons/AddOutlined";
 import BookmarkBorderOutlinedIcon from "@material-ui/icons/BookmarkBorderOutlined";
 
 const JobList = () => {
+  const { isSuper, isAdmin, isCompany } = useSelector(({ profile }) => profile);
+
   const [dataList, setDataList] = React.useState([]);
   const [dataCount, setDataCount] = React.useState(0);
   const [dataSearch, setDataSearch] = React.useState({ page: 0 });
@@ -77,11 +81,14 @@ const JobList = () => {
         {t("Jobs list")}
 
         <div className="flex-1" />
-        <Link to={privateRoute.jobCreate.path}>
-          <Button variant="contained" color="secondary" startIcon={<AddOutlinedIcon />}>
-            {t("Create job")}
-          </Button>
-        </Link>
+
+        {(isSuper || isAdmin || isCompany) && (
+          <Link to={privateRoute.jobCreate.path}>
+            <Button variant="contained" color="secondary" startIcon={<AddOutlinedIcon />}>
+              {t("Create job")}
+            </Button>
+          </Link>
+        )}
       </Typography>
       <JobSearch onSearch={handleClickSearch} />
 
@@ -103,7 +110,13 @@ const JobList = () => {
                 <Typography component="span" variant="h6" color="primary">
                   {job.title}
                 </Typography>
+                <Tag
+                  color={JOB_STATUS_TYPES.find((item) => item.code === job.status)?.color}
+                  style={{ position: "absolute", marginTop: 6, marginLeft: 8 }}>
+                  {JOB_STATUS_TYPES.find((item) => item.code === job.status)?.name}
+                </Tag>
               </Link>
+
               <Typography variant="subtitle2">
                 {t("Company")}: {job.company}
               </Typography>

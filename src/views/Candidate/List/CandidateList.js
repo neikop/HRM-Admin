@@ -8,7 +8,7 @@ import { candidateService } from "services/candidate";
 import { t } from "utils/common";
 import { unix } from "moment";
 import { privateRoute } from "routes";
-import { DDMMYYYY } from "utils/constants";
+import { CANDIDATE_STATUS_TYPES, DDMMYYYY } from "utils/constants";
 import CandidateSearch from "./CandidateSearch";
 import CandidateItem from "./CandidateItem";
 
@@ -139,7 +139,7 @@ const CandidateList = () => {
             { title: t("Language"), dataIndex: "language" },
             { title: t("Level"), dataIndex: "level", sorter: true },
             {
-              title: t("Time"),
+              title: t("Created at"),
               dataIndex: "time",
               sorter: true,
               render: (_, record) => unix(record.updateTime / 1000).format(DDMMYYYY),
@@ -150,7 +150,12 @@ const CandidateList = () => {
               sorter: true,
               render: (_, record) => unix(record.calendarReminder / 1000).format(DDMMYYYY),
             },
-            { title: t("Status"), dataIndex: "status", sorter: true },
+            {
+              title: t("Status"),
+              dataIndex: "status",
+              sorter: true,
+              render: (_, record) => CANDIDATE_STATUS_TYPES.find((item) => item.code === record.status)?.name,
+            },
             {
               dataIndex: "",
               align: "right",

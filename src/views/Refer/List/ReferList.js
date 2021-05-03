@@ -1,5 +1,4 @@
 import React from "react";
-import { useParams } from "react-router-dom";
 import { Alert, Loading } from "components";
 import { Popconfirm, Select, Table } from "antd";
 import { Button, IconButton, Paper, Typography } from "@material-ui/core";
@@ -9,15 +8,14 @@ import { jobService } from "services/job";
 import { t, getUnix } from "utils/common";
 import { DDMMYYYY_HHMM, REFERRAL_STATUS_TYPES } from "utils/constants";
 
+import DateRangeOutlinedIcon from "@material-ui/icons/DateRangeOutlined";
 import RefreshOutlinedIcon from "@material-ui/icons/RefreshOutlined";
 import DeleteOutlinedIcon from "@material-ui/icons/DeleteOutlined";
 
-const Referral = ({ job }) => {
-  const { id } = useParams();
-
+const ReferList = () => {
   const [dataList, setDataList] = React.useState([]);
   const [dataCount, setDataCount] = React.useState(0);
-  const [dataSearch, setDataSearch] = React.useState({ page: 0, idJob: Number(id) });
+  const [dataSearch, setDataSearch] = React.useState({ page: 0 });
   const [dataLoading, setDataLoading] = React.useState(false);
 
   const [isLoadingDelete, setIsLoadingDelete] = React.useState(0);
@@ -91,7 +89,7 @@ const Referral = ({ job }) => {
       shape="rounded"
       variant="outlined"
       color="secondary"
-      count={Math.ceil(dataCount / 5)}
+      count={Math.ceil(dataCount / 10)}
       page={dataSearch.page + 1}
       onChange={(event, nextPage) => {
         setDataSearch((search) => ({
@@ -108,6 +106,13 @@ const Referral = ({ job }) => {
 
   return (
     <>
+      <Typography variant="h6" className="align-items-center mb-24">
+        <IconButton>
+          <DateRangeOutlinedIcon />
+        </IconButton>
+        {t("Referral list")}
+      </Typography>
+
       <Paper className="justify-content-between align-items-center p-16 mb-24">
         <Typography>
           {dataCount} {t("Referrals")}
@@ -117,7 +122,6 @@ const Referral = ({ job }) => {
           {t("Refresh")}
         </Button>
       </Paper>
-
       <Paper className="mb-24">
         <Table
           bordered={false}
@@ -197,4 +201,4 @@ const Referral = ({ job }) => {
   );
 };
 
-export default Referral;
+export default ReferList;

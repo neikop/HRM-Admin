@@ -7,6 +7,7 @@ import { JobView } from "views/Job/View";
 import { CandidateList } from "views/Candidate/List";
 import { CandidateCreate } from "views/Candidate/Create";
 import { CandidateUpdate } from "views/Candidate/Update";
+import { ReferList } from "views/Refer/List";
 import { UserList } from "views/User/List";
 import { UserUpdate } from "views/User/Update";
 
@@ -28,15 +29,15 @@ const privateRoute = {
     path: "/jobs/create",
     component: JobCreate,
   },
-  jobView: {
-    path: "/jobs/:id/:active",
-    url: (id, active = "detail") => `/jobs/${id}/${active}`,
-    component: JobView,
-  },
   jobUpdate: {
     path: "/jobs/:id/edit",
     url: (id) => `/jobs/${id}/edit`,
     component: JobUpdate,
+  },
+  jobView: {
+    path: "/jobs/:id/:active",
+    url: (id, active = "detail") => `/jobs/${id}/${active}`,
+    component: JobView,
   },
 
   candidateList: {
@@ -51,6 +52,11 @@ const privateRoute = {
     path: "/candidates/:id/update",
     url: (id) => `/candidates/${id}/update`,
     component: CandidateUpdate,
+  },
+
+  referList: {
+    path: "/referals/list",
+    component: ReferList,
   },
 
   userList: {

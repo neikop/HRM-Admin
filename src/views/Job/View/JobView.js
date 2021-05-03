@@ -1,4 +1,5 @@
 import React from "react";
+import { useSelector } from "react-redux";
 import { Link, useParams } from "react-router-dom";
 import { Alert, ColorButton, Loading } from "components";
 import { Avatar, Button, Dialog, Divider, IconButton, Paper, Typography } from "@material-ui/core";
@@ -21,6 +22,8 @@ import DeleteOutlinedIcon from "@material-ui/icons/DeleteOutlined";
 
 const JobView = () => {
   const { id } = useParams();
+  const { isSuper, isAdmin, isCompany } = useSelector(({ profile }) => profile);
+
   const [job, setJob] = React.useState({});
   const [isLoadingDelete, setIsLoadingDelete] = React.useState(false);
 
@@ -77,14 +80,16 @@ const JobView = () => {
         </Tag>
 
         <div className="flex-1" />
-        <Popconfirm placement="topRight" title={t("Are you sure?")} onConfirm={() => handleConfirmDelete()}>
-          <ColorButton
-            variant="outlined"
-            color="#d32f2f"
-            startIcon={<Loading visible={isLoadingDelete} icon={<DeleteOutlinedIcon />} />}>
-            {t("Delete job")}
-          </ColorButton>
-        </Popconfirm>
+        {(isSuper || isAdmin || isCompany) && (
+          <Popconfirm placement="topRight" title={t("Are you sure?")} onConfirm={() => handleConfirmDelete()}>
+            <ColorButton
+              variant="outlined"
+              color="#d32f2f"
+              startIcon={<Loading visible={isLoadingDelete} icon={<DeleteOutlinedIcon />} />}>
+              {t("Delete job")}
+            </ColorButton>
+          </Popconfirm>
+        )}
       </Paper>
 
       <Paper className="p-16">
@@ -169,11 +174,13 @@ const JobView = () => {
             {t("Refer candidates")}
           </Button>
 
-          <Link to={privateRoute.jobUpdate.url(id)}>
-            <ColorButton variant="contained" color="#388e3c" startIcon={<EditOutlinedIcon />}>
-              {t("Edit job")}
-            </ColorButton>
-          </Link>
+          {(isSuper || isAdmin || isCompany) && (
+            <Link to={privateRoute.jobUpdate.url(id)}>
+              <ColorButton variant="contained" color="#388e3c" startIcon={<EditOutlinedIcon />}>
+                {t("Edit job")}
+              </ColorButton>
+            </Link>
+          )}
 
           <Dialog fullWidth maxWidth="xl" open={isOpenPopup} onClose={() => setIsOpenPopup(false)}>
             <CandidatePopup job={job} onClose={() => setIsOpenPopup(false)} />

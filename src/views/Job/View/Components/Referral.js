@@ -176,11 +176,7 @@ const Referral = ({ job }) => {
                   title={t("Are you sure?")}
                   onConfirm={() => handleConfirmDelete(record)}>
                   <IconButton>
-                    <Loading
-                      size={24}
-                      visible={isLoadingDelete === record.id}
-                      icon={<DeleteOutlinedIcon color="error" />}
-                    />
+                    <Loading visible={isLoadingDelete === record.id} icon={<DeleteOutlinedIcon color="error" />} />
                   </IconButton>
                 </Popconfirm>
               ),

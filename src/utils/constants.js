@@ -35,6 +35,19 @@ export const CANDIDATE_STATUS_TYPES = [
   { id: 2, code: 1, name: t("Close") },
 ];
 
+export const REFERRAL_STATUS_TYPES = [
+  { id: 1, code: 0, name: t("Approve Pending") },
+  { id: 2, code: 1, name: t("CV Passed") },
+  { id: 3, code: -1, name: t("CV Rejected") },
+  { id: 4, code: 2, name: t("Interview Waiting") },
+  { id: 5, code: 3, name: t("Interview Passed") },
+  { id: 6, code: -3, name: t("Interview Failed") },
+  { id: 7, code: 4, name: t("Offer Accepted") },
+  { id: 8, code: -4, name: t("Offer Rejected") },
+  { id: 9, code: 5, name: t("Probation Passed") },
+  { id: 10, code: -5, name: t("Probation Failed") },
+];
+
 export const USER_ROLES = [
   { id: 1, code: 1000, name: t("Super Admin") },
   { id: 2, code: 1005, name: t("Admin") },

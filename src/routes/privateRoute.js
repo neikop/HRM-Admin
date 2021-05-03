@@ -29,8 +29,8 @@ const privateRoute = {
     component: JobCreate,
   },
   jobView: {
-    path: "/jobs/:id/detail",
-    url: (id) => `/jobs/${id}/detail`,
+    path: "/jobs/:id/:active",
+    url: (id, active = "detail") => `/jobs/${id}/${active}`,
     component: JobView,
   },
   jobUpdate: {

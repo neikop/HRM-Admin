@@ -50,3 +50,29 @@ h6 {
   color: inherit;
   background: transparent;
 }
+
+@mixin typography {
+  font-weight: 400;
+  line-height: 1.5;
+  letter-spacing: 0.00938em;
+}
+
+.ant-tabs {
+  .ant-tabs-tab {
+    padding-bottom: 4px;
+
+    .ant-tabs-tab-btn {
+      @include typography;
+      font-size: 1rem;
+      text-transform: uppercase;
+    }
+  }
+}
+
+.ant-select-item-option-selected:not(.ant-select-item-option-disabled) {
+  font-weight: 500;
+}
+
+.ant-select-item {
+  @include typography;
+}

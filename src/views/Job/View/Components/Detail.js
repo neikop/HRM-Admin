@@ -25,9 +25,9 @@ const Detail = ({ job }) => {
       <div className="flex-row">
         <Avatar
           src={job.avatar}
-          className="bordered"
-          style={{ width: 120, height: 120, margin: "0px 24px 12px 0px" }}
-        />
+          style={{ width: 120, height: 120, margin: "0px 24px 12px 0px", backgroundColor: "transparent" }}>
+          <Avatar src="/kai_avatar.png" style={{ width: 120, height: 120 }} />
+        </Avatar>
 
         <div style={{ width: 600 }}>
           <Typography>

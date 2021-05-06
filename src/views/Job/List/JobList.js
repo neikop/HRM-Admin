@@ -103,7 +103,9 @@ const JobList = () => {
         {dataList.map((job) => (
           <Paper className="flex-row p-16 mb-24" key={job.idJob}>
             <div style={{ padding: "6px 12px 12px 0px" }}>
-              <Avatar src={job.avatar} className="bordered" style={{ width: 72, height: 72 }} />
+              <Avatar src={job.avatar} style={{ width: 72, height: 72, backgroundColor: "transparent" }}>
+                <Avatar src="/kai_avatar.png" style={{ width: 72, height: 72 }} />
+              </Avatar>
             </div>
             <div className="flex-1">
               <Link to={privateRoute.jobView.url(job.idJob)}>

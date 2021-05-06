@@ -144,6 +144,7 @@ const Referral = ({ job }) => {
                     setIsLoadingPicker(record.id);
                     handleChangeStatus(record, { interviewDate: getUnix(value) });
                   }}
+                  minDate={new Date()}
                 />
               ),
             },

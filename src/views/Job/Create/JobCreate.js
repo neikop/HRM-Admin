@@ -238,6 +238,7 @@ const JobCreate = () => {
                       format={DDMMYYYY}
                       value={deadline}
                       onChange={setDeadline}
+                      minDate={new Date()}
                     />
                   </Form.Item>
                   <Form.Item

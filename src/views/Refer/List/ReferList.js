@@ -151,6 +151,7 @@ const ReferList = () => {
                     setIsLoadingPicker(record.id);
                     handleChangeStatus(record, { interviewDate: getUnix(value) });
                   }}
+                  minDate={new Date()}
                 />
               ),
             },

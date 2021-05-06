@@ -159,6 +159,7 @@ const CandidateCreate = () => {
                         format={DDMMYYYY}
                         value={dayOfBirth}
                         onChange={setDayOfBirth}
+                        maxDate={new Date()}
                       />
                     </Form.Item>
                     <Form.Item name="language" label={t("Language")}>

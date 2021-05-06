@@ -95,6 +95,7 @@ const Profile = () => {
                   format={DDMMYYYY}
                   value={dayOfBirth}
                   onChange={setDayOfBirth}
+                  maxDate={new Date()}
                 />
               </Form.Item>
             </Col>

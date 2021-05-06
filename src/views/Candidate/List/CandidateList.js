@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { Alert, Loading } from "components";
-import { Popconfirm, Table } from "antd";
+import { Popconfirm, Table, Tag } from "antd";
 import { Button, IconButton, Paper, Typography } from "@material-ui/core";
 import { Pagination } from "@material-ui/lab";
 import { candidateService } from "services/candidate";
@@ -135,7 +135,11 @@ const CandidateList = () => {
           onChange={handleTableChange}
           columns={[
             { title: t("Name"), dataIndex: "name", sorter: true, render: (_, record) => record.candidateName },
-            { title: t("Skill"), dataIndex: "skill" },
+            {
+              title: t("Skill"),
+              dataIndex: "skill",
+              render: (_, record) => (record.skill ?? []).map((item, index) => <Tag key={index}>{item}</Tag>),
+            },
             { title: t("Language"), dataIndex: "language" },
             { title: t("Level"), dataIndex: "level", sorter: true },
             {

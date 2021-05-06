@@ -1,4 +1,5 @@
 import { Paper, Avatar, Typography } from "@material-ui/core";
+import { Tag } from "antd";
 import { makeStyles } from "@material-ui/core/styles";
 import { unix } from "moment";
 import { DDMMYYYY } from "utils/constants";
@@ -37,7 +38,9 @@ const CandidateItem = ({ candidate }) => {
         </Typography>
         <Typography className={classes.line}>
           <CardMembershipOutlinedIcon className={classes.icon} />
-          {candidate.skill || "-"}
+          {(candidate.skill ?? []).map((item, index) => (
+            <Tag key={index}>{item}</Tag>
+          ))}
         </Typography>
         <Typography className={classes.line}>
           <LocationOnOutlinedIcon className={classes.icon} />

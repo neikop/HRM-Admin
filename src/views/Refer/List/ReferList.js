@@ -106,22 +106,25 @@ const ReferList = () => {
 
   return (
     <>
-      <Typography variant="h6" className="align-items-center mb-24">
+      <Paper elevation={0} className="align-items-center mb-24" style={{ backgroundColor: "transparent" }}>
         <IconButton>
           <DateRangeOutlinedIcon />
         </IconButton>
-        {t("Referral list")}
-      </Typography>
-
-      <Paper className="justify-content-between align-items-center p-16 mb-24">
-        <Typography>
-          {dataCount} {t("Referrals")}
+        <Typography variant="h6" className="flex-1">
+          {t("Referral list")}
         </Typography>
 
         <Button startIcon={<Loading visible={dataLoading} icon={<RefreshOutlinedIcon />} />} onClick={fetchData}>
           {t("Refresh")}
         </Button>
       </Paper>
+
+      <Paper className="justify-content-between align-items-center p-16 mb-24">
+        <Typography>
+          {dataCount} {t("Referrals")}
+        </Typography>
+      </Paper>
+
       <Paper className="mb-24">
         <Table
           bordered={false}

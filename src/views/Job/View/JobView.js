@@ -69,9 +69,7 @@ const JobView = () => {
             <NavigateBeforeOutlinedIcon />
           </IconButton>
         </Link>
-        <Typography variant="h6" color="secondary">
-          {job.title}
-        </Typography>
+        <Typography variant="h6">{job.title}</Typography>
         <Tag color={JOB_STATUS_TYPES.find((item) => item.code === job.status)?.color} style={{ marginLeft: 8 }}>
           {JOB_STATUS_TYPES.find((item) => item.code === job.status)?.name}
         </Tag>

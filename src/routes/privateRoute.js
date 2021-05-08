@@ -22,7 +22,7 @@ const privateRoute = {
   },
 
   jobList: {
-    path: "/jobs/list",
+    path: "/jobs",
     component: JobList,
   },
   jobCreate: {
@@ -41,7 +41,7 @@ const privateRoute = {
   },
 
   candidateList: {
-    path: "/candidates/list",
+    path: "/candidates",
     component: CandidateList,
   },
   candidateCreate: {
@@ -55,12 +55,12 @@ const privateRoute = {
   },
 
   referList: {
-    path: "/referals/list",
+    path: "/referals",
     component: ReferList,
   },
 
   userList: {
-    path: "/users/list",
+    path: "/users",
     component: UserList,
   },
   userUpdate: {

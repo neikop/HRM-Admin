@@ -146,7 +146,7 @@ const ReferList = () => {
                   placeholder={DDMMYYYY_HHMM}
                   format={DDMMYYYY_HHMM}
                   loadingIndicator={isLoadingPicker === record.id}
-                  value={record.interviewDate ?? null}
+                  value={record.interviewDate * 1000 || null}
                   onChange={(value) => {
                     setIsLoadingPicker(record.id);
                     handleChangeStatus(record, { interviewDate: getUnix(value) });

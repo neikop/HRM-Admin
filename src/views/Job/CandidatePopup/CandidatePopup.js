@@ -130,13 +130,13 @@ const CandidatePopup = ({ job: { idJob }, onClose }) => {
               title: t("Time"),
               dataIndex: "time",
               sorter: true,
-              render: (_, record) => unix(record.updateTime / 1000).format(DDMMYYYY),
+              render: (_, record) => unix(record.updateTime).format(DDMMYYYY),
             },
             {
               title: t("Calendar"),
               dataIndex: "calendar",
               sorter: true,
-              render: (_, record) => unix(record.calendarReminder / 1000).format(DDMMYYYY),
+              render: (_, record) => unix(record.calendarReminder).format(DDMMYYYY),
             },
             { title: t("Status"), dataIndex: "status", sorter: true },
             {

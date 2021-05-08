@@ -233,12 +233,12 @@ const JobCreate = () => {
                     <KeyboardDatePicker
                       clearable
                       color="secondary"
-                      helperText=""
                       placeholder={DDMMYYYY}
                       format={DDMMYYYY}
                       value={deadline}
                       onChange={setDeadline}
                       minDate={new Date()}
+                      helperText=""
                     />
                   </Form.Item>
                   <Form.Item

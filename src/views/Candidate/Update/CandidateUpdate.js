@@ -8,7 +8,7 @@ import { candidateService } from "services/candidate";
 import { getUnix, t } from "utils/common";
 import { unix } from "moment";
 import { privateRoute } from "routes";
-import { CANDIDATE_LEVELS, CANDIDATE_STATUS_TYPES, DDMMYYYY, DDMMYYYY_HHMM } from "utils/constants";
+import { CANDIDATE_LEVELS, CANDIDATE_STATUS_TYPES, DDMMYYYY, DDMMYYYY_HHMM, SKILLS } from "utils/constants";
 
 import NavigateBeforeOutlinedIcon from "@material-ui/icons/NavigateBeforeOutlined";
 import CheckOutlinedIcon from "@material-ui/icons/CheckOutlined";
@@ -32,8 +32,8 @@ const CandidateUpdate = () => {
         if (status) {
           setCandidate(data);
           const { dayOfBirth, calendarReminder } = data;
-          if (dayOfBirth) setDayOfBirth(unix(dayOfBirth / 1000));
-          if (calendarReminder) setCalendarReminder(unix(calendarReminder / 1000));
+          if (dayOfBirth) setDayOfBirth(unix(dayOfBirth));
+          if (calendarReminder) setCalendarReminder(unix(calendarReminder));
 
           form.setFieldsValue({ ...data });
         }
@@ -102,7 +102,13 @@ const CandidateUpdate = () => {
                     </Select>
                   </Form.Item>
                   <Form.Item name="skill" label={t("Skill")}>
-                    <Select mode="tags" />
+                    <Select mode="tags">
+                      {SKILLS.map((skill) => (
+                        <Select.Option key={skill} value={skill}>
+                          {skill}
+                        </Select.Option>
+                      ))}
+                    </Select>
                   </Form.Item>
                   <Form.Item name="email" label={t("Email")}>
                     <Input />
@@ -116,12 +122,12 @@ const CandidateUpdate = () => {
                     <KeyboardDatePicker
                       clearable
                       color="secondary"
-                      helperText=""
                       placeholder={DDMMYYYY}
                       format={DDMMYYYY}
                       value={dayOfBirth}
                       onChange={setDayOfBirth}
                       maxDate={new Date()}
+                      helperText=""
                     />
                   </Form.Item>
                   <Form.Item name="language" label={t("Language")}>
@@ -143,11 +149,12 @@ const CandidateUpdate = () => {
                     <KeyboardDateTimePicker
                       clearable
                       color="secondary"
-                      helperText=""
                       placeholder={DDMMYYYY_HHMM}
                       format={DDMMYYYY_HHMM}
                       value={calendarReminder}
                       onChange={setCalendarReminder}
+                      minDate={new Date()}
+                      helperText=""
                     />
                   </Form.Item>
                   <Form.Item name="note" label={t("Note")}>

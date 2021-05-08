@@ -152,6 +152,7 @@ const ReferList = () => {
                     handleChangeStatus(record, { interviewDate: getUnix(value) });
                   }}
                   minDate={new Date()}
+                  minDateMessage={t("Interview time has passed")}
                 />
               ),
             },

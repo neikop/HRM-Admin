@@ -9,7 +9,7 @@ import { candidateService } from "services/candidate";
 import { browserHistory } from "utils/history";
 import { getUnix, t } from "utils/common";
 import { privateRoute } from "routes";
-import { CANDIDATE_LEVELS, CANDIDATE_STATUS_TYPES, DDMMYYYY, DDMMYYYY_HHMM } from "utils/constants";
+import { CANDIDATE_LEVELS, CANDIDATE_STATUS_TYPES, DDMMYYYY, DDMMYYYY_HHMM, SKILLS } from "utils/constants";
 
 import NavigateBeforeOutlinedIcon from "@material-ui/icons/NavigateBeforeOutlined";
 import AddOutlinedIcon from "@material-ui/icons/AddOutlined";
@@ -140,7 +140,13 @@ const CandidateCreate = () => {
                       </Select>
                     </Form.Item>
                     <Form.Item name="skill" label={t("Skill")}>
-                      <Select mode="tags" />
+                      <Select mode="tags">
+                        {SKILLS.map((skill) => (
+                          <Select.Option key={skill} value={skill}>
+                            {skill}
+                          </Select.Option>
+                        ))}
+                      </Select>
                     </Form.Item>
                     <Form.Item name="email" label={t("Email")}>
                       <Input />
@@ -154,12 +160,12 @@ const CandidateCreate = () => {
                       <KeyboardDatePicker
                         clearable
                         color="secondary"
-                        helperText=""
                         placeholder={DDMMYYYY}
                         format={DDMMYYYY}
                         value={dayOfBirth}
                         onChange={setDayOfBirth}
                         maxDate={new Date()}
+                        helperText=""
                       />
                     </Form.Item>
                     <Form.Item name="language" label={t("Language")}>
@@ -181,11 +187,12 @@ const CandidateCreate = () => {
                       <KeyboardDateTimePicker
                         clearable
                         color="secondary"
-                        helperText=""
                         placeholder={DDMMYYYY_HHMM}
                         format={DDMMYYYY_HHMM}
                         value={calendarReminder}
                         onChange={setCalendarReminder}
+                        minDate={new Date()}
+                        helperText=""
                       />
                     </Form.Item>
                     <Form.Item name="note" label={t("Note")}>

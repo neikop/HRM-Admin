@@ -28,7 +28,7 @@ const CandidateItem = ({ candidate }) => {
         </Typography>
         <Typography className={classes.line}>
           <CakeOutlinedIcon className={classes.icon} />
-          {candidate.dayOfBirth ? unix(candidate.dayOfBirth / 1000).format(DDMMYYYY) : "-"}
+          {candidate.dayOfBirth ? unix(candidate.dayOfBirth).format(DDMMYYYY) : "-"}
         </Typography>
       </div>
       <div>

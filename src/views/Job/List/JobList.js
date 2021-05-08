@@ -7,8 +7,9 @@ import { Pagination } from "@material-ui/lab";
 import { jobService } from "services/job";
 import { formatCurrency, formatBonus, normalizeJob } from "utils/converter";
 import { t } from "utils/common";
+import { unix } from "moment";
 import { privateRoute } from "routes";
-import { JOB_STATUS_TYPES } from "utils/constants";
+import { JOB_STATUS_TYPES, DDMMYYYY } from "utils/constants";
 import JobSearch from "./JobSearch";
 
 import WorkOutlineOutlinedIcon from "@material-ui/icons/WorkOutlineOutlined";
@@ -123,9 +124,19 @@ const JobList = () => {
                 {t("Company")}: {job.company}
               </Typography>
 
-              <Typography variant="body2" color="textSecondary">
-                {t("Number of vacancies")}: <span style={{ color: "black" }}>{job.numberOfVacancies}</span>
-              </Typography>
+              <Grid container spacing={4}>
+                <Grid item style={{ width: 240 }}>
+                  <Typography variant="body2" color="textSecondary">
+                    {t("Number of vacancies")}: <span style={{ color: "black" }}>{job.numberOfVacancies}</span>
+                  </Typography>
+                </Grid>
+                <Grid item>
+                  <Typography variant="body2" color="textSecondary">
+                    {t("Deadline")}:{" "}
+                    <span style={{ color: "black" }}>{unix(job.deadline).format(DDMMYYYY)}</span>
+                  </Typography>
+                </Grid>
+              </Grid>
 
               <Typography variant="h6" color="textSecondary">
                 {t("Bonus")}:{" "}

@@ -32,7 +32,7 @@ const Profile = () => {
           if (status) {
             setUser(user);
             const { dayOfBirth } = user;
-            if (dayOfBirth) setDayOfBirth(unix(dayOfBirth / 1000));
+            if (dayOfBirth) setDayOfBirth(unix(dayOfBirth));
 
             form.setFieldsValue({ ...user });
           }
@@ -90,12 +90,12 @@ const Profile = () => {
                 <KeyboardDatePicker
                   clearable
                   color="secondary"
-                  helperText=""
                   placeholder={DDMMYYYY}
                   format={DDMMYYYY}
                   value={dayOfBirth}
                   onChange={setDayOfBirth}
                   maxDate={new Date()}
+                  helperText=""
                 />
               </Form.Item>
             </Col>

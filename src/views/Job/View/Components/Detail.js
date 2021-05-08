@@ -8,6 +8,7 @@ import { t } from "utils/common";
 import { unix } from "moment";
 import { decode } from "html-entities";
 import { privateRoute } from "routes";
+import { DDMMYYYY } from "utils/constants";
 import CandidatePopup from "views/Job/CandidatePopup";
 
 import OpenInNewIcon from "@material-ui/icons/OpenInNew";
@@ -50,10 +51,10 @@ const Detail = ({ job }) => {
         </div>
         <div>
           <Typography>
-            {t("From")}: {unix(job.createTime).format("DD-MM-YYYY")}
+            {t("From")}: {unix(job.createTime).format(DDMMYYYY)}
           </Typography>
           <Typography>
-            {t("Deadline")}: {unix(job.deadline).format("DD-MM-YYYY")}
+            {t("Deadline")}: {unix(job.deadline).format(DDMMYYYY)}
           </Typography>
           <Typography color="textSecondary">
             {t("Number of vacancies")}: <span style={{ color: "black" }}>{job.numberOfVacancies}</span>

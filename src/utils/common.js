@@ -8,4 +8,4 @@ export const getCurrentToken = () => {
   return profile.token;
 };
 
-export const getUnix = (moment) => (moment && moment.isValid() ? moment.unix() * 1000 : null);
+export const getUnix = (moment) => (moment && moment.isValid() ? moment.unix() : null);

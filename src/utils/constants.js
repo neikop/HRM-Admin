@@ -1,4 +1,5 @@
 import { t } from "utils/common";
+import { skills } from "utils/skills";
 
 export const WORKPLACE_TYPES = [
   { id: 1, code: "Hà Nội", name: t("Ha Noi") },
@@ -61,3 +62,5 @@ export const USER_TYPES = [
 
 export const DDMMYYYY = "DD/MM/YYYY";
 export const DDMMYYYY_HHMM = "DD/MM/YYYY HH:mm";
+
+export const SKILLS = skills;

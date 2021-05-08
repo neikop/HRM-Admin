@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { Alert, Loading } from "components";
 import { Popconfirm, Table, Tag } from "antd";
-import { Button, IconButton, Paper, Typography } from "@material-ui/core";
+import { Button, IconButton, Paper, Tooltip, Typography } from "@material-ui/core";
 import { Pagination } from "@material-ui/lab";
 import { candidateService } from "services/candidate";
 import { t } from "utils/common";
@@ -166,17 +166,21 @@ const CandidateList = () => {
               render: (_, record) => (
                 <Typography noWrap>
                   <Link to={privateRoute.candidateUpdate.url(record.id)}>
-                    <IconButton>
-                      <DirectionsOutlinedIcon color="secondary" />
-                    </IconButton>
+                    <Tooltip title={t("View detail")}>
+                      <IconButton>
+                        <DirectionsOutlinedIcon color="secondary" />
+                      </IconButton>
+                    </Tooltip>
                   </Link>
                   <Popconfirm
                     placement="topRight"
                     title={t("Are you sure?")}
                     onConfirm={() => handleConfirmDelete(record)}>
-                    <IconButton>
-                      <Loading visible={isLoadingDelete === record.id} icon={<DeleteOutlinedIcon color="error" />} />
-                    </IconButton>
+                    <Tooltip title={t("Delete")}>
+                      <IconButton>
+                        <Loading visible={isLoadingDelete === record.id} icon={<DeleteOutlinedIcon color="error" />} />
+                      </IconButton>
+                    </Tooltip>
                   </Popconfirm>
                 </Typography>
               ),

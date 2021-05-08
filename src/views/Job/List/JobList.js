@@ -2,7 +2,7 @@ import React from "react";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { Spin, Tag } from "antd";
-import { Avatar, Button, Grid, IconButton, Paper, Typography } from "@material-ui/core";
+import { Avatar, Button, Grid, IconButton, Paper, Tooltip, Typography } from "@material-ui/core";
 import { Pagination } from "@material-ui/lab";
 import { jobService } from "services/job";
 import { formatCurrency, formatBonus, normalizeJob } from "utils/converter";
@@ -132,8 +132,7 @@ const JobList = () => {
                 </Grid>
                 <Grid item>
                   <Typography variant="body2" color="textSecondary">
-                    {t("Deadline")}:{" "}
-                    <span style={{ color: "black" }}>{unix(job.deadline).format(DDMMYYYY)}</span>
+                    {t("Deadline")}: <span style={{ color: "black" }}>{unix(job.deadline).format(DDMMYYYY)}</span>
                   </Typography>
                 </Grid>
               </Grid>
@@ -158,13 +157,17 @@ const JobList = () => {
             </div>
             <div>
               <Link to={privateRoute.jobView.url(job.idJob)}>
-                <IconButton>
-                  <DirectionsOutlinedIcon color="secondary" />
-                </IconButton>
+                <Tooltip title={t("View detail")}>
+                  <IconButton>
+                    <DirectionsOutlinedIcon color="secondary" />
+                  </IconButton>
+                </Tooltip>
               </Link>
-              <IconButton>
-                <BookmarkBorderOutlinedIcon />
-              </IconButton>
+              <Tooltip title={t("Save")}>
+                <IconButton disabled>
+                  <BookmarkBorderOutlinedIcon />
+                </IconButton>
+              </Tooltip>
             </div>
           </Paper>
         ))}

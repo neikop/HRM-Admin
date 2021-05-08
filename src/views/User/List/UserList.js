@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { Alert, Loading } from "components";
 import { Popconfirm, Select, Table } from "antd";
-import { Button, IconButton, Paper, Typography } from "@material-ui/core";
+import { Button, IconButton, Paper, Tooltip, Typography } from "@material-ui/core";
 import { userService } from "services/user";
 import { t } from "utils/common";
 import { unix } from "moment";
@@ -148,20 +148,24 @@ const UserList = () => {
               render: (_, record) => (
                 <Typography noWrap>
                   <Link to={privateRoute.userUpdate.url(record.userId)}>
-                    <IconButton>
-                      <DirectionsOutlinedIcon color="secondary" />
-                    </IconButton>
+                    <Tooltip title={t("View detail")}>
+                      <IconButton>
+                        <DirectionsOutlinedIcon color="secondary" />
+                      </IconButton>
+                    </Tooltip>
                   </Link>
                   <Popconfirm
                     placement="topRight"
                     title={t("Are you sure?")}
                     onConfirm={() => handleConfirmDelete(record)}>
-                    <IconButton>
-                      <Loading
-                        visible={isLoadingDelete === record.userId}
-                        icon={<DeleteOutlinedIcon color="error" />}
-                      />
-                    </IconButton>
+                    <Tooltip title={t("Delete")}>
+                      <IconButton>
+                        <Loading
+                          visible={isLoadingDelete === record.userId}
+                          icon={<DeleteOutlinedIcon color="error" />}
+                        />
+                      </IconButton>
+                    </Tooltip>
                   </Popconfirm>
                 </Typography>
               ),

@@ -2,7 +2,7 @@ import React from "react";
 import { useParams } from "react-router-dom";
 import { Alert, Loading } from "components";
 import { Popconfirm, Select, Table } from "antd";
-import { Button, IconButton, Paper, Typography } from "@material-ui/core";
+import { Button, IconButton, Paper, Tooltip, Typography } from "@material-ui/core";
 import { Pagination } from "@material-ui/lab";
 import { DateTimePicker } from "@material-ui/pickers";
 import { jobService } from "services/job";
@@ -177,9 +177,11 @@ const Referral = ({ job }) => {
                   placement="topRight"
                   title={t("Are you sure?")}
                   onConfirm={() => handleConfirmDelete(record)}>
-                  <IconButton>
-                    <Loading visible={isLoadingDelete === record.id} icon={<DeleteOutlinedIcon color="error" />} />
-                  </IconButton>
+                  <Tooltip title={t("Delete")}>
+                    <IconButton>
+                      <Loading visible={isLoadingDelete === record.id} icon={<DeleteOutlinedIcon color="error" />} />
+                    </IconButton>
+                  </Tooltip>
                 </Popconfirm>
               ),
             },

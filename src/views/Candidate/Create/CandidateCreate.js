@@ -37,12 +37,11 @@ const CandidateCreate = () => {
           ...data,
           candidateName: name,
         });
-
-        uploadFile(file);
       })
       .catch(console.warn)
       .finally(() => {
         setIsLoadingParser(false);
+        uploadFile(file);
       });
   };
 
@@ -56,11 +55,12 @@ const CandidateCreate = () => {
         if (status) {
           const { url: urlCv } = data;
           form.setFieldsValue({ urlCv });
-
-          setUpload(false);
         }
       })
-      .catch(console.warn);
+      .catch(console.warn)
+      .finally(() => {
+        setUpload(false);
+      });
   };
 
   const handleClickSubmit = () => {

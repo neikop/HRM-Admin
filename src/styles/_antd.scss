@@ -76,3 +76,8 @@ h6 {
 .ant-select-item {
   @include typography;
 }
+
+.ant-spin-nested-loading > div > .ant-spin .ant-spin-dot {
+  left: calc(50% - 20px);
+  margin: 0px;
+}

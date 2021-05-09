@@ -164,7 +164,7 @@ const JobList = () => {
                 </Tooltip>
               </Link>
               <Tooltip title={t("Save")}>
-                <IconButton disabled>
+                <IconButton style={{ display: "none" }}>
                   <BookmarkBorderOutlinedIcon />
                 </IconButton>
               </Tooltip>

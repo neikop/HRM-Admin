@@ -7,7 +7,7 @@ import { candidateService } from "services/candidate";
 import { jobService } from "services/job";
 import { t } from "utils/common";
 import { unix } from "moment";
-import { DDMMYYYY } from "utils/constants";
+import { CANDIDATE_STATUS_TYPES, DDMMYYYY } from "utils/constants";
 import { CandidateItem, CandidateSearch } from "views/Candidate/List";
 
 import AssignmentIndOutlinedIcon from "@material-ui/icons/AssignmentIndOutlined";
@@ -138,7 +138,12 @@ const CandidatePopup = ({ job: { idJob }, onClose }) => {
               sorter: true,
               render: (_, record) => unix(record.calendarReminder).format(DDMMYYYY),
             },
-            { title: t("Status"), dataIndex: "status", sorter: true },
+            {
+              title: t("Status"),
+              dataIndex: "status",
+              sorter: true,
+              render: (_, record) => CANDIDATE_STATUS_TYPES.find((item) => item.code === record.status)?.name,
+            },
             {
               dataIndex: "",
               align: "right",

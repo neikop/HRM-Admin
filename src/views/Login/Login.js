@@ -11,9 +11,9 @@ import { authRoute } from "routes";
 const LoginForm = () => {
   const classes = useStyles();
 
-  const [username, setUsername] = React.useState("admin123");
+  const [username, setUsername] = React.useState("");
   const [usernameError, setUsernameError] = React.useState("");
-  const [password, setPassword] = React.useState("admin12366949");
+  const [password, setPassword] = React.useState("");
   const [passwordError, setPasswordError] = React.useState("");
 
   const [isLoading, setIsLoading] = React.useState(false);

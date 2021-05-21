@@ -1,7 +1,7 @@
 import React from "react";
 import { useSelector } from "react-redux";
 import { IconButton, Tooltip } from "@material-ui/core";
-import { coreuiAction } from "actions/coreui";
+import { coreuiAction, DARKMODE } from "actions/coreui";
 import { enable as enableDarkMode, disable as disableDarkMode, setFetchMethod } from "darkreader";
 import { t } from "utils/common";
 
@@ -24,12 +24,20 @@ export const handleChangeMode = (isDark) => {
   }
 };
 
-const Darkmode = () => {
+const Darkmode = ({ init }) => {
   const { darkmode } = useSelector(({ coreui }) => coreui);
 
   const handleClickBar = (isDark) => (event) => {
     handleChangeMode(isDark);
   };
+
+  React.useEffect(() => {
+    if (init) {
+      const darkmode = THEME_BARS.find((item) => item.code === localStorage.getItem(DARKMODE)) || THEME_BARS[0];
+      const isLight = darkmode.code === THEME_BARS[0].code;
+      handleChangeMode(isLight);
+    }
+  }, [init]);
 
   const themeChoose = THEME_BARS.find((item) => item.code === darkmode) || THEME_BARS[0];
   const isDark = themeChoose.code === THEME_BARS[1].code;

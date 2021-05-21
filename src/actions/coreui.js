@@ -1,12 +1,15 @@
 import { store } from "reducers";
 import { ActionType } from "reducers/coreui";
 
+export const DARKMODE = "hrm.admin.darkmode";
+export const LANGUAGE = "hrm.admin.language";
+
 const updateDarkmode = (darkmode) => {
   store.dispatch({
     type: ActionType.GET_DARKMODE,
     data: darkmode,
   });
-  localStorage.setItem("hrm.admin.darkmode", darkmode);
+  localStorage.setItem(DARKMODE, darkmode);
 };
 
 const updateLanguage = (language) => {
@@ -14,7 +17,7 @@ const updateLanguage = (language) => {
     type: ActionType.GET_LANGUAGE,
     data: language,
   });
-  localStorage.setItem("hrm.admin.language", language);
+  localStorage.setItem(LANGUAGE, language);
 };
 
 export const coreuiAction = {

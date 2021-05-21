@@ -1,44 +1,43 @@
 import React from "react";
 import { useSelector } from "react-redux";
 import { useTranslation } from "react-i18next";
-import { Button, Paper, Popper, Typography, ClickAwayListener, List, ListItem } from "@material-ui/core";
-import { coreuiAction } from "actions/coreui";
+import { Button, Paper, Typography, List, ListItem } from "@material-ui/core";
+import { Dropdown } from "antd";
+import { coreuiAction, LANGUAGE } from "actions/coreui";
 
 import ArrowDropDownOutlinedIcon from "@material-ui/icons/ArrowDropDownOutlined";
 
 export const LANGUAGE_BARS = [
-  { id: 1, name: "English", code: "en", width: 116.1 },
-  { id: 2, name: "Tiếng Việt", code: "vi", width: 132.7 },
+  { id: 1, name: "English", code: "en" },
+  { id: 2, name: "Tiếng Việt", code: "vi" },
 ];
 
-const LanguageBar = () => {
+const LanguageBar = ({ init }) => {
   const { language } = useSelector(({ coreui }) => coreui);
   const { i18n } = useTranslation();
-
-  const [anchorUser, setAnchorUser] = React.useState(null);
-  const [isOpen, setIsOpen] = React.useState(false);
-
-  const handleClickUser = (event) => {
-    setAnchorUser(event.currentTarget);
-    setIsOpen((open) => !open);
-  };
 
   const handleChangeLanguage = (code) => {
     coreuiAction.updateLanguage(code);
     i18n.changeLanguage(code);
-    setIsOpen(false);
   };
+
+  React.useEffect(() => {
+    if (init) {
+      const language = LANGUAGE_BARS.find((item) => item.code === localStorage.getItem(LANGUAGE)) || LANGUAGE_BARS[0];
+      coreuiAction.updateLanguage(language.code);
+      i18n.changeLanguage(language.code);
+    }
+  }, [init, i18n]);
 
   const languageChoose = LANGUAGE_BARS.find((item) => item.code === language) || LANGUAGE_BARS[0];
 
   return (
-    <>
-      <Button variant="outlined" endIcon={<ArrowDropDownOutlinedIcon />} onClick={handleClickUser}>
-        {languageChoose.name}
-      </Button>
-      <Popper disablePortal placement="bottom-end" open={isOpen} anchorEl={anchorUser}>
-        <ClickAwayListener onClickAway={() => setIsOpen(false)}>
-          <List component={Paper} style={{ width: languageChoose.width, marginTop: 12 }}>
+    <Dropdown
+      trigger="click"
+      placement="bottomRight"
+      overlay={
+        <div>
+          <List component={Paper} style={{ marginTop: 12 }}>
             {LANGUAGE_BARS.map((item) => (
               <ListItem
                 key={item.id}
@@ -49,9 +48,12 @@ const LanguageBar = () => {
               </ListItem>
             ))}
           </List>
-        </ClickAwayListener>
-      </Popper>
-    </>
+        </div>
+      }>
+      <Button variant="outlined" endIcon={<ArrowDropDownOutlinedIcon />}>
+        {languageChoose.name}
+      </Button>
+    </Dropdown>
   );
 };
 

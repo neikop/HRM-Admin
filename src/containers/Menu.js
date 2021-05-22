@@ -12,29 +12,31 @@ import AssignmentIndOutlinedIcon from "@material-ui/icons/AssignmentIndOutlined"
 import GroupOutlinedIcon from "@material-ui/icons/GroupOutlined";
 import DateRangeOutlinedIcon from "@material-ui/icons/DateRangeOutlined";
 
-const MenuItem = ({ visible = true, name, icon, path }) => {
-  const classes = useStyles();
-  const location = useLocation();
-
-  return (
-    visible && (
-      <ListItem
-        button
-        component={Link}
-        to={path}
-        className={classes.item}
-        selected={location.pathname.startsWith(path)}>
-        <ListItemIcon className={classes.icon}>{icon}</ListItemIcon>
-        <ListItemText primary={name} />
-      </ListItem>
-    )
-  );
-};
-
-const Menu = () => {
+const Menu = ({ onClickMenu }) => {
   const { isSuper, isAdmin } = useSelector(({ profile }) => profile);
-
   const { home, jobList, candidateList, userList, referList } = privateRoute;
+
+  const MenuItem = ({ visible = true, name, icon, path }) => {
+    const classes = useStyles();
+    const location = useLocation();
+    return (
+      visible && (
+        <ListItem
+          button
+          component={Link}
+          to={path}
+          className={classes.item}
+          selected={location.pathname.startsWith(path)}
+          onClick={() => {
+            if (onClickMenu) onClickMenu();
+          }}>
+          <ListItemIcon className={classes.icon}>{icon}</ListItemIcon>
+          <ListItemText primary={name} />
+        </ListItem>
+      )
+    );
+  };
+
   return (
     <>
       <MenuItem {...home} name={t("Home")} icon={<DashboardOutlinedIcon />} />

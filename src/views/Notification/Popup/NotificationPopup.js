@@ -133,6 +133,9 @@ const useStyles = makeStyles((theme) => ({
     height: 360,
     paddingTop: 36,
     paddingBottom: 36,
+    "@media (max-width: 600px)": {
+      maxWidth: "75vw",
+    },
   },
   listItem: {
     "&:hover": {

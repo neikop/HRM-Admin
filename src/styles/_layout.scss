@@ -1,6 +1,5 @@
 .App {
   min-height: 100vh;
-  background-color: aliceblue;
 }
 
 .Auth-Layout {
@@ -24,4 +23,13 @@
 
 .App-Body {
   padding: 24px;
+}
+
+@media screen and (max-width: 600px) {
+  .App-Header {
+    padding: 0px 8px;
+  }
+  .App-Body {
+    padding: 24px 12px;
+  }
 }

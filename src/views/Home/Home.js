@@ -66,7 +66,7 @@ const Home = () => {
   return (
     <>
       <Paper elevation={0} className="align-items-center mb-24" style={{ backgroundColor: "transparent" }}>
-        <IconButton onClick={fetchData}>
+        <IconButton>
           <DashboardOutlinedIcon />
         </IconButton>
         <Typography variant="h6" className="flex-1">

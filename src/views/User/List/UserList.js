@@ -114,16 +114,17 @@ const UserList = () => {
           dataSource={dataList}
           pagination={false}
           columns={[
-            { title: t("Username"), dataIndex: "username" },
+            { title: t("Username"), dataIndex: "username", width: 180, fixed: "left" },
             {
               title: t("Role"),
               dataIndex: "roleId",
+              width: 160,
               render: (_, record) => (
                 <Select
                   value={record.roleId}
                   onChange={(value) => handleChangeRole(record, value)}
                   loading={isLoadingSelect === record.userId}
-                  style={{ width: 180 }}>
+                  style={{ width: 140 }}>
                   {USER_ROLES.map((item) => (
                     <Select.Option key={item.id} value={item.code}>
                       {item.name}
@@ -135,16 +136,19 @@ const UserList = () => {
             {
               title: t("Type"),
               dataIndex: "userType",
+              width: 120,
               render: (_, record) => USER_TYPES.find((item) => item.code === record.userType)?.name,
             },
             {
               title: t("Created at"),
               dataIndex: "createdAt",
+              width: 120,
               render: (_, record) => unix(record.createdAt).format(DDMMYYYY),
             },
             {
               dataIndex: "",
               align: "right",
+              width: 128,
               render: (_, record) => (
                 <Typography noWrap>
                   <Link to={privateRoute.userUpdate.url(record.userId)}>

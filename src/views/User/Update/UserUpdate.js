@@ -80,7 +80,7 @@ const UserUpdate = () => {
       <Paper className="p-16">
         <Form form={form} layout="vertical">
           <Row gutter={24}>
-            <Col span={6}>
+            <Col xl={6} lg={8} md={12} span={24}>
               <Form.Item name="fullName" label={t("Name")}>
                 <Input disabled />
               </Form.Item>
@@ -101,7 +101,7 @@ const UserUpdate = () => {
                 />
               </Form.Item>
             </Col>
-            <Col span={6}>
+            <Col xl={6} lg={8} md={12} span={24}>
               <Form.Item label={t("Username")}>
                 <Input disabled value={user.username} />
               </Form.Item>

@@ -91,7 +91,11 @@ const NotificationPopup = () => {
                   <ListItemText primary={noticeFormat(item)} secondary={convertTime(item.createTime * 1000)} />
                 </ListItem>
               ))}
-
+              {dataList.length === 0 && isLast.current && (
+                <ListItem>
+                  <ListItemText primary={t("You don't have any notifications")} />
+                </ListItem>
+              )}
               {!isLast.current && (
                 <ListItem className="flex-center">
                   <Loading visible={dataLoading} />

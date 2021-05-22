@@ -97,6 +97,11 @@ const NotificationList = () => {
               <ListItemText primary={noticeFormat(item)} secondary={convertTime(item.createTime * 1000)} />
             </ListItem>
           ))}
+          {dataList.length === 0 && isLast.current && (
+            <ListItem divider>
+              <ListItemText primary={t("You don't have any notifications")} />
+            </ListItem>
+          )}
           <ListItem className="flex-center">
             <Loading visible={dataLoading} />
           </ListItem>

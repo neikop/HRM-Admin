@@ -10,6 +10,7 @@ import { CandidateUpdate } from "views/Candidate/Update";
 import { ReferList } from "views/Refer/List";
 import { UserList } from "views/User/List";
 import { UserUpdate } from "views/User/Update";
+import { NotificationList } from "views/Notification/List";
 
 const privateRoute = {
   home: {
@@ -67,6 +68,11 @@ const privateRoute = {
     path: "/users/:id/update",
     url: (id) => `/users/${id}/update`,
     component: UserUpdate,
+  },
+
+  notificationList: {
+    path: "/notifications",
+    component: NotificationList,
   },
 };
 

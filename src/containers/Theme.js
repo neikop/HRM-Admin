@@ -1,5 +1,6 @@
 import React from "react";
 import { createMuiTheme, ThemeProvider } from "@material-ui/core/styles";
+import { common } from "@material-ui/core/colors";
 
 const Theme = ({ children }) => {
   const theme = createMuiTheme({
@@ -21,8 +22,18 @@ const Theme = ({ children }) => {
       },
       MuiInputBase: {
         style: {
-          backgroundColor: "#FFF",
+          backgroundColor: common.white,
         },
+      },
+    },
+    typography: {
+      subtitle1: {
+        fontWeight: 500,
+        lineHeight: 1.5,
+      },
+      subtitle2: {
+        fontWeight: 500,
+        lineHeight: 1.43,
       },
     },
     overrides: {},

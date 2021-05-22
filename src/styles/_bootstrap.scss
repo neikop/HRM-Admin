@@ -18,8 +18,8 @@
 
 .flex-center {
   display: flex;
-  justify-content: center;
-  align-items: center;
+  justify-content: center !important;
+  align-items: center !important;
 }
 
 @for $i from 1 through 10 {

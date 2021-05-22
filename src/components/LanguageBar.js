@@ -35,6 +35,7 @@ const LanguageBar = ({ init }) => {
     <Dropdown
       trigger="click"
       placement="bottomRight"
+      getPopupContainer={(event) => event.parentNode}
       overlay={
         <div>
           <List component={Paper} style={{ marginTop: 12 }}>

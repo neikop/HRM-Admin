@@ -1,12 +1,13 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import { AppMenu } from "containers";
 import { Darkmode, LanguageBar } from "components";
 import { Avatar, IconButton, Paper, Divider, List, ListItem, ListItemText } from "@material-ui/core";
+import { Dropdown } from "antd";
 import { profileAction } from "actions/profile";
 import { t } from "utils/common";
-import { Link } from "react-router-dom";
 import { privateRoute } from "routes";
-import { Dropdown } from "antd";
+import { NotificationPopup } from "views/Notification/Popup";
 
 const Header = () => {
   const handleClickLogout = () => {
@@ -20,20 +21,24 @@ const Header = () => {
       <LanguageBar init />
       <div className="mr-8" />
       <Darkmode init />
+      <NotificationPopup />
 
       <Dropdown
         trigger="click"
         placement="bottomRight"
+        getPopupContainer={(event) => event.parentNode}
         overlay={
-          <List component={Paper} style={{ width: 240, marginTop: 4 }}>
-            <ListItem button component={Link} to={privateRoute.profile.path}>
-              <ListItemText>{t("Profile")}</ListItemText>
-            </ListItem>
-            <Divider />
-            <ListItem button onClick={handleClickLogout}>
-              <ListItemText>{t("Logout")}</ListItemText>
-            </ListItem>
-          </List>
+          <div>
+            <List component={Paper} style={{ width: 240, marginTop: 4 }}>
+              <ListItem button component={Link} to={privateRoute.profile.path}>
+                <ListItemText>{t("Profile")}</ListItemText>
+              </ListItem>
+              <Divider />
+              <ListItem button onClick={handleClickLogout}>
+                <ListItemText>{t("Logout")}</ListItemText>
+              </ListItem>
+            </List>
+          </div>
         }>
         <IconButton style={{ padding: 8 }}>
           <Avatar variant="circular" style={{ width: 36, height: 36 }} />

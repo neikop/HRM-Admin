@@ -51,7 +51,10 @@ const LanguageBar = ({ init }) => {
           </List>
         </div>
       }>
-      <Button variant="outlined" endIcon={<ArrowDropDownOutlinedIcon />}>
+      <Button
+        variant="outlined"
+        style={{ whiteSpace: "nowrap", minWidth: 120 }}
+        endIcon={<ArrowDropDownOutlinedIcon />}>
         {languageChoose.name}
       </Button>
     </Dropdown>

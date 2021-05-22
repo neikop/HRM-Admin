@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { Loading, PerfectScrollbar } from "components";
-import { Avatar, IconButton, ListItemAvatar, Paper } from "@material-ui/core";
+import { Avatar, IconButton, ListItemAvatar, Paper, Tooltip } from "@material-ui/core";
 import { List, ListItem, ListItemText } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import { Dropdown } from "antd";
@@ -117,9 +117,11 @@ const NotificationPopup = () => {
           </List>
         </div>
       }>
-      <IconButton>
-        <NotificationsActiveOutlinedIcon />
-      </IconButton>
+      <Tooltip title={t("Notifications")}>
+        <IconButton>
+          <NotificationsActiveOutlinedIcon />
+        </IconButton>
+      </Tooltip>
     </Dropdown>
   );
 };

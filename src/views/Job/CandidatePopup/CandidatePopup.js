@@ -115,7 +115,7 @@ const CandidatePopup = ({ job: { idJob }, onClose }) => {
 
       <Paper className="mb-24">
         <Table
-          scroll={{ y: 480 }}
+          scroll={{ y: 480, x: 800 }}
           bordered={false}
           loading={dataLoading}
           rowKey={(record) => record.id}
@@ -123,30 +123,40 @@ const CandidatePopup = ({ job: { idJob }, onClose }) => {
           pagination={false}
           onChange={handleTableChange}
           columns={[
-            { title: t("Name"), dataIndex: "name", sorter: true, render: (_, record) => record.candidateName },
-            { title: t("Language"), dataIndex: "language" },
-            { title: t("Level"), dataIndex: "level", sorter: true },
             {
-              title: t("Time"),
+              title: t("Name"),
+              dataIndex: "name",
+              width: 180,
+              sorter: true,
+              render: (_, record) => record.candidateName,
+            },
+            { title: t("Language"), dataIndex: "language", width: 120 },
+            { title: t("Level"), dataIndex: "level", width: 120, sorter: true },
+            {
+              title: t("Created at"),
               dataIndex: "time",
+              width: 120,
               sorter: true,
               render: (_, record) => unix(record.updateTime).format(DDMMYYYY),
             },
             {
               title: t("Calendar"),
               dataIndex: "calendar",
+              width: 120,
               sorter: true,
               render: (_, record) => unix(record.calendarReminder).format(DDMMYYYY),
             },
             {
               title: t("Status"),
               dataIndex: "status",
+              width: 100,
               sorter: true,
               render: (_, record) => CANDIDATE_STATUS_TYPES.find((item) => item.code === record.status)?.name,
             },
             {
               dataIndex: "",
               align: "right",
+              width: 80,
               render: (_, record) => (
                 <Button
                   color="secondary"

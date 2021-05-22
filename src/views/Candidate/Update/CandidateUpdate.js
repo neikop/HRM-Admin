@@ -83,9 +83,9 @@ const CandidateUpdate = () => {
       <Paper className="p-16">
         <Form form={form} layout="vertical">
           <Row gutter={24}>
-            <Col span={12}>
+            <Col lg={12} span={24}>
               <Row gutter={24}>
-                <Col span={12}>
+                <Col md={12} span={24}>
                   <Form.Item name="candidateName" label={t("Name")}>
                     <Input />
                   </Form.Item>
@@ -117,7 +117,7 @@ const CandidateUpdate = () => {
                     <Input />
                   </Form.Item>
                 </Col>
-                <Col span={12}>
+                <Col md={12} span={24}>
                   <Form.Item label={t("Date of Birth")}>
                     <KeyboardDatePicker
                       clearable
@@ -164,7 +164,7 @@ const CandidateUpdate = () => {
               </Row>
             </Col>
 
-            <Col span={12}>
+            <Col lg={12} span={24} style={{ minHeight: 600, marginBottom: 12 }}>
               <Tabs animated type="card" className="CV-Preview">
                 {(candidate.urlCv ?? []).map((url, index) => (
                   <Tabs.TabPane key={index} tab={`CV ${index + 1}`}>

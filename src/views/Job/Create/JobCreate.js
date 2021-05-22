@@ -165,13 +165,13 @@ const JobCreate = () => {
             <NavigateBeforeOutlinedIcon />
           </IconButton>
         </Link>
-        <Typography variant="h6">{t("Create job")}</Typography>
+        <Typography variant="h6">{id ? t("Update job") : t("Create job")}</Typography>
       </Paper>
 
       <Paper className="p-16">
         <Form form={form} layout="vertical">
           <Row gutter={24}>
-            <Col span={12}>
+            <Col lg={12} span={24}>
               <Row gutter={24}>
                 <Col>
                   <Form.Item name="avatar" hidden>
@@ -202,7 +202,7 @@ const JobCreate = () => {
                 </Col>
               </Row>
               <Row gutter={24}>
-                <Col span={12}>
+                <Col md={12} span={24}>
                   <Form.Item
                     name="company"
                     label={t("Company")}
@@ -228,7 +228,7 @@ const JobCreate = () => {
                     </Select>
                   </Form.Item>
                 </Col>
-                <Col span={12}>
+                <Col md={12} span={24}>
                   <Form.Item label={t("Deadline")} required>
                     <KeyboardDatePicker
                       clearable
@@ -270,7 +270,7 @@ const JobCreate = () => {
                 </Col>
               </Row>
               <Row gutter={24}>
-                <Col span={12}>
+                <Col md={12} span={24}>
                   <Form.Item
                     name="fromSalary"
                     label={t("From Salary")}
@@ -292,7 +292,7 @@ const JobCreate = () => {
                     />
                   </Form.Item>
                 </Col>
-                <Col span={12}>
+                <Col md={12} span={24}>
                   <Form.Item name="toSalary" label="To Salary">
                     <InputNumberFormat
                       customInput={Input}
@@ -327,7 +327,7 @@ const JobCreate = () => {
                 </Col>
               </Row>
             </Col>
-            <Col span={12}>
+            <Col lg={12} span={24}>
               <Form.Item label={t("Description")}>
                 <RichTextEditor value={description} onChange={setDescription} />
               </Form.Item>

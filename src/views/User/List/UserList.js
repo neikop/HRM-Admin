@@ -107,14 +107,18 @@ const UserList = () => {
 
       <Paper className="mb-24">
         <Table
-          scroll={{ y: 620 }}
+          scroll={{ y: 600, x: 800 }}
           bordered={false}
           loading={dataLoading}
           rowKey={(record) => record.userId}
           dataSource={dataList}
           pagination={false}
           columns={[
-            { title: t("Username"), dataIndex: "username", width: 180, fixed: "left" },
+            {
+              title: t("Username"),
+              dataIndex: "username",
+              width: 180,
+            },
             {
               title: t("Role"),
               dataIndex: "roleId",

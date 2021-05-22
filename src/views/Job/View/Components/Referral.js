@@ -45,25 +45,30 @@ const Referral = ({ job }) => {
   }, [dataSearch]);
 
   const handleChangeStatus = (item, { status = item.status, interviewDate = item.interviewDate }) => {
-    jobService
-      .applyCvToJob({
-        params_request: {
-          idJob: item.idJob,
-          idCV: item.idCv,
-          status,
-          interviewDate,
-        },
-      })
-      .then((response) => {
-        Alert.success({ message: t("Update referral successfully") });
+    if (!interviewDate) {
+      Alert.error({ message: t("Update Interview Date First") });
+      setIsLoadingPicker();
+      setIsLoadingSelect();
+    } else
+      jobService
+        .applyCvToJob({
+          params_request: {
+            idJob: item.idJob,
+            idCV: item.idCv,
+            status,
+            interviewDate,
+          },
+        })
+        .then((response) => {
+          Alert.success({ message: t("Update referral successfully") });
 
-        Object.assign(item, { status, interviewDate });
-      })
-      .catch(console.warn)
-      .finally(() => {
-        setIsLoadingSelect();
-        setIsLoadingPicker();
-      });
+          Object.assign(item, { status, interviewDate });
+        })
+        .catch(console.warn)
+        .finally(() => {
+          setIsLoadingSelect();
+          setIsLoadingPicker();
+        });
   };
 
   const handleConfirmDelete = (item) => {
@@ -107,7 +112,7 @@ const Referral = ({ job }) => {
   }, [fetchData]);
 
   return (
-    <>
+    <div className="m-4">
       <Paper className="justify-content-between align-items-center p-16 mb-24">
         <Typography>
           {dataCount} {t("Referrals")}
@@ -120,18 +125,25 @@ const Referral = ({ job }) => {
 
       <Paper className="mb-24">
         <Table
+          scroll={{ x: 800 }}
           bordered={false}
           loading={dataLoading}
           rowKey={(record) => record.id}
           dataSource={dataList}
           pagination={false}
           columns={[
-            { title: t("Candidate"), dataIndex: "name", render: (_, record) => record.candidateName },
-            { title: t("Job title"), dataIndex: "title" },
-            { title: t("Company"), dataIndex: "company" },
+            {
+              title: t("Candidate"),
+              dataIndex: "name",
+              width: 180,
+              render: (_, record) => record.candidateName,
+            },
+            { title: t("Job title"), dataIndex: "title", width: 180 },
+            { title: t("Company"), dataIndex: "company", width: 120 },
             {
               title: t("Interview Date"),
               dataIndex: "interviewDate",
+              width: 240,
               render: (_, record) => (
                 <DateTimePicker
                   size="small"
@@ -152,6 +164,7 @@ const Referral = ({ job }) => {
             {
               title: t("Status"),
               dataIndex: "status",
+              width: 200,
               render: (_, record) => (
                 <Select
                   value={record.status}
@@ -172,6 +185,7 @@ const Referral = ({ job }) => {
             {
               dataIndex: "",
               align: "right",
+              width: 80,
               render: (_, record) => (
                 <Popconfirm
                   placement="topRight"
@@ -193,7 +207,7 @@ const Referral = ({ job }) => {
           <TablePagination />
         </div>
       )}
-    </>
+    </div>
   );
 };
 

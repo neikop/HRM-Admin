@@ -1,8 +1,8 @@
 import React from "react";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import { Spin, Tag } from "antd";
-import { Avatar, Button, Grid, IconButton, Paper, Tooltip, Typography } from "@material-ui/core";
+import { Spin, Tag, Row, Col } from "antd";
+import { Avatar, Button, Hidden, IconButton, Paper, Tooltip, Typography } from "@material-ui/core";
 import { Pagination } from "@material-ui/lab";
 import { jobService } from "services/job";
 import { formatCurrency, formatBonus, normalizeJob } from "utils/converter";
@@ -58,6 +58,7 @@ const JobList = () => {
       shape="rounded"
       variant="outlined"
       color="secondary"
+      siblingCount={0}
       count={Math.ceil(dataCount / 10)}
       page={dataSearch.page + 1}
       onChange={(event, nextPage) => {
@@ -75,7 +76,7 @@ const JobList = () => {
 
   return (
     <>
-      <Typography variant="h6" className="align-items-center mb-24">
+      <Typography variant="h6" className="align-items-center flex-wrap mb-24">
         <IconButton>
           <WorkOutlineOutlinedIcon />
         </IconButton>
@@ -93,7 +94,7 @@ const JobList = () => {
       </Typography>
       <JobSearch onSearch={handleClickSearch} />
 
-      <Paper className="justify-content-between align-items-center p-16 mb-24">
+      <Paper className="justify-content-between align-items-center flex-wrap p-16 mb-24">
         <Typography>
           {dataCount} {t("jobs matched")}
         </Typography>
@@ -109,66 +110,67 @@ const JobList = () => {
               </Avatar>
             </div>
             <div className="flex-1">
-              <Link to={privateRoute.jobView.url(job.idJob)}>
-                <Typography component="span" variant="h6" color="primary">
+              <Link to={privateRoute.jobView.url(job.idJob)} className="align-items-center flex-wrap">
+                <Typography component="span" variant="h6" color="primary" className="mr-8">
                   {job.title}
                 </Typography>
-                <Tag
-                  color={JOB_STATUS_TYPES.find((item) => item.code === job.status)?.color}
-                  style={{ position: "absolute", marginTop: 6, marginLeft: 8 }}>
+                <Tag color={JOB_STATUS_TYPES.find((item) => item.code === job.status)?.color}>
                   {JOB_STATUS_TYPES.find((item) => item.code === job.status)?.name}
                 </Tag>
               </Link>
 
-              <Typography variant="subtitle2">
+              <Typography variant="subtitle2" className="mt-8">
                 {t("Company")}: {job.company}
               </Typography>
 
-              <Grid container spacing={4}>
-                <Grid item style={{ width: 240 }}>
+              <Row gutter={24}>
+                <Col style={{ width: 240 }}>
                   <Typography variant="body2" color="textSecondary">
                     {t("Number of vacancies")}: <span style={{ color: "black" }}>{job.numberOfVacancies}</span>
                   </Typography>
-                </Grid>
-                <Grid item>
+                </Col>
+                <Col flex={1}>
                   <Typography variant="body2" color="textSecondary">
                     {t("Deadline")}: <span style={{ color: "black" }}>{unix(job.deadline).format(DDMMYYYY)}</span>
                   </Typography>
-                </Grid>
-              </Grid>
+                </Col>
+              </Row>
 
               <Typography variant="h6" color="textSecondary">
                 {t("Bonus")}:{" "}
                 <span style={{ color: job.bonus > 0 ? "green" : "silver" }}>{formatBonus(job.bonus)}</span>
               </Typography>
 
-              <Grid container spacing={4}>
-                <Grid item style={{ width: 240 }}>
-                  <Typography>{t("Salary range")}</Typography>
+              <Row gutter={24}>
+                <Col style={{ width: 240 }}>
+                  <Typography color="textSecondary">{t("Salary range")}</Typography>
                   <Typography>
                     {formatCurrency(job.currency, job.fromSalary)} - {formatCurrency(job.currency, job.toSalary)}
                   </Typography>
-                </Grid>
-                <Grid item>
-                  <Typography>{t("Workplace")}</Typography>
+                </Col>
+                <Col flex={1}>
+                  <Typography color="textSecondary">{t("Workplace")}</Typography>
                   <Typography>{job.workplace}</Typography>
-                </Grid>
-              </Grid>
+                </Col>
+              </Row>
             </div>
-            <div>
-              <Link to={privateRoute.jobView.url(job.idJob)}>
-                <Tooltip title={t("View detail")}>
-                  <IconButton>
-                    <DirectionsOutlinedIcon color="secondary" />
+
+            <Hidden xsDown>
+              <div>
+                <Link to={privateRoute.jobView.url(job.idJob)}>
+                  <Tooltip title={t("View detail")}>
+                    <IconButton>
+                      <DirectionsOutlinedIcon color="secondary" />
+                    </IconButton>
+                  </Tooltip>
+                </Link>
+                <Tooltip title={t("Save")}>
+                  <IconButton style={{ display: "none" }}>
+                    <BookmarkBorderOutlinedIcon />
                   </IconButton>
                 </Tooltip>
-              </Link>
-              <Tooltip title={t("Save")}>
-                <IconButton style={{ display: "none" }}>
-                  <BookmarkBorderOutlinedIcon />
-                </IconButton>
-              </Tooltip>
-            </div>
+              </div>
+            </Hidden>
           </Paper>
         ))}
       </Spin>

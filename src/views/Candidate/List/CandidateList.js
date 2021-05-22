@@ -86,6 +86,7 @@ const CandidateList = () => {
       shape="rounded"
       variant="outlined"
       color="secondary"
+      siblingCount={0}
       count={Math.ceil(dataCount / 10)}
       page={dataSearch.page + 1}
       onChange={(event, nextPage) => {
@@ -103,7 +104,7 @@ const CandidateList = () => {
 
   return (
     <>
-      <Typography variant="h6" className="align-items-center mb-24">
+      <Typography variant="h6" className="align-items-center flex-wrap mb-24">
         <IconButton>
           <AssignmentIndOutlinedIcon />
         </IconButton>
@@ -118,7 +119,7 @@ const CandidateList = () => {
       </Typography>
       <CandidateSearch onSearch={handleClickSearch} />
 
-      <Paper className="justify-content-between align-items-center p-16 mb-24">
+      <Paper className="justify-content-between align-items-center flex-wrap p-16 mb-24">
         <Typography>
           {dataCount} {t("Candidates")}
         </Typography>
@@ -127,6 +128,7 @@ const CandidateList = () => {
 
       <Paper className="mb-24">
         <Table
+          scroll={{ x: 800 }}
           bordered={false}
           loading={dataLoading}
           rowKey={(record) => record.id}
@@ -134,35 +136,46 @@ const CandidateList = () => {
           pagination={false}
           onChange={handleTableChange}
           columns={[
-            { title: t("Name"), dataIndex: "name", sorter: true, render: (_, record) => record.candidateName },
+            {
+              title: t("Name"),
+              dataIndex: "name",
+              width: 180,
+              sorter: true,
+              render: (_, record) => record.candidateName,
+            },
             {
               title: t("Skill"),
               dataIndex: "skill",
+              width: 180,
               render: (_, record) => (record.skill ?? []).map((item, index) => <Tag key={index}>{item}</Tag>),
             },
-            { title: t("Language"), dataIndex: "language" },
-            { title: t("Level"), dataIndex: "level", sorter: true },
+            { title: t("Language"), dataIndex: "language", width: 120 },
+            { title: t("Level"), dataIndex: "level", width: 120, sorter: true },
             {
               title: t("Created at"),
               dataIndex: "time",
+              width: 120,
               sorter: true,
               render: (_, record) => unix(record.updateTime).format(DDMMYYYY_HHMM),
             },
             {
               title: t("Calendar"),
               dataIndex: "calendar",
+              width: 120,
               sorter: true,
               render: (_, record) => unix(record.calendarReminder).format(DDMMYYYY_HHMM),
             },
             {
               title: t("Status"),
               dataIndex: "status",
+              width: 100,
               sorter: true,
               render: (_, record) => CANDIDATE_STATUS_TYPES.find((item) => item.code === record.status)?.name,
             },
             {
               dataIndex: "",
               align: "right",
+              width: 128,
               render: (_, record) => (
                 <Typography noWrap>
                   <Link to={privateRoute.candidateUpdate.url(record.id)}>

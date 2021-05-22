@@ -43,25 +43,30 @@ const ReferList = () => {
   }, [dataSearch]);
 
   const handleChangeStatus = (item, { status = item.status, interviewDate = item.interviewDate }) => {
-    jobService
-      .applyCvToJob({
-        params_request: {
-          idJob: item.idJob,
-          idCV: item.idCv,
-          status,
-          interviewDate,
-        },
-      })
-      .then((response) => {
-        Alert.success({ message: t("Update referral successfully") });
+    if (!interviewDate) {
+      Alert.error({ message: t("Update Interview Date First") });
+      setIsLoadingPicker();
+      setIsLoadingSelect();
+    } else
+      jobService
+        .applyCvToJob({
+          params_request: {
+            idJob: item.idJob,
+            idCV: item.idCv,
+            status,
+            interviewDate,
+          },
+        })
+        .then((response) => {
+          Alert.success({ message: t("Update referral successfully") });
 
-        Object.assign(item, { status, interviewDate });
-      })
-      .catch(console.warn)
-      .finally(() => {
-        setIsLoadingSelect();
-        setIsLoadingPicker();
-      });
+          Object.assign(item, { status, interviewDate });
+        })
+        .catch(console.warn)
+        .finally(() => {
+          setIsLoadingSelect();
+          setIsLoadingPicker();
+        });
   };
 
   const handleConfirmDelete = (item) => {
@@ -127,18 +132,25 @@ const ReferList = () => {
 
       <Paper className="mb-24">
         <Table
+          scroll={{ x: 800 }}
           bordered={false}
           loading={dataLoading}
           rowKey={(record) => record.id}
           dataSource={dataList}
           pagination={false}
           columns={[
-            { title: t("Candidate"), dataIndex: "name", render: (_, record) => record.candidateName },
-            { title: t("Job title"), dataIndex: "title" },
-            { title: t("Company"), dataIndex: "company" },
+            {
+              title: t("Candidate"),
+              dataIndex: "name",
+              width: 180,
+              render: (_, record) => record.candidateName,
+            },
+            { title: t("Job title"), dataIndex: "title", width: 180 },
+            { title: t("Company"), dataIndex: "company", width: 120 },
             {
               title: t("Interview Date"),
               dataIndex: "interviewDate",
+              width: 240,
               render: (_, record) => (
                 <DateTimePicker
                   size="small"
@@ -159,6 +171,7 @@ const ReferList = () => {
             {
               title: t("Status"),
               dataIndex: "status",
+              width: 200,
               render: (_, record) => (
                 <Select
                   value={record.status}
@@ -179,6 +192,7 @@ const ReferList = () => {
             {
               dataIndex: "",
               align: "right",
+              width: 80,
               render: (_, record) => (
                 <Popconfirm
                   placement="topRight"

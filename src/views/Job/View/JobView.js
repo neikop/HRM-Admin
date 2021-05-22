@@ -63,7 +63,7 @@ const JobView = () => {
 
   return (
     <>
-      <Paper elevation={0} className="align-items-center mb-12" style={{ backgroundColor: "transparent" }}>
+      <Paper elevation={0} className="align-items-center flex-wrap mb-12" style={{ backgroundColor: "transparent" }}>
         <Link to={privateRoute.jobList.path}>
           <IconButton>
             <NavigateBeforeOutlinedIcon />
@@ -80,6 +80,7 @@ const JobView = () => {
             <ColorButton
               variant="outlined"
               color="#d32f2f"
+              style={{ marginLeft: "auto" }}
               startIcon={<Loading visible={isLoadingDelete} icon={<DeleteOutlinedIcon />} />}>
               {t("Delete job")}
             </ColorButton>

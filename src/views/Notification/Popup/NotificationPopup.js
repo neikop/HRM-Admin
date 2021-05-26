@@ -52,7 +52,13 @@ const NotificationPopup = () => {
     if (item.status === 0)
       noticeService
         .updateNotification({
-          params_request: { id: item.id, status: 1 },
+          params_request: {
+            id: item.id,
+            status: 1,
+            type: item.type,
+            idJob: item.job?.idJob,
+            idCv: item.resume?.id,
+          },
         })
         .then(() => {
           Object.assign(item, { status: 1 });

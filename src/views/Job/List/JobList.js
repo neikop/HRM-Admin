@@ -110,7 +110,7 @@ const JobList = () => {
               </Avatar>
             </div>
             <div className="flex-1">
-              <Link to={privateRoute.jobView.url(job.idJob)} className="align-items-center flex-wrap">
+              <Link to={privateRoute.jobView.url(job.idJob)} className="flex-inline align-items-center flex-wrap">
                 <Typography component="span" variant="h6" color="primary" className="mr-8">
                   {job.title}
                 </Typography>

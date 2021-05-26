@@ -36,7 +36,7 @@ export const noticeFormat = (item) => {
     case 3:
       return (
         <>
-          Ứng viên <b>{candidate}</b> ứng tuyển vào Job <b>{job}</b> có lịch phỏng vấn vào <b>{reminder}</b>.
+          Ứng viên <b>{candidate}</b> của bạn có lịch nhắc nhở vào <b>{reminder}</b>.
         </>
       );
     case 5:

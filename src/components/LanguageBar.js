@@ -5,6 +5,7 @@ import { Button, Paper, Typography, List, ListItem } from "@material-ui/core";
 import { Dropdown } from "antd";
 import { coreuiAction, LANGUAGE } from "actions/coreui";
 
+import TranslateOutlinedIcon from "@material-ui/icons/TranslateOutlined";
 import ArrowDropDownOutlinedIcon from "@material-ui/icons/ArrowDropDownOutlined";
 
 export const LANGUAGE_BARS = [
@@ -45,6 +46,9 @@ const LanguageBar = ({ init }) => {
                 button
                 selected={item.code === languageChoose.code}
                 onClick={() => handleChangeLanguage(item.code)}>
+                <Typography component="code" variant="overline" className="mr-8">
+                  {item.code}
+                </Typography>
                 <Typography variant="button">{item.name}</Typography>
               </ListItem>
             ))}
@@ -53,7 +57,8 @@ const LanguageBar = ({ init }) => {
       }>
       <Button
         variant="outlined"
-        style={{ whiteSpace: "nowrap", minWidth: 120 }}
+        style={{ whiteSpace: "nowrap", minWidth: 150 }}
+        startIcon={<TranslateOutlinedIcon />}
         endIcon={<ArrowDropDownOutlinedIcon />}>
         {languageChoose.name}
       </Button>

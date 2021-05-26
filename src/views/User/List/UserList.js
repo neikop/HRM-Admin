@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { Alert, Loading } from "components";
 import { Popconfirm, Select, Table } from "antd";
-import { Button, IconButton, Paper, Tooltip, Typography } from "@material-ui/core";
+import { Avatar, Button, IconButton, Paper, Tooltip, Typography } from "@material-ui/core";
 import { userService } from "services/user";
 import { t } from "utils/common";
 import { unix } from "moment";
@@ -117,7 +117,13 @@ const UserList = () => {
             {
               title: t("Username"),
               dataIndex: "username",
-              width: 180,
+              width: 240,
+              render: (_, record) => (
+                <div className="align-items-center">
+                  <Avatar src={record.avatarUrl} className="mr-12" />
+                  <Typography>{record.username}</Typography>
+                </div>
+              ),
             },
             {
               title: t("Role"),

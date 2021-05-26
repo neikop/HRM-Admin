@@ -1,7 +1,7 @@
 import React from "react";
 import { Link, useParams } from "react-router-dom";
 import { Alert, Loading } from "components";
-import { Button, IconButton, Paper, Typography } from "@material-ui/core";
+import { Avatar, Button, IconButton, Paper, Typography } from "@material-ui/core";
 import { KeyboardDatePicker } from "@material-ui/pickers";
 import { Col, Form, Input, Row, Select } from "antd";
 import { userService } from "services/user";
@@ -80,6 +80,11 @@ const UserUpdate = () => {
       <Paper className="p-16">
         <Form form={form} layout="vertical">
           <Row gutter={24}>
+            <Col span={24}>
+              <Form.Item label={t("Avatar")} className="Job-Avatar">
+                <Avatar variant="square" src={user.avatarUrl} />
+              </Form.Item>
+            </Col>
             <Col xl={6} lg={8} md={12} span={24}>
               <Form.Item name="fullName" label={t("Name")}>
                 <Input disabled />

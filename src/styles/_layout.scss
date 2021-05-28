@@ -12,12 +12,10 @@
 
 .App-Header {
   display: flex;
+  flex-direction: row !important;
   align-items: center;
   height: 60px;
-  position: sticky;
-  top: 0px;
-  left: 0px;
-  right: 0px;
+  position: sticky !important;
   z-index: 2;
   padding: 0px 24px;
 }

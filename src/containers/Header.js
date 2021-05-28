@@ -3,7 +3,7 @@ import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { AppMenu } from "containers";
 import { Darkmode, LanguageBar } from "components";
-import { Avatar, IconButton, Paper, Divider, List, ListItem, ListItemText, Hidden, Drawer } from "@material-ui/core";
+import { Avatar, IconButton, Paper, Divider, List, ListItem, ListItemText, Hidden, Drawer, AppBar } from "@material-ui/core";
 import { Dropdown } from "antd";
 import { profileAction } from "actions/profile";
 import { t } from "utils/common";
@@ -23,7 +23,7 @@ const Header = () => {
   };
 
   return (
-    <Paper square className="App-Header">
+    <Paper component={AppBar} square className="App-Header">
       <Hidden smDown>
         <AppMenu />
       </Hidden>

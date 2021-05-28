@@ -25,8 +25,16 @@ const logout = () => {
   localStorage.removeItem("hrm.admin.user");
 };
 
+const update = (user) => {
+  store.dispatch({
+    type: ActionType.USER_UPDATE,
+    data: user,
+  });
+};
+
 export const profileAction = {
   ActionType,
   login,
   logout,
+  update,
 };

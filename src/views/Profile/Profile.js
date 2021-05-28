@@ -4,6 +4,7 @@ import { Alert, Loading } from "components";
 import { Avatar, Button, IconButton, Paper, Typography } from "@material-ui/core";
 import { KeyboardDatePicker } from "@material-ui/pickers";
 import { Col, Form, Input, Row, Select, Upload } from "antd";
+import { profileAction } from "actions/profile";
 import { userService } from "services/user";
 import { fileService } from "services/file";
 import { getUnix, t } from "utils/common";
@@ -21,7 +22,7 @@ const Profile = () => {
   const [user, setUser] = React.useState({});
   const [dayOfBirth, setDayOfBirth] = React.useState(null);
 
-  const [isLoadingUpload, setIsLoadingUpload] = React.useState(false);
+  const [isLoadingUpload, setIsLoadingUpload] = React.useState(true);
   const [isLoadingCreate, setIsLoadingUpdate] = React.useState(false);
 
   const fetchData = React.useCallback(() => {
@@ -38,6 +39,9 @@ const Profile = () => {
             if (dayOfBirth) setDayOfBirth(unix(dayOfBirth));
 
             form.setFieldsValue({ ...user });
+
+            setIsLoadingUpload(false);
+            profileAction.update(user);
           }
         })
         .catch(console.warn);

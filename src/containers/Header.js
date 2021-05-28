@@ -1,4 +1,5 @@
 import React from "react";
+import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { AppMenu } from "containers";
 import { Darkmode, LanguageBar } from "components";
@@ -12,6 +13,8 @@ import { NotificationPopup } from "views/Notification/Popup";
 import MenuOutlinedIcon from "@material-ui/icons/MenuOutlined";
 
 const Header = () => {
+  const { avatarUrl } = useSelector(({ profile }) => profile);
+
   const [isOpenMenu, setIsOpenMenu] = React.useState(false);
   const handleOpenMenu = (open) => (event) => setIsOpenMenu(open);
 
@@ -59,7 +62,7 @@ const Header = () => {
           </div>
         }>
         <IconButton style={{ padding: 8 }}>
-          <Avatar variant="circular" style={{ width: 36, height: 36 }} />
+          <Avatar variant="circular" src={avatarUrl} style={{ width: 36, height: 36 }} />
         </IconButton>
       </Dropdown>
     </Paper>

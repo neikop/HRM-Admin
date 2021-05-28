@@ -9,7 +9,7 @@ import { userService } from "services/user";
 import { fileService } from "services/file";
 import { getUnix, t } from "utils/common";
 import { unix } from "moment";
-import { DDMMYYYY, USER_TYPES } from "utils/constants";
+import { DDMMYYYY, USER_ROLES, USER_TYPES } from "utils/constants";
 
 import PersonOutlinedIcon from "@material-ui/icons/PersonOutlined";
 import CheckOutlinedIcon from "@material-ui/icons/CheckOutlined";
@@ -154,9 +154,20 @@ const Profile = () => {
               <Form.Item label={t("Email")}>
                 <Input disabled value={user.email} />
               </Form.Item>
+            </Col>
+            <Col xl={6} lg={8} md={12} span={24}>
               <Form.Item label={t("Type")}>
                 <Select disabled value={user.userType}>
                   {USER_TYPES.map((item) => (
+                    <Select.Option key={item.id} value={item.code}>
+                      {item.name}
+                    </Select.Option>
+                  ))}
+                </Select>
+              </Form.Item>
+              <Form.Item label={t("Role")}>
+                <Select disabled value={user.roleId}>
+                  {USER_ROLES.map((item) => (
                     <Select.Option key={item.id} value={item.code}>
                       {item.name}
                     </Select.Option>

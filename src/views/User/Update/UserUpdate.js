@@ -8,7 +8,7 @@ import { userService } from "services/user";
 import { getUnix, t } from "utils/common";
 import { unix } from "moment";
 import { privateRoute } from "routes";
-import { DDMMYYYY, USER_TYPES } from "utils/constants";
+import { DDMMYYYY, USER_ROLES, USER_TYPES } from "utils/constants";
 
 import NavigateBeforeOutlinedIcon from "@material-ui/icons/NavigateBeforeOutlined";
 import CheckOutlinedIcon from "@material-ui/icons/CheckOutlined";
@@ -113,9 +113,20 @@ const UserUpdate = () => {
               <Form.Item label={t("Email")}>
                 <Input disabled value={user.email} />
               </Form.Item>
+            </Col>
+            <Col xl={6} lg={8} md={12} span={24}>
               <Form.Item label={t("Type")}>
                 <Select disabled value={user.userType}>
                   {USER_TYPES.map((item) => (
+                    <Select.Option key={item.id} value={item.code}>
+                      {item.name}
+                    </Select.Option>
+                  ))}
+                </Select>
+              </Form.Item>
+              <Form.Item label={t("Role")}>
+                <Select disabled value={user.roleId}>
+                  {USER_ROLES.map((item) => (
                     <Select.Option key={item.id} value={item.code}>
                       {item.name}
                     </Select.Option>

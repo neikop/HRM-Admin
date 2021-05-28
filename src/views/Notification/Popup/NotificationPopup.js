@@ -1,5 +1,4 @@
 import React from "react";
-import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { Loading, PerfectScrollbar } from "components";
 import { Avatar, IconButton, ListItemAvatar, Paper, Badge, Tooltip } from "@material-ui/core";
@@ -10,6 +9,7 @@ import { noticeAction } from "actions/notice";
 import { noticeService, noticeFormat, noticeRouter } from "services/notice";
 import { convertTime, t } from "utils/common";
 import { privateRoute } from "routes";
+import { useNotice } from "../List/useNotice";
 
 import DeleteOutlinedIcon from "@material-ui/icons/DeleteOutlined";
 import NotificationsActiveOutlinedIcon from "@material-ui/icons/NotificationsActiveOutlined";
@@ -17,36 +17,42 @@ import NotificationsActiveOutlinedIcon from "@material-ui/icons/NotificationsAct
 const NotificationPopup = () => {
   const classes = useStyles();
 
-  const { dataList, nextPage, isLast, number } = useSelector(({ notice }) => notice);
+  const [dataList, setDataList, dataUnread, setDataUnread] = useNotice();
   const [dataLoading, setDataLoading] = React.useState(false);
 
-  const fetchData = () => {
-    if (isLast || dataLoading) return;
+  const isLast = React.useRef(false);
+  const isStop = React.useRef(false);
+  const offset = React.useRef(0);
+
+  const fetchData = React.useCallback(() => {
+    if (isLast.current || isStop.current) return;
 
     setDataLoading(true);
+    isStop.current = true;
     noticeService
       .getListNotificationByUser({
-        params_request: { page: nextPage, size: 10 },
+        params_request: { page: offset.current, size: 10 },
       })
       .then((response) => {
         const { status = 1, data } = response;
         if (status) {
           const { notifications, total } = data;
-          noticeAction.noticeAppendList(notifications);
-          noticeAction.noticeUpdateNumber(total);
+          setDataList((items) => items.concat(notifications));
+          setDataUnread(total);
+          if (notifications.length === 0) isLast.current = true;
+          offset.current = offset.current + 1;
         }
       })
       .catch(console.warn)
       .finally(() => {
         setDataLoading(false);
+        isStop.current = false;
       });
-  };
+  }, [setDataList, setDataUnread]);
 
   const handleClickRead = (item) => {
-    noticeRouter(item);
-    noticeAction.noticeUpdateOne({ ...item, status: 1 });
+    noticeAction.updateNotice({ ...item, status: 1 });
     if (item.status === 0) {
-      noticeAction.noticeUpdateNumber(number - 1);
       noticeService
         .updateNotification({
           params_request: {
@@ -62,10 +68,7 @@ const NotificationPopup = () => {
   };
 
   const handleClickDelete = (item) => {
-    noticeAction.noticeDeleteOne(item);
-    if (item.status === 0) {
-      noticeAction.noticeUpdateNumber(number - 1);
-    }
+    noticeAction.removeNotice(item);
     noticeService
       .removeNotification({
         params_request: {
@@ -77,8 +80,7 @@ const NotificationPopup = () => {
 
   React.useEffect(() => {
     fetchData();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [fetchData]);
 
   return (
     <Dropdown
@@ -97,7 +99,10 @@ const NotificationPopup = () => {
                   divider
                   selected={item.status === 0}
                   className={classes.listItem}
-                  onClick={() => handleClickRead(item)}>
+                  onClick={() => {
+                    handleClickRead(item);
+                    noticeRouter(item);
+                  }}>
                   <ListItemAvatar>
                     <Avatar src={item.job?.avatar} style={{ backgroundColor: "transparent" }}>
                       <Avatar src="/kai_avatar.png" />
@@ -142,7 +147,7 @@ const NotificationPopup = () => {
         </div>
       }>
       <IconButton>
-        <Badge badgeContent={Math.max(0, number)} color="error">
+        <Badge badgeContent={Math.max(0, dataUnread)} color="error">
           <NotificationsActiveOutlinedIcon />
         </Badge>
       </IconButton>

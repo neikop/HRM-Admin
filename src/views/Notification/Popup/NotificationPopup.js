@@ -13,6 +13,7 @@ import { useNotice } from "../List/useNotice";
 
 import DeleteOutlinedIcon from "@material-ui/icons/DeleteOutlined";
 import NotificationsActiveOutlinedIcon from "@material-ui/icons/NotificationsActiveOutlined";
+import AccessTimeOutlinedIcon from "@material-ui/icons/AccessTimeOutlined";
 
 const NotificationPopup = () => {
   const classes = useStyles();
@@ -50,21 +51,19 @@ const NotificationPopup = () => {
       });
   }, [setDataList, setDataUnread]);
 
-  const handleClickRead = (item) => {
-    noticeAction.updateNotice({ ...item, status: 1 });
-    if (item.status === 0) {
-      noticeService
-        .updateNotification({
-          params_request: {
-            id: item.id,
-            status: 1,
-            type: item.type,
-            idJob: item.job?.idJob,
-            idCv: item.resume?.id,
-          },
-        })
-        .catch(console.warn);
-    }
+  const handleClickRead = (item, status) => {
+    noticeAction.updateNotice({ ...item, status });
+    noticeService
+      .updateNotification({
+        params_request: {
+          id: item.id,
+          status,
+          type: item.type,
+          idJob: item.job?.idJob,
+          idCv: item.resume?.id,
+        },
+      })
+      .catch(console.warn);
   };
 
   const handleClickDelete = (item) => {
@@ -100,19 +99,33 @@ const NotificationPopup = () => {
                   selected={item.status === 0}
                   className={classes.listItem}
                   onClick={() => {
-                    handleClickRead(item);
                     noticeRouter(item);
+                    handleClickRead(item, 1);
                   }}>
                   <ListItemAvatar>
                     <Avatar src={item.job?.avatar} style={{ backgroundColor: "transparent" }}>
                       <Avatar src="/kai_avatar.png" />
                     </Avatar>
                   </ListItemAvatar>
-                  <ListItemText primary={noticeFormat(item)} secondary={convertTime(item.createTime * 1000)} />
+                  <ListItemText
+                    primary={noticeFormat(item)}
+                    secondary={
+                      <div className="align-items-center">
+                        <AccessTimeOutlinedIcon fontSize="small" className="mr-4" />
+                        {convertTime(item.createTime * 1000)}
+                      </div>
+                    }
+                  />
                   {item.isSystem === 0 && (
                     <ListItemSecondaryAction>
                       <Tooltip title={t("Remove")}>
-                        <IconButton edge="end" size="small" onClick={() => handleClickDelete(item)}>
+                        <IconButton
+                          edge="end"
+                          size="small"
+                          onClick={(event) => {
+                            event.stopPropagation();
+                            handleClickDelete(item);
+                          }}>
                           <DeleteOutlinedIcon fontSize="small" />
                         </IconButton>
                       </Tooltip>
@@ -138,7 +151,11 @@ const NotificationPopup = () => {
               component={Link}
               className={classes.listBottom}
               to={privateRoute.notificationList.path}>
-              <ListItemText primary={t("View all")} style={{ textAlign: "center" }} />
+              <ListItemText
+                primary={t("View all")}
+                primaryTypographyProps={{ color: "primary" }}
+                style={{ textAlign: "center" }}
+              />
             </ListItem>
             <ListItem dense divider className={classes.listTop}>
               <ListItemText primary={t("Notifications")} primaryTypographyProps={{ variant: "subtitle1" }} />

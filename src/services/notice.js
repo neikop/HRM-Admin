@@ -19,18 +19,20 @@ export const noticeFormat = (item) => {
   const user = item.userCreate?.username;
   const candidate = item.resume?.candidateName;
   const reminder = getDate(item.resume?.calendarReminder * 1000);
+  const createAt = getDate(item.createTime * 1000);
   const job = item.job?.title;
   switch (item.type) {
     case 1:
       return (
         <>
-          Job <b>{job}</b> đã có ứng viên <b>{candidate}</b> ứng tuyển.
+          Job <b>{job}</b> đã có ứng viên <b>{candidate}</b> ứng tuyển vào <b>{createAt}</b>.
         </>
       );
     case 2:
       return (
         <>
-          Trạng thái của ứng viên <b>{candidate}</b> ứng tuyển vào Job <b>{job}</b> đã được cập nhật.
+          Trạng thái của ứng viên <b>{candidate}</b> ứng tuyển vào Job <b>{job}</b> đã được cập nhật vào{" "}
+          <b>{createAt}</b>.
         </>
       );
     case 3:
@@ -42,17 +44,18 @@ export const noticeFormat = (item) => {
     case 5:
       return (
         <>
-          User <b>{user}</b> vừa ứng tuyển ứng viên <b>{candidate}</b> vào Job <b>{job}</b> đang chờ phê duyệt.
+          User <b>{user}</b> vừa ứng tuyển ứng viên <b>{candidate}</b> vào Job <b>{job}</b> đang chờ phê duyệt vào{" "}
+          <b>{createAt}</b>.
         </>
       );
     case 7:
       return (
         <>
-          Trạng thái của ứng viên <b>{candidate}</b> đã được cập nhật.
+          Trạng thái của ứng viên <b>{candidate}</b> đã được cập nhật vào <b>{createAt}</b>.
         </>
       );
     default:
-      return <>Bạn có thông báo mới</>;
+      return <>Bạn có thông báo mới vào <b>{createAt}</b></>;
   }
 };
 

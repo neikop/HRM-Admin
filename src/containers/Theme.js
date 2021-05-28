@@ -36,7 +36,13 @@ const Theme = ({ children }) => {
         lineHeight: 1.43,
       },
     },
-    overrides: {},
+    overrides: {
+      MuiIconButton: {
+        sizeSmall: {
+          padding: 6,
+        },
+      },
+    },
     palette: {
       primary: {
         main: "#fbc02d",

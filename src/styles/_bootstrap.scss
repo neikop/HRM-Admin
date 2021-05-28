@@ -11,6 +11,10 @@
   flex-direction: column !important;
 }
 
+.flex-inline {
+  display: inline-flex;
+}
+
 .flex-row {
   display: flex;
   flex-direction: row !important;

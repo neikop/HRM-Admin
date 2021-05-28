@@ -7,7 +7,7 @@ const api = "/api/v1/notice";
 
 const getListNotificationByUser = (body) => client.post(api, { constructor: "getListNotificationByUser", ...body });
 const updateNotification = (body) => client.post(api, { constructor: "updateNotification", ...body });
-const removeNotification = (body) => client.post(api, { constructor: "updateNotification", ...body });
+const removeNotification = (body) => client.post(api, { constructor: "removeNotification", ...body });
 
 export const noticeService = {
   getListNotificationByUser,

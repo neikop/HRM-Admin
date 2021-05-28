@@ -1,55 +1,49 @@
 import React from "react";
+import { useSelector } from "react-redux";
 import { Loading } from "components";
-import { Avatar, IconButton, ListItemAvatar, Paper, Typography } from "@material-ui/core";
-import { List, ListItem, ListItemText } from "@material-ui/core";
+import { Avatar, IconButton, ListItemAvatar, Paper, Tooltip, Typography } from "@material-ui/core";
+import { List, ListItem, ListItemText, ListItemSecondaryAction } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
+import { noticeAction } from "actions/notice";
 import { noticeService, noticeFormat, noticeRouter } from "services/notice";
 import { convertTime, t } from "utils/common";
 
+import DeleteOutlinedIcon from "@material-ui/icons/DeleteOutlined";
 import NotificationsActiveOutlinedIcon from "@material-ui/icons/NotificationsActiveOutlined";
 
 const NotificationList = () => {
   const classes = useStyles();
 
-  const [, setCounter] = React.useState(0);
-  const [dataList, setDataList] = React.useState([]);
+  const { dataList, nextPage, isLast, number } = useSelector(({ notice }) => notice);
   const [dataLoading, setDataLoading] = React.useState(false);
 
-  const isLast = React.useRef(false);
-  const isStop = React.useRef(false);
-  const offet = React.useRef(0);
-
-  const fetchData = React.useCallback(() => {
-    if (isLast.current || isStop.current) return;
-
-    const { scrollHeight } = document.getElementById("NotificationList");
-    if (window.innerHeight + window.scrollY + 120 < scrollHeight) return;
+  const fetchData = () => {
+    if (isLast || dataLoading) return;
 
     setDataLoading(true);
-    isStop.current = true;
     noticeService
       .getListNotificationByUser({
-        params_request: { page: offet.current, size: 10 },
+        params_request: { page: nextPage, size: 10 },
       })
       .then((response) => {
         const { status = 1, data } = response;
         if (status) {
-          const { notifications } = data;
-          setDataList((items) => items.concat(notifications));
-          if (notifications.length === 0) isLast.current = true;
-          offet.current = offet.current + 1;
+          const { notifications, total } = data;
+          noticeAction.noticeAppendList(notifications);
+          noticeAction.noticeUpdateNumber(total);
         }
       })
       .catch(console.warn)
       .finally(() => {
         setDataLoading(false);
-        isStop.current = false;
       });
-  }, []);
+  };
 
   const handleClickRead = (item) => {
     noticeRouter(item);
-    if (item.status === 0)
+    noticeAction.noticeUpdateOne({ ...item, status: 1 });
+    if (item.status === 0) {
+      noticeAction.noticeUpdateNumber(number - 1);
       noticeService
         .updateNotification({
           params_request: {
@@ -60,18 +54,30 @@ const NotificationList = () => {
             idCv: item.resume?.id,
           },
         })
-        .then(() => {
-          Object.assign(item, { status: 1 });
-          setCounter((i) => i + 1);
-        })
         .catch(console.warn);
+    }
+  };
+
+  const handleClickDelete = (item) => {
+    noticeAction.noticeDeleteOne(item);
+    if (item.status === 0) {
+      noticeAction.noticeUpdateNumber(number - 1);
+    }
+    noticeService
+      .removeNotification({
+        params_request: {
+          ids: [item.id],
+        },
+      })
+      .catch(console.warn);
   };
 
   React.useEffect(() => {
-    fetchData();
+    noticeAction.noticeResetList();
     window.addEventListener("scroll", fetchData);
     return () => window.removeEventListener("scroll", fetchData);
-  }, [fetchData]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <>
@@ -101,6 +107,15 @@ const NotificationList = () => {
                 </Avatar>
               </ListItemAvatar>
               <ListItemText primary={noticeFormat(item)} secondary={convertTime(item.createTime * 1000)} />
+              {item.isSystem === 0 && (
+                <ListItemSecondaryAction>
+                  <Tooltip title={t("Remove")}>
+                    <IconButton edge="end" onClick={() => handleClickDelete(item)}>
+                      <DeleteOutlinedIcon />
+                    </IconButton>
+                  </Tooltip>
+                </ListItemSecondaryAction>
+              )}
             </ListItem>
           ))}
           {dataList.length === 0 && isLast.current && (
@@ -113,7 +128,7 @@ const NotificationList = () => {
           </ListItem>
         </List>
       </Paper>
-      {offet.current <= 1 && <div style={{ height: "40vh" }} />}
+      {nextPage <= 1 && <div style={{ height: "80vh" }} />}
     </>
   );
 };

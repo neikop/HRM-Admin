@@ -1,55 +1,52 @@
 import React from "react";
+import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { Loading, PerfectScrollbar } from "components";
-import { Avatar, IconButton, ListItemAvatar, Paper, Tooltip } from "@material-ui/core";
-import { List, ListItem, ListItemText } from "@material-ui/core";
+import { Avatar, IconButton, ListItemAvatar, Paper, Badge, Tooltip } from "@material-ui/core";
+import { List, ListItem, ListItemText, ListItemSecondaryAction } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import { Dropdown } from "antd";
+import { noticeAction } from "actions/notice";
 import { noticeService, noticeFormat, noticeRouter } from "services/notice";
 import { convertTime, t } from "utils/common";
 import { privateRoute } from "routes";
 
+import DeleteOutlinedIcon from "@material-ui/icons/DeleteOutlined";
 import NotificationsActiveOutlinedIcon from "@material-ui/icons/NotificationsActiveOutlined";
 
 const NotificationPopup = () => {
   const classes = useStyles();
 
-  const [, setCounter] = React.useState(0);
-  const [dataList, setDataList] = React.useState([]);
+  const { dataList, nextPage, isLast, number } = useSelector(({ notice }) => notice);
   const [dataLoading, setDataLoading] = React.useState(false);
 
-  const isLast = React.useRef(false);
-  const isStop = React.useRef(false);
-  const offet = React.useRef(0);
-
-  const fetchData = React.useCallback(() => {
-    if (isLast.current || isStop.current) return;
+  const fetchData = () => {
+    if (isLast || dataLoading) return;
 
     setDataLoading(true);
-    isStop.current = true;
     noticeService
       .getListNotificationByUser({
-        params_request: { page: offet.current, size: 10 },
+        params_request: { page: nextPage, size: 10 },
       })
       .then((response) => {
         const { status = 1, data } = response;
         if (status) {
-          const { notifications } = data;
-          setDataList((items) => items.concat(notifications));
-          if (notifications.length === 0) isLast.current = true;
-          offet.current = offet.current + 1;
+          const { notifications, total } = data;
+          noticeAction.noticeAppendList(notifications);
+          noticeAction.noticeUpdateNumber(total);
         }
       })
       .catch(console.warn)
       .finally(() => {
         setDataLoading(false);
-        isStop.current = false;
       });
-  }, []);
+  };
 
   const handleClickRead = (item) => {
     noticeRouter(item);
-    if (item.status === 0)
+    noticeAction.noticeUpdateOne({ ...item, status: 1 });
+    if (item.status === 0) {
+      noticeAction.noticeUpdateNumber(number - 1);
       noticeService
         .updateNotification({
           params_request: {
@@ -60,16 +57,28 @@ const NotificationPopup = () => {
             idCv: item.resume?.id,
           },
         })
-        .then(() => {
-          Object.assign(item, { status: 1 });
-          setCounter((i) => i + 1);
-        })
         .catch(console.warn);
+    }
+  };
+
+  const handleClickDelete = (item) => {
+    noticeAction.noticeDeleteOne(item);
+    if (item.status === 0) {
+      noticeAction.noticeUpdateNumber(number - 1);
+    }
+    noticeService
+      .removeNotification({
+        params_request: {
+          ids: [item.id],
+        },
+      })
+      .catch(console.warn);
   };
 
   React.useEffect(() => {
     fetchData();
-  }, [fetchData]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <Dropdown
@@ -95,6 +104,15 @@ const NotificationPopup = () => {
                     </Avatar>
                   </ListItemAvatar>
                   <ListItemText primary={noticeFormat(item)} secondary={convertTime(item.createTime * 1000)} />
+                  {item.isSystem === 0 && (
+                    <ListItemSecondaryAction>
+                      <Tooltip title={t("Remove")}>
+                        <IconButton edge="end" size="small" onClick={() => handleClickDelete(item)}>
+                          <DeleteOutlinedIcon fontSize="small" />
+                        </IconButton>
+                      </Tooltip>
+                    </ListItemSecondaryAction>
+                  )}
                 </ListItem>
               ))}
               {dataList.length === 0 && isLast.current && (
@@ -123,11 +141,11 @@ const NotificationPopup = () => {
           </List>
         </div>
       }>
-      <Tooltip title={t("Notifications")}>
-        <IconButton>
+      <IconButton>
+        <Badge badgeContent={Math.max(0, number)} color="error">
           <NotificationsActiveOutlinedIcon />
-        </IconButton>
-      </Tooltip>
+        </Badge>
+      </IconButton>
     </Dropdown>
   );
 };

@@ -1,19 +1,19 @@
 import React from "react";
 import { useSelector } from "react-redux";
 import { Alert, Loading } from "components";
-import { Avatar, Button, IconButton, Paper, Typography } from "@material-ui/core";
+import { Avatar, Box, Button, IconButton, Paper, Typography } from "@material-ui/core";
 import { KeyboardDatePicker } from "@material-ui/pickers";
-import { Col, Form, Input, Row, Select, Upload } from "antd";
+import { Col, Form, Input, Row, Tabs, Upload } from "antd";
 import { profileAction } from "actions/profile";
 import { userService } from "services/user";
 import { fileService } from "services/file";
 import { getUnix, t } from "utils/common";
 import { unix } from "moment";
 import { DDMMYYYY, USER_ROLES, USER_TYPES } from "utils/constants";
+import UpdatePassword from "./UpdatePassword";
 
 import PersonOutlinedIcon from "@material-ui/icons/PersonOutlined";
 import CheckOutlinedIcon from "@material-ui/icons/CheckOutlined";
-import AddOutlinedIcon from "@material-ui/icons/AddOutlined";
 
 const Profile = () => {
   const { userId } = useSelector(({ profile }) => profile);
@@ -105,86 +105,92 @@ const Profile = () => {
         <Typography variant="h6">{t("Profile")}</Typography>
       </Paper>
 
-      <Paper className="p-16">
-        <Form form={form} layout="vertical">
-          <Row gutter={24}>
-            <Col span={24}>
-              <Form.Item name="avatarUrl" hidden>
-                <Input />
-              </Form.Item>
-              <Form.Item label={t("Avatar")}>
-                <Upload
-                  className="Job-Avatar"
-                  accept="image/*"
-                  listType="picture-card"
-                  showUploadList={false}
-                  customRequest={handleUploadAvatar}>
-                  {avatarUrl ? (
-                    <Avatar variant="square" src={avatarUrl} />
-                  ) : (
-                    <Loading visible={isLoadingUpload} icon={<AddOutlinedIcon />} />
-                  )}
-                </Upload>
-              </Form.Item>
-            </Col>
-            <Col xl={6} lg={8} md={12} span={24}>
-              <Form.Item name="fullName" label={t("Name")}>
-                <Input />
-              </Form.Item>
-              <Form.Item name="phone" label={t("Phone")}>
-                <Input />
-              </Form.Item>
-              <Form.Item label={t("Date of Birth")}>
-                <KeyboardDatePicker
-                  clearable
-                  color="secondary"
-                  placeholder={DDMMYYYY}
-                  format={DDMMYYYY}
-                  value={dayOfBirth}
-                  onChange={setDayOfBirth}
-                  maxDate={new Date()}
-                  helperText=""
-                />
-              </Form.Item>
-            </Col>
-            <Col xl={6} lg={8} md={12} span={24}>
-              <Form.Item label={t("Username")}>
-                <Input disabled value={user.username} />
-              </Form.Item>
-              <Form.Item label={t("Email")}>
-                <Input disabled value={user.email} />
-              </Form.Item>
-            </Col>
-            <Col xl={6} lg={8} md={12} span={24}>
-              <Form.Item label={t("Type")}>
-                <Select disabled value={user.userType}>
-                  {USER_TYPES.map((item) => (
-                    <Select.Option key={item.id} value={item.code}>
-                      {item.name}
-                    </Select.Option>
-                  ))}
-                </Select>
-              </Form.Item>
-              <Form.Item label={t("Role")}>
-                <Select disabled value={user.roleId}>
-                  {USER_ROLES.map((item) => (
-                    <Select.Option key={item.id} value={item.code}>
-                      {item.name}
-                    </Select.Option>
-                  ))}
-                </Select>
-              </Form.Item>
-            </Col>
-          </Row>
-        </Form>
+      <Row gutter={[24, 24]}>
+        <Col xl={8} lg={12} span={24}>
+          <Paper className="p-16">
+            <Box className="Job-Avatar flex-center flex-column mb-24">
+              <Avatar src={avatarUrl} />
+              <Typography variant="h6" color="textSecondary">
+                {user.fullName}
+              </Typography>
+            </Box>
+            {[
+              { label: t("Username"), value: user.username },
+              { label: t("Email"), value: user.email },
+              { label: t("Type"), value: USER_TYPES.find((item) => item.code === user.userType)?.name },
+              { label: t("Role"), value: USER_ROLES.find((item) => item.code === user.roleId)?.name },
+            ].map(({ label, value }, index) => (
+              <Row gutter={24} key={index} className="mb-12">
+                <Col xl={8} lg={24} md={8} span={24}>
+                  <Typography color="textSecondary">{label}</Typography>
+                </Col>
+                <Col xl={16} lg={24} md={16} span={24}>
+                  <Typography style={{ wordBreak: "break-word" }}>{value}</Typography>
+                </Col>
+              </Row>
+            ))}
+          </Paper>
+        </Col>
+        <Col xl={16} lg={12} span={24}>
+          <Paper className="pl-16 pr-16 pb-16">
+            <Tabs animated>
+              <Tabs.TabPane tab={t("Account Info")} key="account-info">
+                <Row>
+                  <Col xl={12} lg={24} span={24}>
+                    <Form form={form} layout="vertical">
+                      <Form.Item name="avatarUrl" hidden>
+                        <Input />
+                      </Form.Item>
+                      <Box display="flex">
+                        <Avatar src={avatarUrl} className="mr-8" />
+                        <Form.Item>
+                          <Upload accept="image/*" showUploadList={false} customRequest={handleUploadAvatar}>
+                            <Button variant="outlined" startIcon={<Loading visible={isLoadingUpload} />}>
+                              Change Avatar
+                            </Button>
+                          </Upload>
+                        </Form.Item>
+                      </Box>
 
-        <Button
-          variant="outlined"
-          startIcon={<Loading visible={isLoadingCreate} icon={<CheckOutlinedIcon />} />}
-          onClick={handleClickSubmit}>
-          {t("Update user")}
-        </Button>
-      </Paper>
+                      <Form.Item name="fullName" label={t("Name")}>
+                        <Input />
+                      </Form.Item>
+                      <Form.Item name="phone" label={t("Phone")}>
+                        <Input />
+                      </Form.Item>
+                      <Form.Item label={t("Date of Birth")}>
+                        <KeyboardDatePicker
+                          clearable
+                          color="secondary"
+                          placeholder={DDMMYYYY}
+                          format={DDMMYYYY}
+                          value={dayOfBirth}
+                          onChange={setDayOfBirth}
+                          maxDate={new Date()}
+                          helperText=""
+                        />
+                      </Form.Item>
+                      <Button
+                        variant="outlined"
+                        startIcon={<Loading visible={isLoadingCreate} icon={<CheckOutlinedIcon />} />}
+                        onClick={handleClickSubmit}>
+                        {t("Update user")}
+                      </Button>
+                    </Form>
+                  </Col>
+                </Row>
+              </Tabs.TabPane>
+              <Tabs.TabPane tab={t("Change Password")} key="change-password">
+                <Row>
+                  <Col xl={12} lg={24} span={24}>
+                    <UpdatePassword />
+                  </Col>
+                </Row>
+              </Tabs.TabPane>
+            </Tabs>
+          </Paper>
+        </Col>
+      </Row>
     </>
   );
 };

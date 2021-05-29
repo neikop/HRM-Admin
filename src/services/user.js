@@ -17,6 +17,7 @@ const send = (url, body) => {
 const getListUser = (body) => client.post(api, { constructor: "getListUser", ...body });
 const getUserInfo = (body) => client.post(api, { constructor: "getUserInfo", ...body });
 const updateUserInfo = (body) => client.post(api, { constructor: "updateUserInfo", ...body });
+const changePassword = (body) => client.post(api, { constructor: "changePassword", ...body });
 const updateRole = (body) => client.post(api, { constructor: "updateRole", ...body });
 const deleteUser = (body) => client.post(api, { constructor: "deleteUser", ...body });
 
@@ -27,6 +28,7 @@ export const userService = {
   getListUser,
   getUserInfo,
   updateUserInfo,
+  changePassword,
   updateRole,
   deleteUser,
 };

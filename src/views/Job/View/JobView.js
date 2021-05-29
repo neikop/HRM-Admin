@@ -89,10 +89,10 @@ const JobView = () => {
       </Paper>
 
       <Tabs destroyInactiveTabPane size="middle" defaultActiveKey={active} onChange={handleChangeActiveKey}>
-        <Tabs.TabPane tab={t("Detail")} key="detail">
+        <Tabs.TabPane tab={t("DETAIL")} key="detail">
           <Job.Detail job={job} />
         </Tabs.TabPane>
-        <Tabs.TabPane tab={t("Referral")} key="referral">
+        <Tabs.TabPane tab={t("REFERRAL")} key="referral">
           <Job.Referral job={job} />
         </Tabs.TabPane>
       </Tabs>

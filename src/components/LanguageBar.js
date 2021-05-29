@@ -39,7 +39,7 @@ const LanguageBar = ({ init }) => {
       getPopupContainer={(event) => event.parentNode}
       overlay={
         <div>
-          <List component={Paper} style={{ marginTop: 12 }}>
+          <List disablePadding component={Paper} style={{ marginTop: 12 }}>
             {LANGUAGE_BARS.map((item) => (
               <ListItem
                 key={item.id}

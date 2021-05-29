@@ -1,6 +1,7 @@
-.App {
+.App,
+body {
   min-height: 100vh;
-  background-color: #eee4;
+  background-color: #fafafa;
 }
 
 .Auth-Layout {
@@ -11,22 +12,25 @@
 }
 
 .App-Header {
-  display: flex;
   flex-direction: row !important;
   align-items: center;
   height: 60px;
-  position: sticky !important;
   z-index: 2;
   padding: 0px 24px;
 }
 
 .App-Body {
   padding: 24px;
+  padding-top: 84px;
 }
 
 @media screen and (max-width: 800px) {
   .App-Header {
     padding: 0px 8px;
+
+    .MuiIconButton-root {
+      padding: 8px;
+    }
   }
   .App-Body {
     padding: 24px 12px;

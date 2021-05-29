@@ -27,8 +27,8 @@ const beforeRequest = (config) => {
   return config;
 };
 
-const client = axios.create({ baseURL: env.API_URL });
-const clientFile = axios.create({ baseURL: env.API_FILE_URL });
+const client = axios.create({ baseURL: env.API_URL, timeout: 10000 });
+const clientFile = axios.create({ baseURL: env.API_FILE_URL, timeout: 10000 });
 
 [client, clientFile].forEach((client) => {
   client.interceptors.response.use(({ data }) => data, onError);

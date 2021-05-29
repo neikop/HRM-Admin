@@ -17,6 +17,11 @@ const Theme = ({ children }) => {
       MuiAvatar: {
         variant: "rounded",
       },
+      MuiMenu: {
+        getContentAnchorEl: null,
+        anchorOrigin: { vertical: "bottom", horizontal: "right" },
+        transformOrigin: { vertical: "top", horizontal: "right" },
+      },
       MuiTypography: {
         component: "div",
       },

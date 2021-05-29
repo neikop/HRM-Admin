@@ -64,7 +64,7 @@ const CandidatePopup = ({ job: { idJob }, onClose }) => {
       .applyCvToJob({
         params_request: {
           idJob,
-          idCV: item.id,
+          idCv: item.id,
         },
       })
       .then((response) => {
@@ -156,7 +156,7 @@ const CandidatePopup = ({ job: { idJob }, onClose }) => {
             {
               dataIndex: "",
               align: "right",
-              width: 80,
+              width: 120,
               render: (_, record) => (
                 <Button
                   color="secondary"

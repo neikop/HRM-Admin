@@ -91,3 +91,8 @@ h6 {
     padding: 12px 6px;
   }
 }
+
+.MuiListItem-button:hover,
+.MuiIconButton-root:hover {
+  background-color: rgba(0, 0, 0, 0.06) !important;
+}

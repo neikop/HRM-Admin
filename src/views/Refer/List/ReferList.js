@@ -52,7 +52,7 @@ const ReferList = () => {
         .applyCvToJob({
           params_request: {
             idJob: item.idJob,
-            idCV: item.idCv,
+            idCv: item.idCv,
             status,
             interviewDate,
           },
@@ -75,7 +75,7 @@ const ReferList = () => {
       .deleteApplyCvToJob({
         params_request: {
           idJob: item.idJob,
-          idCV: item.idCv,
+          idCv: item.idCv,
         },
       })
       .then((response) => {

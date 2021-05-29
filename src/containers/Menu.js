@@ -31,7 +31,7 @@ const Menu = ({ onClickMenu }) => {
             if (onClickMenu) onClickMenu();
           }}>
           <ListItemIcon className={classes.icon}>{icon}</ListItemIcon>
-          <ListItemText primary={name} />
+          <ListItemText className={classes.text} primary={name} />
         </ListItem>
       )
     );
@@ -51,6 +51,12 @@ const Menu = ({ onClickMenu }) => {
 const useStyles = makeStyles((theme) => ({
   item: {
     width: "unset",
+    marginRight: 4,
+    borderRadius: 4,
+    "&:hover": {
+      color: "#000",
+      backgroundColor: "#0001",
+    },
   },
   icon: {
     minWidth: "unset",

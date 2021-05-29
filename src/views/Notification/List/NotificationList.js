@@ -1,15 +1,19 @@
 import React from "react";
 import { Loading } from "components";
-import { Avatar, IconButton, ListItemAvatar, Paper, Tooltip, Typography } from "@material-ui/core";
-import { List, ListItem, ListItemText, ListItemSecondaryAction } from "@material-ui/core";
+import { Avatar, IconButton, ListItemAvatar, Paper, Typography } from "@material-ui/core";
+import { Menu, List, ListItem, ListItemText, ListItemSecondaryAction } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import { noticeAction } from "actions/notice";
 import { noticeService, noticeFormat, noticeRouter } from "services/notice";
 import { convertTime, t } from "utils/common";
 import { useNotice } from "./useNotice";
 
-import DeleteOutlinedIcon from "@material-ui/icons/DeleteOutlined";
 import NotificationsActiveOutlinedIcon from "@material-ui/icons/NotificationsActiveOutlined";
+import AccessTimeOutlinedIcon from "@material-ui/icons/AccessTimeOutlined";
+import MoreHorizOutlinedIcon from "@material-ui/icons/MoreHorizOutlined";
+import CancelOutlinedIcon from "@material-ui/icons/CancelOutlined";
+import RadioButtonCheckedOutlinedIcon from "@material-ui/icons/RadioButtonCheckedOutlined";
+import RadioButtonUncheckedOutlinedIcon from "@material-ui/icons/RadioButtonUncheckedOutlined";
 
 const NotificationList = () => {
   const classes = useStyles();
@@ -20,6 +24,16 @@ const NotificationList = () => {
   const isLast = React.useRef(false);
   const isStop = React.useRef(false);
   const offset = React.useRef(0);
+
+  const [chosenItem, setChosenItem] = React.useState({});
+  const [anchorItem, setAnchorItem] = React.useState(null);
+  const handleClickItem = (item) => (event) => {
+    setChosenItem(item);
+    setAnchorItem(event.currentTarget);
+  };
+  const handleCloseItem = () => {
+    setAnchorItem(null);
+  };
 
   const fetchData = React.useCallback(() => {
     if (isLast.current || isStop.current) return;
@@ -46,24 +60,24 @@ const NotificationList = () => {
       });
   }, [setDataList]);
 
-  const handleClickRead = (item) => {
-    noticeAction.updateNotice({ ...item, status: 1 });
-    if (item.status === 0) {
-      noticeService
-        .updateNotification({
-          params_request: {
-            id: item.id,
-            status: 1,
-            type: item.type,
-            idJob: item.job?.idJob,
-            idCv: item.resume?.id,
-          },
-        })
-        .catch(console.warn);
-    }
+  const handleClickRead = (item, status) => {
+    if (item.isSystem) return;
+    noticeAction.updateNotice({ ...item, status });
+    noticeService
+      .updateNotification({
+        params_request: {
+          id: item.id,
+          status,
+          type: item.type,
+          idJob: item.job?.idJob,
+          idCv: item.resume?.id,
+        },
+      })
+      .catch(console.warn);
   };
 
   const handleClickDelete = (item) => {
+    if (item.isSystem) return;
     noticeAction.removeNotice(item);
     noticeService
       .removeNotification({
@@ -102,22 +116,28 @@ const NotificationList = () => {
               selected={item.status === 0}
               className={classes.listItem}
               onClick={() => {
-                handleClickRead(item);
                 noticeRouter(item);
+                handleClickRead(item, 1);
               }}>
               <ListItemAvatar>
                 <Avatar src={item.job?.avatar} style={{ backgroundColor: "transparent" }}>
                   <Avatar src="/kai_avatar.png" />
                 </Avatar>
               </ListItemAvatar>
-              <ListItemText primary={noticeFormat(item)} secondary={convertTime(item.createTime * 1000)} />
+              <ListItemText
+                primary={noticeFormat(item)}
+                secondary={
+                  <div className="align-items-center">
+                    <AccessTimeOutlinedIcon fontSize="small" className="mr-4" />
+                    {convertTime(item.createTime * 1000)}
+                  </div>
+                }
+              />
               {item.isSystem === 0 && (
                 <ListItemSecondaryAction>
-                  <Tooltip title={t("Remove")}>
-                    <IconButton edge="end" onClick={() => handleClickDelete(item)}>
-                      <DeleteOutlinedIcon />
-                    </IconButton>
-                  </Tooltip>
+                  <IconButton edge="end" size="small" onClick={handleClickItem(item)}>
+                    <MoreHorizOutlinedIcon fontSize="small" />
+                  </IconButton>
                 </ListItemSecondaryAction>
               )}
             </ListItem>
@@ -131,6 +151,43 @@ const NotificationList = () => {
             <Loading visible={dataLoading} />
           </ListItem>
         </List>
+
+        <Menu anchorEl={anchorItem} open={Boolean(anchorItem)} onClose={handleCloseItem}>
+          {chosenItem.status === 0 && (
+            <ListItem
+              button
+              dense
+              onClick={() => {
+                handleClickRead(chosenItem, 1);
+                handleCloseItem();
+              }}>
+              <RadioButtonCheckedOutlinedIcon className="mr-8" />
+              <ListItemText primary={t("Mark as read")} />
+            </ListItem>
+          )}
+          {chosenItem.status === 1 && (
+            <ListItem
+              button
+              dense
+              onClick={() => {
+                handleClickRead(chosenItem, 0);
+                handleCloseItem();
+              }}>
+              <RadioButtonUncheckedOutlinedIcon className="mr-8" />
+              <ListItemText primary={t("Mark as unread")} />
+            </ListItem>
+          )}
+          <ListItem
+            button
+            dense
+            onClick={() => {
+              handleClickDelete(chosenItem);
+              handleCloseItem();
+            }}>
+            <CancelOutlinedIcon className="mr-8" />
+            <ListItemText primary={t("Remove notification")} />
+          </ListItem>
+        </Menu>
       </Paper>
       {offset.current <= 1 && <div style={{ height: "40vh" }} />}
     </>

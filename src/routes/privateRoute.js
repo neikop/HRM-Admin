@@ -4,6 +4,9 @@ import { JobList } from "views/Job/List";
 import { JobCreate } from "views/Job/Create";
 import { JobUpdate } from "views/Job/Update";
 import { JobView } from "views/Job/View";
+import { CompanyList } from "views/Company/List";
+import { CompanyCreate } from "views/Company/Create";
+import { CompanyUpdate } from "views/Company/Update";
 import { CandidateList } from "views/Candidate/List";
 import { CandidateCreate } from "views/Candidate/Create";
 import { CandidateUpdate } from "views/Candidate/Update";
@@ -39,6 +42,20 @@ const privateRoute = {
     path: "/jobs/:id/:active",
     url: (id, active = "detail") => `/jobs/${id}/${active}`,
     component: JobView,
+  },
+
+  companyList: {
+    path: "/companys",
+    component: CompanyList,
+  },
+  companyCreate: {
+    path: "/companys/create",
+    component: CompanyCreate,
+  },
+  companyUpdate: {
+    path: "/companys/:id/update",
+    url: (id) => `/companys/${id}/update`,
+    component: CompanyUpdate,
   },
 
   candidateList: {

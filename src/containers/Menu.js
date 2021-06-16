@@ -8,13 +8,14 @@ import { privateRoute } from "routes";
 
 import DashboardOutlinedIcon from "@material-ui/icons/DashboardOutlined";
 import WorkOutlineOutlinedIcon from "@material-ui/icons/WorkOutlineOutlined";
+import LocationCityOutlinedIcon from "@material-ui/icons/LocationCityOutlined";
 import AssignmentIndOutlinedIcon from "@material-ui/icons/AssignmentIndOutlined";
 import GroupOutlinedIcon from "@material-ui/icons/GroupOutlined";
 import DateRangeOutlinedIcon from "@material-ui/icons/DateRangeOutlined";
 
 const Menu = ({ onClickMenu }) => {
   const { isSuper, isAdmin } = useSelector(({ profile }) => profile);
-  const { home, jobList, candidateList, userList, referList } = privateRoute;
+  const { home, jobList, companyList, candidateList, userList, referList } = privateRoute;
 
   const MenuItem = ({ visible = true, name, icon, path }) => {
     const classes = useStyles();
@@ -41,6 +42,7 @@ const Menu = ({ onClickMenu }) => {
     <>
       <MenuItem {...home} name={t("Home")} icon={<DashboardOutlinedIcon />} />
       <MenuItem {...jobList} name={t("Job")} icon={<WorkOutlineOutlinedIcon />} />
+      <MenuItem {...companyList} name={t("Company")} icon={<LocationCityOutlinedIcon />} visible={isSuper || isAdmin} />
       <MenuItem {...candidateList} name={t("Candidate")} icon={<AssignmentIndOutlinedIcon />} />
       <MenuItem {...referList} name={t("Refer history")} icon={<DateRangeOutlinedIcon />} />
       <MenuItem {...userList} name={t("User")} icon={<GroupOutlinedIcon />} visible={isSuper || isAdmin} />

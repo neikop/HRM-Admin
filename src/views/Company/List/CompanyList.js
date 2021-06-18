@@ -142,7 +142,7 @@ const CompanyList = () => {
               width: 128,
               render: (_, record) => (
                 <Typography noWrap>
-                  <Link to={privateRoute.companyUpdate.url(record.id)}>
+                  <Link to={privateRoute.companyDetail.url(record.id)}>
                     <Tooltip title={t("View detail")}>
                       <IconButton>
                         <DirectionsOutlinedIcon color="secondary" />

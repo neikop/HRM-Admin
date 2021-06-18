@@ -105,9 +105,11 @@ const JobList = () => {
         {dataList.map((job) => (
           <Paper className="flex-row p-16 mb-24" key={job.idJob}>
             <div style={{ padding: "6px 12px 12px 0px" }}>
-              <Avatar src={job.avatar} style={{ width: 72, height: 72, backgroundColor: "transparent" }}>
-                <Avatar src="/kai_avatar.png" style={{ width: 72, height: 72 }} />
-              </Avatar>
+              <Link to={privateRoute.jobView.url(job.idJob)}>
+                <Avatar src={job.avatar} style={{ width: 72, height: 72, backgroundColor: "transparent" }}>
+                  <Avatar src="/kai_avatar.png" style={{ width: 72, height: 72 }} />
+                </Avatar>
+              </Link>
             </div>
             <div className="flex-1">
               <Link to={privateRoute.jobView.url(job.idJob)} className="flex-inline align-items-center flex-wrap">
@@ -120,7 +122,7 @@ const JobList = () => {
               </Link>
 
               <Typography variant="subtitle2" className="mt-8">
-                {t("Company")}: {job.company}
+                {t("Company")}: <Link to={privateRoute.companyDetail.url(job.company?.id)}>{job.company?.name}</Link>
               </Typography>
 
               <Row gutter={24}>

@@ -14,6 +14,7 @@ import { unix } from "moment";
 import { decode } from "html-entities";
 import { privateRoute } from "routes";
 import { DDMMYYYY, JOB_STATUS_TYPES, JOB_FORMS, CURRENCY_TYPES } from "utils/constants";
+import { SelectCompany } from "views/Company/Components";
 
 import NavigateBeforeOutlinedIcon from "@material-ui/icons/NavigateBeforeOutlined";
 import AddOutlinedIcon from "@material-ui/icons/AddOutlined";
@@ -29,6 +30,7 @@ const JobCreate = () => {
   const [description, setDescription] = React.useState("");
   const [requirement, setRequirement] = React.useState("");
   const [welfare, setWelfare] = React.useState("");
+  const [company, setCompany] = React.useState();
 
   const [isLoadingUpload, setIsLoadingUpload] = React.useState(false);
   const [isLoadingCreate, setIsLoadingCreate] = React.useState(false);
@@ -42,15 +44,19 @@ const JobCreate = () => {
         .then((response) => {
           const { status = 1, data } = response;
           if (status) {
-            const { deadline, description, requirement, welfare, ...job } = normalizeJob(data);
+            const { deadline, description, requirement, welfare, company, ...job } = normalizeJob(data);
             setTimeout(() => {
               if (deadline) setDeadline(unix(deadline));
               if (description) setDescription(decode(description));
               if (requirement) setRequirement(decode(requirement));
               if (welfare) setWelfare(decode(welfare));
+              if (company) setCompany(company);
             }, 0);
 
-            form.setFieldsValue({ ...job });
+            form.setFieldsValue({
+              ...job,
+              idCompany: company?.id,
+            });
           }
         })
         .catch(console.warn);
@@ -177,9 +183,8 @@ const JobCreate = () => {
                   <Form.Item name="avatar" hidden>
                     <Input />
                   </Form.Item>
-                  <Form.Item label={t("Picture")}>
+                  <Form.Item label={t("Picture")} className="Picture-Large">
                     <Upload
-                      className="Job-Avatar"
                       accept="image/*"
                       listType="picture-card"
                       showUploadList={false}
@@ -204,10 +209,14 @@ const JobCreate = () => {
               <Row gutter={24}>
                 <Col md={12} span={24}>
                   <Form.Item
-                    name="company"
+                    name="idCompany"
                     label={t("Company")}
                     rules={[{ required: true, message: t("Company is required") }]}>
-                    <Input />
+                    <SelectCompany
+                      initCompany={company}
+                      initValue={company?.id}
+                      onChange={(value) => form.setFieldsValue({ idCompany: value })}
+                    />
                   </Form.Item>
                   <Form.Item
                     name="workplace"

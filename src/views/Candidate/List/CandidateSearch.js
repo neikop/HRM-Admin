@@ -13,6 +13,10 @@ const CandidateSearch = ({ onSearch }) => {
     onSearch({ keyword });
   };
 
+  const handlePressKey = (event) => {
+    if (event.key === "Enter") handleClickSearch();
+  };
+
   return (
     <>
       <Paper elevation={0} className="flex-row mb-24" style={{ backgroundColor: "transparent" }}>
@@ -21,6 +25,7 @@ const CandidateSearch = ({ onSearch }) => {
           label={t("Find candidate by keyword")}
           value={keyword}
           onChange={(event) => setKeyword(event.target.value)}
+          onKeyPress={handlePressKey}
           InputProps={{
             startAdornment: (
               <InputAdornment position="start">

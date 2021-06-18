@@ -23,6 +23,10 @@ const JobSearch = ({ onSearch }) => {
     onSearch({ keyword, workplace, salary, currency, company, status });
   };
 
+  const handlePressKey = (event) => {
+    if (event.key === "Enter") handleClickSearch();
+  };
+
   return (
     <>
       <Paper elevation={0} className="flex-row mb-24" style={{ backgroundColor: "transparent" }}>
@@ -31,6 +35,7 @@ const JobSearch = ({ onSearch }) => {
           label={t("Find your job by keyword")}
           value={keyword}
           onChange={(event) => setKeyword(event.target.value)}
+          onKeyPress={handlePressKey}
           InputProps={{
             startAdornment: (
               <InputAdornment position="start">

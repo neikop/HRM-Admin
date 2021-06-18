@@ -6,6 +6,7 @@ import { JobUpdate } from "views/Job/Update";
 import { JobView } from "views/Job/View";
 import { CompanyList } from "views/Company/List";
 import { CompanyCreate } from "views/Company/Create";
+import { CompanyDetail } from "views/Company/Detail";
 import { CompanyUpdate } from "views/Company/Update";
 import { CandidateList } from "views/Candidate/List";
 import { CandidateCreate } from "views/Candidate/Create";
@@ -51,6 +52,11 @@ const privateRoute = {
   companyCreate: {
     path: "/companys/create",
     component: CompanyCreate,
+  },
+  companyDetail: {
+    path: "/companys/:id/detail",
+    url: (id) => `/companys/${id}/detail`,
+    component: CompanyDetail,
   },
   companyUpdate: {
     path: "/companys/:id/update",

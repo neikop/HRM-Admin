@@ -35,7 +35,7 @@ const Detail = ({ job }) => {
         <div className="flex-row flex-wrap">
           <div style={{ width: 600, marginBottom: 12 }}>
             <Typography>
-              {t("Company")}: {job.company}
+              {t("Company")}: <Link to={privateRoute.companyDetail.url(job.company?.id)}>{job.company?.name}</Link>
             </Typography>
             <Typography>
               {t("Workplace")}: {job.workplace}

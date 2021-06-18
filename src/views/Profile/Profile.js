@@ -108,7 +108,7 @@ const Profile = () => {
       <Row gutter={[24, 24]}>
         <Col xl={8} lg={12} span={24}>
           <Paper className="p-16">
-            <Box className="Job-Avatar flex-center flex-column mb-24">
+            <Box className="Picture-Large flex-center flex-column mb-24">
               <Avatar src={avatarUrl} />
               <Typography variant="h6" color="textSecondary">
                 {user.fullName}

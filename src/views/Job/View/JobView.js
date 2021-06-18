@@ -2,7 +2,7 @@ import React from "react";
 import { useSelector } from "react-redux";
 import { Link, useParams } from "react-router-dom";
 import { Alert, ColorButton, Loading } from "components";
-import { IconButton, Paper, Typography } from "@material-ui/core";
+import { IconButton, Hidden, Paper, Typography } from "@material-ui/core";
 import { Popconfirm, Tabs, Tag } from "antd";
 import { jobService } from "services/job";
 import { browserHistory } from "utils/history";
@@ -10,6 +10,7 @@ import { normalizeJob } from "utils/converter";
 import { t } from "utils/common";
 import { privateRoute } from "routes";
 import { JOB_STATUS_TYPES } from "utils/constants";
+import { CompanyPaper } from "views/Company/Detail";
 import * as Job from "views/Job/View/Components";
 
 import NavigateBeforeOutlinedIcon from "@material-ui/icons/NavigateBeforeOutlined";
@@ -88,14 +89,27 @@ const JobView = () => {
         )}
       </Paper>
 
-      <Tabs destroyInactiveTabPane size="middle" defaultActiveKey={active} onChange={handleChangeActiveKey}>
-        <Tabs.TabPane tab={t("DETAIL")} key="detail">
-          <Job.Detail job={job} />
-        </Tabs.TabPane>
-        <Tabs.TabPane tab={t("REFERRAL")} key="referral">
-          <Job.Referral job={job} />
-        </Tabs.TabPane>
-      </Tabs>
+      <div className="flex-row">
+        <div className="flex-1">
+          <Tabs destroyInactiveTabPane size="middle" defaultActiveKey={active} onChange={handleChangeActiveKey}>
+            <Tabs.TabPane tab={t("DETAIL")} key="detail">
+              <Job.Detail job={job} />
+            </Tabs.TabPane>
+            <Tabs.TabPane tab={t("REFERRAL")} key="referral">
+              <Job.Referral job={job} />
+            </Tabs.TabPane>
+          </Tabs>
+        </div>
+
+        <Hidden mdDown>
+          <div hidden={active !== "detail"} style={{ width: 520, paddingTop: 20, marginLeft: 20 }}>
+            <Typography variant="h6" gutterBottom>
+              {t("Company info")}
+            </Typography>
+            <CompanyPaper id={job.company?.id} />
+          </div>
+        </Hidden>
+      </div>
     </>
   );
 };

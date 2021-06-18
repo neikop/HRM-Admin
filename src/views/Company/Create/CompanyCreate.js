@@ -140,9 +140,8 @@ const CompanyCreate = () => {
                   <Form.Item name="image" hidden>
                     <Input />
                   </Form.Item>
-                  <Form.Item label={t("Picture")}>
+                  <Form.Item label={t("Picture")} className="Picture-Large">
                     <Upload
-                      className="Job-Avatar"
                       accept="image/*"
                       listType="picture-card"
                       showUploadList={false}
@@ -181,7 +180,7 @@ const CompanyCreate = () => {
             </Col>
             <Col lg={12} span={24}>
               <Form.Item label={t("Description")}>
-                <RichTextEditor value={description} onChange={setDescription} />
+                <RichTextEditor height={320} value={description} onChange={setDescription} />
               </Form.Item>
             </Col>
           </Row>

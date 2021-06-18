@@ -2,10 +2,10 @@ import { Editor } from "@tinymce/tinymce-react";
 
 const TINYMCE_KEY = "5d69hqudzyhmoa0v09uej10bp1zghpplvbbciuekof9c15xw";
 
-const RichTextEditor = ({ value, onChange, ...props }) => (
+const RichTextEditor = ({ value, onChange, height = 200, ...props }) => (
   <Editor
     init={{
-      height: 200,
+      height,
       menubar: false,
       branding: false,
       plugins: [

@@ -32,6 +32,7 @@ const Theme = ({ children }) => {
       },
     },
     typography: {
+      fontFamily: "Raleway",
       subtitle1: {
         fontWeight: 500,
         lineHeight: 1.5,

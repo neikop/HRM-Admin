@@ -1,5 +1,5 @@
 @import "~antd/dist/antd.min.css";
-@import '~react-perfect-scrollbar/dist/css/styles.css';
+@import "~react-perfect-scrollbar/dist/css/styles.css";
 @import "styles/antd";
 @import "styles/layout";
 @import "styles/components";
@@ -8,7 +8,7 @@
 
 body {
   margin: 0;
-  font-family: "Roboto", "Ubuntu", sans-serif;
+  font-family: "Raleway", "Roboto", "Ubuntu", sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }

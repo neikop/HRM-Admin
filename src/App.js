@@ -2,7 +2,7 @@ import React from "react";
 import { Provider } from "react-redux";
 import { Router, Switch, Route } from "react-router-dom";
 import { AuthLayout, PrivateLayout } from "layouts";
-import { AppTheme } from "containers";
+import { AppError, AppTheme } from "containers";
 import { store } from "reducers";
 import { ConfigProvider } from "antd";
 import { MuiPickersUtilsProvider } from "@material-ui/pickers";
@@ -29,12 +29,14 @@ const App = () => {
         <MuiPickersUtilsProvider utils={MomentUtils}>
           <AppTheme>
             <Router history={browserHistory}>
-              {isReady && (
-                <Switch>
-                  <Route path="/auth" component={AuthLayout} />
-                  <Route path="/" component={PrivateLayout} />
-                </Switch>
-              )}
+              <AppError>
+                {isReady && (
+                  <Switch>
+                    <Route path="/auth" component={AuthLayout} />
+                    <Route path="/" component={PrivateLayout} />
+                  </Switch>
+                )}
+              </AppError>
             </Router>
           </AppTheme>
         </MuiPickersUtilsProvider>

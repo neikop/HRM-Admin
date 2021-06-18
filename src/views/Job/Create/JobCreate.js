@@ -59,7 +59,6 @@ const JobCreate = () => {
             });
           }
         })
-        .catch(console.warn);
   }, [id, form]);
 
   const handleUploadAvatar = async ({ file, onSuccess, onError }) => {
@@ -76,7 +75,6 @@ const JobCreate = () => {
           form.setFieldsValue({ avatar });
         }
       })
-      .catch(console.warn)
       .finally(() => {
         setIsLoadingUpload(false);
       });
@@ -120,12 +118,10 @@ const JobCreate = () => {
 
             browserHistory.push(privateRoute.jobList.path);
           })
-          .catch(console.warn)
           .finally(() => {
             setIsLoadingCreate(false);
           });
-      })
-      .catch(console.warn);
+      });
   };
 
   const handleClickUpdate = () => {
@@ -149,12 +145,10 @@ const JobCreate = () => {
 
             browserHistory.push(privateRoute.jobView.url(id));
           })
-          .catch(console.warn)
           .finally(() => {
             setIsLoadingCreate(false);
           });
-      })
-      .catch(console.warn);
+      });
   };
 
   React.useEffect(() => {

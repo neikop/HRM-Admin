@@ -25,8 +25,7 @@ export const CompanyPaper = ({ id, isAdmin }) => {
           if (status) {
             setCompany(data);
           }
-        })
-        .catch(console.warn);
+        });
   }, [id]);
 
   React.useEffect(() => {

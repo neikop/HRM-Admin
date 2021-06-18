@@ -33,8 +33,7 @@ const JobView = () => {
         if (status) {
           setJob(normalizeJob(data));
         }
-      })
-      .catch(console.warn);
+      });
   }, [id]);
 
   const handleConfirmDelete = () => {
@@ -48,7 +47,6 @@ const JobView = () => {
 
         browserHistory.replace(privateRoute.jobList.path);
       })
-      .catch(console.warn)
       .finally(() => {
         setIsLoadingDelete(false);
       });

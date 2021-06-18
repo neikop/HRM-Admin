@@ -116,7 +116,6 @@ const RegisterForm = () => {
           profileAction.login(data);
         }
       })
-      .catch(console.warn)
       .finally(() => {
         setIsLoading(false);
       });

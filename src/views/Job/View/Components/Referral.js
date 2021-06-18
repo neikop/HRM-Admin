@@ -38,7 +38,6 @@ const Referral = ({ job }) => {
           setDataCount(total);
         }
       })
-      .catch(console.warn)
       .finally(() => {
         setDataLoading(false);
       });
@@ -64,7 +63,6 @@ const Referral = ({ job }) => {
 
           Object.assign(item, { status, interviewDate });
         })
-        .catch(console.warn)
         .finally(() => {
           setIsLoadingSelect();
           setIsLoadingPicker();
@@ -85,7 +83,6 @@ const Referral = ({ job }) => {
 
         fetchData();
       })
-      .catch(console.warn)
       .finally(() => {
         setIsLoadingDelete();
       });

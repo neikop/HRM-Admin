@@ -44,7 +44,6 @@ const Profile = () => {
             profileAction.update(user);
           }
         })
-        .catch(console.warn);
   }, [userId, form]);
 
   const handleClickSubmit = () => {
@@ -63,7 +62,6 @@ const Profile = () => {
 
           fetchData();
         })
-        .catch(console.warn)
         .finally(() => {
           setIsLoadingUpdate(false);
         });
@@ -84,7 +82,6 @@ const Profile = () => {
           form.setFieldsValue({ avatarUrl });
         }
       })
-      .catch(console.warn)
       .finally(() => {
         setIsLoadingUpload(false);
       });

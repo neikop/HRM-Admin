@@ -64,7 +64,6 @@ const NotificationPopup = () => {
           offset.current = offset.current + 1;
         }
       })
-      .catch(console.warn)
       .finally(() => {
         setDataLoading(false);
         isStop.current = false;
@@ -84,7 +83,6 @@ const NotificationPopup = () => {
           idCv: item.resume?.id,
         },
       })
-      .catch(console.warn);
   };
 
   const handleClickDelete = (item) => {
@@ -96,7 +94,6 @@ const NotificationPopup = () => {
           ids: [item.id],
         },
       })
-      .catch(console.warn);
   };
 
   React.useEffect(() => {

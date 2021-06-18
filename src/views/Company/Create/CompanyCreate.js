@@ -40,7 +40,6 @@ const CompanyCreate = () => {
             form.setFieldsValue({ ...job });
           }
         })
-        .catch(console.warn);
   }, [id, form]);
 
   const handleUploadAvatar = async ({ file, onSuccess, onError }) => {
@@ -57,7 +56,6 @@ const CompanyCreate = () => {
           form.setFieldsValue({ image });
         }
       })
-      .catch(console.warn)
       .finally(() => {
         setIsLoadingUpload(false);
       });
@@ -80,12 +78,10 @@ const CompanyCreate = () => {
 
             browserHistory.push(privateRoute.companyList.path);
           })
-          .catch(console.warn)
           .finally(() => {
             setIsLoadingCreate(false);
           });
-      })
-      .catch(console.warn);
+      });
   };
 
   const handleClickUpdate = () => {
@@ -106,12 +102,10 @@ const CompanyCreate = () => {
 
             browserHistory.push(privateRoute.companyView.url(id));
           })
-          .catch(console.warn)
           .finally(() => {
             setIsLoadingCreate(false);
           });
-      })
-      .catch(console.warn);
+      });
   };
 
   React.useEffect(() => {

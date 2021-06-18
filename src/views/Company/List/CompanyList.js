@@ -36,7 +36,6 @@ const CompanyList = () => {
           setDataCount(total);
         }
       })
-      .catch(console.warn)
       .finally(() => {
         setDataLoading(false);
       });
@@ -55,7 +54,6 @@ const CompanyList = () => {
 
         fetchData();
       })
-      .catch(console.warn)
       .finally(() => {
         setIsLoadingDelete();
       });

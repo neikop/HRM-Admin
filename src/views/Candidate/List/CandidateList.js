@@ -41,7 +41,6 @@ const CandidateList = () => {
           setDataCount(total);
         }
       })
-      .catch(console.warn)
       .finally(() => {
         setDataLoading(false);
       });
@@ -60,7 +59,6 @@ const CandidateList = () => {
 
         fetchData();
       })
-      .catch(console.warn)
       .finally(() => {
         setIsLoadingDelete();
       });

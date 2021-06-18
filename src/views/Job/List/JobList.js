@@ -39,7 +39,6 @@ const JobList = () => {
           setDataCount(total);
         }
       })
-      .catch(console.warn)
       .finally(() => {
         setDataLoading(false);
       });

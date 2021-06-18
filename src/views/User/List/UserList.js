@@ -34,7 +34,6 @@ const UserList = () => {
           setDataList(users);
         }
       })
-      .catch(console.warn)
       .finally(() => {
         setDataLoading(false);
       });
@@ -54,7 +53,6 @@ const UserList = () => {
 
         Object.assign(item, { roleId });
       })
-      .catch(console.warn)
       .finally(() => {
         setIsLoadingSelect();
       });
@@ -74,7 +72,6 @@ const UserList = () => {
 
         fetchData();
       })
-      .catch(console.warn)
       .finally(() => {
         setIsLoadingDelete();
       });

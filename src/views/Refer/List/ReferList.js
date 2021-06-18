@@ -36,7 +36,6 @@ const ReferList = () => {
           setDataCount(total);
         }
       })
-      .catch(console.warn)
       .finally(() => {
         setDataLoading(false);
       });
@@ -62,7 +61,6 @@ const ReferList = () => {
 
           Object.assign(item, { status, interviewDate });
         })
-        .catch(console.warn)
         .finally(() => {
           setIsLoadingSelect();
           setIsLoadingPicker();
@@ -83,7 +81,6 @@ const ReferList = () => {
 
         fetchData();
       })
-      .catch(console.warn)
       .finally(() => {
         setIsLoadingDelete();
       });

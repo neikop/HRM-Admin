@@ -53,7 +53,6 @@ const Home = () => {
           setDashboard(dashboard);
         }
       })
-      .catch(console.warn)
       .finally(() => {
         setIsLoading(false);
       });

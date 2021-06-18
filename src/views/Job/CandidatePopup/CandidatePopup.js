@@ -37,7 +37,6 @@ const CandidatePopup = ({ job: { idJob }, onClose }) => {
           setDataCount(total);
         }
       })
-      .catch(console.warn)
       .finally(() => {
         setDataLoading(false);
       });
@@ -72,7 +71,6 @@ const CandidatePopup = ({ job: { idJob }, onClose }) => {
 
         onClose();
       })
-      .catch(console.warn)
       .finally(() => {
         setIsLoadingSelect();
       });

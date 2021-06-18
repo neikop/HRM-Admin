@@ -53,7 +53,6 @@ const NotificationList = () => {
           offset.current = offset.current + 1;
         }
       })
-      .catch(console.warn)
       .finally(() => {
         setDataLoading(false);
         isStop.current = false;
@@ -73,7 +72,6 @@ const NotificationList = () => {
           idCv: item.resume?.id,
         },
       })
-      .catch(console.warn);
   };
 
   const handleClickDelete = (item) => {
@@ -85,7 +83,6 @@ const NotificationList = () => {
           ids: [item.id],
         },
       })
-      .catch(console.warn);
   };
 
   React.useEffect(() => {

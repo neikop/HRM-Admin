@@ -17,7 +17,6 @@ const App = () => {
     try {
       const user = localStorage.getItem("hrm.admin.user");
       profileAction.login(JSON.parse(user));
-    } catch {
     } finally {
       setIsReady(true);
     }

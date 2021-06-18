@@ -38,7 +38,6 @@ const CandidateUpdate = () => {
           form.setFieldsValue({ ...data });
         }
       })
-      .catch(console.warn);
   }, [id, form]);
 
   const handleClickSubmit = () => {
@@ -58,7 +57,6 @@ const CandidateUpdate = () => {
 
           fetchData();
         })
-        .catch(console.warn)
         .finally(() => {
           setIsLoadingCreate(false);
         });

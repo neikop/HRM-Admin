@@ -33,7 +33,6 @@ const UserUpdate = () => {
           form.setFieldsValue({ ...user });
         }
       })
-      .catch(console.warn);
   }, [id, form]);
 
   React.useEffect(() => {

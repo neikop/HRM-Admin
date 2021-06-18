@@ -38,7 +38,6 @@ const CandidateCreate = () => {
           candidateName: name,
         });
       })
-      .catch(console.warn)
       .finally(() => {
         setIsLoadingParser(false);
         uploadFile(file);
@@ -57,7 +56,6 @@ const CandidateCreate = () => {
           form.setFieldsValue({ urlCv });
         }
       })
-      .catch(console.warn)
       .finally(() => {
         setUpload(false);
       });
@@ -79,7 +77,6 @@ const CandidateCreate = () => {
 
           browserHistory.push(privateRoute.candidateList.path);
         })
-        .catch(console.warn)
         .finally(() => {
           setIsLoadingCreate(false);
         });

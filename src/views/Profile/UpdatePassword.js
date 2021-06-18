@@ -34,7 +34,6 @@ const UpdatePassword = () => {
 
           form.resetFields();
         })
-        .catch(console.warn)
         .finally(() => {
           setIsLoadingUpdate(false);
         });

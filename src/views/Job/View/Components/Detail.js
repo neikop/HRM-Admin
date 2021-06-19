@@ -33,7 +33,7 @@ const Detail = ({ job }) => {
         </Avatar>
 
         <div className="flex-row flex-wrap">
-          <div style={{ width: 600, marginBottom: 12 }}>
+          <div style={{ minWidth: 320, maxWidth: 600, marginBottom: 12, marginRight: 24 }}>
             <Typography>
               {t("Company")}: <Link to={privateRoute.companyDetail.url(job.company?.id)}>{job.company?.name}</Link>
             </Typography>

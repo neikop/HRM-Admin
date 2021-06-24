@@ -27,9 +27,9 @@ export const JOB_FORMS = [
 ];
 
 export const CANDIDATE_LEVELS = [
-  { id: 1, code: "Fresher ( Dưới 1 năm kinh nghiệm)", name: t("Fresher ( Dưới 1 năm kinh nghiệm)") },
-  { id: 2, code: "Junior ( Từ 1 đến 3 năm kinh nghiệm)", name: t("Junior ( Từ 1 đến 3 năm kinh nghiệm)") },
-  { id: 3, code: "Senior ( Trên 3 năm kinh nghiệm)", name: t("Senior ( Trên 3 năm kinh nghiệm)") },
+  { id: 1, code: "Fresher (Dưới 1 năm kinh nghiệm)", name: t("Fresher (Dưới 1 năm kinh nghiệm)") },
+  { id: 2, code: "Junior (Từ 1 đến 3 năm kinh nghiệm)", name: t("Junior (Từ 1 đến 3 năm kinh nghiệm)") },
+  { id: 3, code: "Senior (Trên 3 năm kinh nghiệm)", name: t("Senior (Trên 3 năm kinh nghiệm)") },
 ];
 
 export const CANDIDATE_STATUS_TYPES = [

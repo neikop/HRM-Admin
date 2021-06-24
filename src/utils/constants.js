@@ -2,9 +2,10 @@ import { t } from "utils/common";
 import { skills } from "utils/skills";
 
 export const WORKPLACE_TYPES = [
-  { id: 1, code: "Hà Nội", name: t("Ha Noi") },
-  { id: 2, code: "Đà Nẵng", name: t("Da Nang") },
-  { id: 3, code: "Hồ Chí Minh", name: t("Ho Chi Minh") },
+  { id: 1, code: "Hà Nội", name: t("Hà Nội") },
+  { id: 2, code: "Đà Nẵng", name: t("Đà Nẵng") },
+  { id: 3, code: "Hồ Chí Minh", name: t("Hồ Chí Minh") },
+  { id: 4, code: "日本", name: t("日本") },
 ];
 
 export const CURRENCY_TYPES = [
@@ -26,9 +27,9 @@ export const JOB_FORMS = [
 ];
 
 export const CANDIDATE_LEVELS = [
-  { id: 1, code: "Fresher", name: t("Fresher") },
-  { id: 2, code: "Junior", name: t("Junior") },
-  { id: 3, code: "Senior", name: t("Senior") },
+  { id: 1, code: "Fresher ( Dưới 1 năm kinh nghiệm)", name: t("Fresher ( Dưới 1 năm kinh nghiệm)") },
+  { id: 2, code: "Junior ( Từ 1 đến 3 năm kinh nghiệm)", name: t("Junior ( Từ 1 đến 3 năm kinh nghiệm)") },
+  { id: 3, code: "Senior ( Trên 3 năm kinh nghiệm)", name: t("Senior ( Trên 3 năm kinh nghiệm)") },
 ];
 
 export const CANDIDATE_STATUS_TYPES = [

@@ -9,7 +9,7 @@ import { formatCurrency, formatBonus, normalizeJob } from "utils/converter";
 import { t } from "utils/common";
 import { unix } from "moment";
 import { privateRoute } from "routes";
-import { JOB_STATUS_TYPES, DDMMYYYY } from "utils/constants";
+import { JOB_STATUS_TYPES, JOB_COUNTRIES, DDMMYYYY } from "utils/constants";
 import { parse } from "query-string";
 import JobSearch from "./JobSearch";
 
@@ -84,7 +84,9 @@ const JobList = () => {
           <WorkOutlineOutlinedIcon />
         </IconButton>
         {t("Jobs list")}
-
+        <Tag color="orange" className="ml-12">
+          {JOB_COUNTRIES.find((item) => item.code === country)?.name}
+        </Tag>
         <div className="flex-1" />
 
         {(isSuper || isAdmin || isCompany) && (

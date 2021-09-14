@@ -1,6 +1,6 @@
 import React from "react";
 import { useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { Spin, Tag, Row, Col } from "antd";
 import { Avatar, Button, Hidden, IconButton, Paper, Tooltip, Typography } from "@material-ui/core";
 import { Pagination } from "@material-ui/lab";
@@ -10,6 +10,7 @@ import { t } from "utils/common";
 import { unix } from "moment";
 import { privateRoute } from "routes";
 import { JOB_STATUS_TYPES, DDMMYYYY } from "utils/constants";
+import { parse } from "query-string";
 import JobSearch from "./JobSearch";
 
 import WorkOutlineOutlinedIcon from "@material-ui/icons/WorkOutlineOutlined";
@@ -18,6 +19,9 @@ import AddOutlinedIcon from "@material-ui/icons/AddOutlined";
 import BookmarkBorderOutlinedIcon from "@material-ui/icons/BookmarkBorderOutlined";
 
 const JobList = () => {
+  const location = useLocation();
+  const { country } = parse(location.search);
+
   const { isSuper, isAdmin, isCompany } = useSelector(({ profile }) => profile);
 
   const [dataList, setDataList] = React.useState([]);
@@ -29,7 +33,7 @@ const JobList = () => {
     setDataLoading(true);
     jobService
       .getListInfoJob({
-        search: dataSearch,
+        search: { ...dataSearch, country },
       })
       .then((response) => {
         const { status = 1, data } = response;
@@ -42,7 +46,7 @@ const JobList = () => {
       .finally(() => {
         setDataLoading(false);
       });
-  }, [dataSearch]);
+  }, [dataSearch, country]);
 
   const handleClickSearch = (nextSearch) => {
     setDataSearch((search) => ({

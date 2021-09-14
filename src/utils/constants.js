@@ -26,6 +26,11 @@ export const JOB_FORMS = [
   { id: 2, code: "Part Time", name: "Part Time" },
 ];
 
+export const JOB_COUNTRIES = [
+  { id: 1, code: "vietnam", name: "Việt Nam" },
+  { id: 2, code: "japan", name: "Japan" },
+];
+
 export const CANDIDATE_LEVELS = [
   { id: 1, code: "Fresher (Dưới 1 năm kinh nghiệm)", name: t("Fresher (Dưới 1 năm kinh nghiệm)") },
   { id: 2, code: "Junior (Từ 1 đến 3 năm kinh nghiệm)", name: t("Junior (Từ 1 đến 3 năm kinh nghiệm)") },

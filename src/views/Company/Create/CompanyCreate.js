@@ -2,11 +2,12 @@ import React from "react";
 import { Link, useParams } from "react-router-dom";
 import { Alert, Loading, RichTextEditor } from "components";
 import { Avatar, Button, IconButton, Paper, Typography } from "@material-ui/core";
-import { Col, Form, Input, Row, Upload } from "antd";
+import { Col, Form, Input, Select, Row, Upload } from "antd";
 import { fileService } from "services/file";
 import { companyService } from "services/company";
 import { browserHistory } from "utils/history";
 import { t } from "utils/common";
+import { JOB_COUNTRIES } from "utils/constants";
 import { privateRoute } from "routes";
 import { decode } from "html-entities";
 
@@ -39,7 +40,7 @@ const CompanyCreate = () => {
 
             form.setFieldsValue({ ...job });
           }
-        })
+        });
   }, [id, form]);
 
   const handleUploadAvatar = async ({ file, onSuccess, onError }) => {
@@ -62,50 +63,46 @@ const CompanyCreate = () => {
   };
 
   const handleClickCreate = () => {
-    form
-      .validateFields()
-      .then((values) => {
-        setIsLoadingCreate(true);
-        companyService
-          .createCompany({
-            params_request: {
-              ...values,
-              description,
-            },
-          })
-          .then((response) => {
-            Alert.success({ message: t("Create company successfully") });
+    form.validateFields().then((values) => {
+      setIsLoadingCreate(true);
+      companyService
+        .createCompany({
+          params_request: {
+            ...values,
+            description,
+          },
+        })
+        .then((response) => {
+          Alert.success({ message: t("Create company successfully") });
 
-            browserHistory.push(privateRoute.companyList.path);
-          })
-          .finally(() => {
-            setIsLoadingCreate(false);
-          });
-      });
+          browserHistory.push(privateRoute.companyList.path);
+        })
+        .finally(() => {
+          setIsLoadingCreate(false);
+        });
+    });
   };
 
   const handleClickUpdate = () => {
-    form
-      .validateFields()
-      .then((values) => {
-        setIsLoadingCreate(true);
-        companyService
-          .updateCompany({
-            params_request: {
-              id: Number(id),
-              ...values,
-              description,
-            },
-          })
-          .then((response) => {
-            Alert.success({ message: t("Update company successfully") });
+    form.validateFields().then((values) => {
+      setIsLoadingCreate(true);
+      companyService
+        .updateCompany({
+          params_request: {
+            id: Number(id),
+            ...values,
+            description,
+          },
+        })
+        .then((response) => {
+          Alert.success({ message: t("Update company successfully") });
 
-            browserHistory.push(privateRoute.companyView.url(id));
-          })
-          .finally(() => {
-            setIsLoadingCreate(false);
-          });
-      });
+          browserHistory.push(privateRoute.companyDetail.url(id));
+        })
+        .finally(() => {
+          setIsLoadingCreate(false);
+        });
+    });
   };
 
   React.useEffect(() => {
@@ -165,12 +162,29 @@ const CompanyCreate = () => {
                   </Form.Item>
                 </Col>
               </Row>
-              <Form.Item
-                name="address"
-                label={t("Address")}
-                rules={[{ required: true, message: t("Address is required") }]}>
-                <Input />
-              </Form.Item>
+              <Row>
+                <Col flex={1}>
+                  <Form.Item
+                    name="address"
+                    label={t("Address")}
+                    rules={[{ required: true, message: t("Address is required") }]}>
+                    <Input />
+                  </Form.Item>
+                </Col>
+              </Row>
+              <Row>
+                <Col xl={12} span={24}>
+                  <Form.Item name="country" label={t("Country")} required initialValue={JOB_COUNTRIES[0].code}>
+                    <Select>
+                      {JOB_COUNTRIES.map((item) => (
+                        <Select.Option key={item.id} value={item.code}>
+                          {item.name}
+                        </Select.Option>
+                      ))}
+                    </Select>
+                  </Form.Item>
+                </Col>
+              </Row>
             </Col>
             <Col lg={12} span={24}>
               <Form.Item label={t("Description")}>

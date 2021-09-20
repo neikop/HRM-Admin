@@ -12,6 +12,8 @@ import DateRangeOutlinedIcon from "@material-ui/icons/DateRangeOutlined";
 import RefreshOutlinedIcon from "@material-ui/icons/RefreshOutlined";
 import DeleteOutlinedIcon from "@material-ui/icons/DeleteOutlined";
 
+import DetailRefer from "./DetailRefer";
+
 const ReferList = () => {
   const [dataList, setDataList] = React.useState([]);
   const [dataCount, setDataCount] = React.useState(0);
@@ -142,6 +144,12 @@ const ReferList = () => {
               width: 180,
               render: (_, record) => record.candidateName,
             },
+            {
+              title: t("Skill"),
+              dataIndex: "skill",
+              width: 180,
+              render: (_, record) => record.candidateSkill,
+            },
             { title: t("Job title"), dataIndex: "title", width: 180 },
             { title: t("Company"), dataIndex: "company", width: 120 },
             {
@@ -204,6 +212,9 @@ const ReferList = () => {
               ),
             },
           ]}
+           expandable={{
+            expandedRowRender: (record) => <DetailRefer refer={record} />,
+          }}
         />
       </Paper>
       {dataCount > 0 && (

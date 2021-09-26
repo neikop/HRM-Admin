@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
 import { Alert, Loading } from "components";
 import { Popconfirm, Table, Tag, Select } from "antd";
 import { Button, IconButton, Paper, Tooltip, Typography } from "@material-ui/core";
@@ -18,6 +19,8 @@ import AddOutlinedIcon from "@material-ui/icons/AddOutlined";
 import DeleteOutlinedIcon from "@material-ui/icons/DeleteOutlined";
 
 const CandidateList = () => {
+  const { isSuper, isAdmin, isRecruit } = useSelector(({ profile }) => profile);
+
   const [dataList, setDataList] = React.useState([]);
   const [dataCount, setDataCount] = React.useState(0);
   const [dataSearch, setDataSearch] = React.useState({ page: 0 });
@@ -186,6 +189,7 @@ const CandidateList = () => {
               sorter: true,
               render: (_, record) => (
                 <Select
+                  disabled={!isSuper && !isAdmin && !isRecruit}
                   value={record.status}
                   onChange={(value) => {
                     setIsLoadingSelect(record.id);

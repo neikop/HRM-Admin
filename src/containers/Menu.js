@@ -22,7 +22,7 @@ const Menu = ({ onClickMenu }) => {
   const location = useLocation();
 
   const { country } = parse(location.search);
-  const { isSuper, isAdmin } = useSelector(({ profile }) => profile);
+  const { isSuper, isAdmin, isCompany } = useSelector(({ profile }) => profile);
   const { home, jobList, companyList, candidateList, userList, referList } = privateRoute;
 
   const MenuItem = ({ visible = true, name, icon, path }) => {
@@ -88,9 +88,13 @@ const Menu = ({ onClickMenu }) => {
         </Dropdown>
       </Hidden>
 
-      <MenuItem {...companyList} name={t("Company")} icon={<LocationCityOutlinedIcon />} visible={isSuper || isAdmin} />
-
-      <MenuItem {...candidateList} name={t("Candidate")} icon={<AssignmentIndOutlinedIcon />} />
+      <MenuItem
+        {...companyList}
+        name={t("Company")}
+        icon={<LocationCityOutlinedIcon />}
+        visible={isSuper || isAdmin || isCompany}
+      />
+      <MenuItem {...candidateList} name={t("Candidate")} icon={<AssignmentIndOutlinedIcon />} visible={!isCompany} />
       <MenuItem {...referList} name={t("Refer history")} icon={<DateRangeOutlinedIcon />} />
       <MenuItem {...userList} name={t("User")} icon={<GroupOutlinedIcon />} visible={isSuper || isAdmin} />
     </>

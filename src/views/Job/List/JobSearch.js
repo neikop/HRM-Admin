@@ -1,16 +1,18 @@
 import React from "react";
+import { useSelector } from "react-redux";
 import { NumberFormat } from "components";
 import { Button, InputAdornment, MenuItem, Paper, TextField, Typography } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import { Col, Row } from "antd";
 import { t } from "utils/common";
-import { CURRENCY_TYPES, JOB_STATUS_TYPES, WORKPLACE_TYPES } from "utils/constants";
+import { CURRENCY_TYPES, WORKPLACE_TYPES, JOB_STATUS_TYPES } from "utils/constants";
 
 import SearchOutlinedIcon from "@material-ui/icons/SearchOutlined";
 import FilterListOutlinedIcon from "@material-ui/icons/FilterListOutlined";
 
 const JobSearch = ({ onSearch }) => {
   const classes = useStyles();
+  const { isUser, isRecruit } = useSelector(({ profile }) => profile);
 
   const [keyword, setKeyword] = React.useState("");
   const [workplace, setWorkplace] = React.useState("");
@@ -113,7 +115,7 @@ const JobSearch = ({ onSearch }) => {
               label={t("Status")}
               value={status}
               onChange={(event) => setStatus(event.target.value)}>
-              {JOB_STATUS_TYPES.map((item) => (
+              {JOB_STATUS_TYPES.filter((item) => !item.noRecruit || !(isUser || isRecruit)).map((item) => (
                 <MenuItem key={item.id} value={item.code}>
                   {item.name}
                 </MenuItem>

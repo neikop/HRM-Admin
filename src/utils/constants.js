@@ -16,9 +16,9 @@ export const CURRENCY_TYPES = [
 
 export const JOB_STATUS_TYPES = [
   { id: 1, code: 2, name: t("Open"), color: "green" },
-  { id: 2, code: 1, name: t("Processing"), color: "blue" },
+  { id: 2, code: 1, name: t("Processing"), color: "blue", noRecruit: 1 },
   { id: 3, code: 3, name: t("Urgent"), color: "volcano" },
-  { id: 4, code: -1, name: t("Close") },
+  { id: 4, code: -1, name: t("Close"), noRecruit: 1 },
 ];
 
 export const JOB_FORMS = [

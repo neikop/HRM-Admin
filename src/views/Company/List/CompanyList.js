@@ -128,7 +128,9 @@ const CompanyList = () => {
               render: (_, record) => (
                 <div className="align-items-center">
                   <Avatar src={record.image} className="mr-12" />
-                  <Typography>{record.name}</Typography>
+                  <Typography component={Link} to={privateRoute.companyDetail.url(record.id)}>
+                    {record.name}
+                  </Typography>
                 </div>
               ),
             },

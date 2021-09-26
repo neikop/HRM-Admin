@@ -139,7 +139,7 @@ const JobList = () => {
                 <Select
                   value={job.status}
                   onChange={(status) => handleChangeStatus({ idJob: job.idJob, status })}
-                  style={{ width: 180 }}>
+                  style={{ width: 120 }}>
                   {JOB_STATUS_TYPES.map((item) => (
                     <Select.Option key={item.id} value={item.code}>
                       {item.name}

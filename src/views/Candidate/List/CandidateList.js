@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { Alert, Loading } from "components";
-import { Popconfirm, Table, Tag } from "antd";
+import { Popconfirm, Table, Tag, Select } from "antd";
 import { Button, IconButton, Paper, Tooltip, Typography } from "@material-ui/core";
 import { Pagination } from "@material-ui/lab";
 import { candidateService } from "services/candidate";
@@ -24,6 +24,7 @@ const CandidateList = () => {
   const [dataSort, setDataSort] = React.useState();
   const [dataLoading, setDataLoading] = React.useState(false);
 
+  const [isLoadingSelect, setIsLoadingSelect] = React.useState(0);
   const [isLoadingDelete, setIsLoadingDelete] = React.useState(0);
 
   const fetchData = React.useCallback(() => {
@@ -45,6 +46,21 @@ const CandidateList = () => {
         setDataLoading(false);
       });
   }, [dataSearch, dataSort]);
+
+  const handleChangeStatus = (item, { status }) => {
+    candidateService
+      .updateCv({
+        params_request: { id: item.id, status },
+      })
+      .then((response) => {
+        Alert.success({ message: t("Update candidate successfully") });
+
+        Object.assign(item, { status });
+      })
+      .finally(() => {
+        setIsLoadingSelect();
+      });
+  };
 
   const handleConfirmDelete = (item) => {
     setIsLoadingDelete(item.id);
@@ -168,7 +184,21 @@ const CandidateList = () => {
               dataIndex: "status",
               width: 100,
               sorter: true,
-              render: (_, record) => CANDIDATE_STATUS_TYPES.find((item) => item.code === record.status)?.name,
+              render: (_, record) => (
+                <Select
+                  value={record.status}
+                  onChange={(value) => {
+                    setIsLoadingSelect(record.id);
+                    handleChangeStatus(record, { status: value });
+                  }}
+                  loading={isLoadingSelect === record.id}>
+                  {CANDIDATE_STATUS_TYPES.map((item) => (
+                    <Select.Option key={item.id} value={item.code}>
+                      {item.name}
+                    </Select.Option>
+                  ))}
+                </Select>
+              ),
             },
             {
               dataIndex: "",

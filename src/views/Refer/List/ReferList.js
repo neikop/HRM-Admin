@@ -1,4 +1,5 @@
 import React from "react";
+import { useSelector } from "react-redux";
 import { Alert, Loading } from "components";
 import { Popconfirm, Select, Table } from "antd";
 import { Button, IconButton, Paper, Tooltip, Typography } from "@material-ui/core";
@@ -15,6 +16,8 @@ import DeleteOutlinedIcon from "@material-ui/icons/DeleteOutlined";
 import DetailRefer from "./DetailRefer";
 
 const ReferList = () => {
+  const { isUser, isRecruit } = useSelector(({ profile }) => profile);
+
   const [dataList, setDataList] = React.useState([]);
   const [dataCount, setDataCount] = React.useState(0);
   const [dataSearch, setDataSearch] = React.useState({ page: 0 });
@@ -179,6 +182,7 @@ const ReferList = () => {
               width: 200,
               render: (_, record) => (
                 <Select
+                  disabled={isUser || isRecruit}
                   value={record.status}
                   onChange={(value) => {
                     setIsLoadingSelect(record.id);
@@ -212,7 +216,7 @@ const ReferList = () => {
               ),
             },
           ]}
-           expandable={{
+          expandable={{
             expandedRowRender: (record) => <DetailRefer refer={record} />,
           }}
         />

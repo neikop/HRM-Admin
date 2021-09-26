@@ -1,5 +1,5 @@
 export const formatCurrency = (currency = "USD", salary) =>
-  Number(salary ?? 0).toLocaleString("en-EN", { style: "currency", currency });
+  Number(salary ?? 0).toLocaleString("en-EN", { style: "currency", currency, maximumFractionDigits: 0 });
 
 export const formatBonus = (bonus) => formatCurrency("VND", bonus).substr(1).concat("");
 

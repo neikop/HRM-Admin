@@ -1,7 +1,7 @@
 import React from "react";
 import { useSelector } from "react-redux";
 import { Link, useLocation } from "react-router-dom";
-import { Spin, Tag, Row, Col } from "antd";
+import { Spin, Tag, Row, Col, Select } from "antd";
 import { Avatar, Button, Hidden, IconButton, Paper, Tooltip, Typography } from "@material-ui/core";
 import { Pagination } from "@material-ui/lab";
 import { jobService } from "services/job";
@@ -54,6 +54,19 @@ const JobList = () => {
       ...nextSearch,
       page: 0,
     }));
+  };
+
+  const handleChangeStatus = ({ idJob, status }) => {
+    jobService
+      .updateJob({
+        params_request: { idJob, status },
+      })
+      .then(() => {
+        setDataList((jobs) => {
+          jobs.find((item) => item.idJob === idJob).status = status;
+          return [...jobs];
+        });
+      });
   };
 
   const TablePagination = () => (
@@ -121,10 +134,23 @@ const JobList = () => {
                 <Typography component="span" variant="h6" color="primary" className="mr-8">
                   {job.title}
                 </Typography>
+              </Link>
+              {isSuper || isAdmin ? (
+                <Select
+                  value={job.status}
+                  onChange={(status) => handleChangeStatus({ idJob: job.idJob, status })}
+                  style={{ width: 180 }}>
+                  {JOB_STATUS_TYPES.map((item) => (
+                    <Select.Option key={item.id} value={item.code}>
+                      {item.name}
+                    </Select.Option>
+                  ))}
+                </Select>
+              ) : (
                 <Tag color={JOB_STATUS_TYPES.find((item) => item.code === job.status)?.color}>
                   {JOB_STATUS_TYPES.find((item) => item.code === job.status)?.name}
                 </Tag>
-              </Link>
+              )}
 
               <Typography variant="subtitle2" className="mt-8">
                 {t("Company")}: <Link to={privateRoute.companyDetail.url(job.company?.id)}>{job.company?.name}</Link>

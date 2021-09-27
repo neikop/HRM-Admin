@@ -1,6 +1,6 @@
 import React from "react";
 import { useSelector } from "react-redux";
-import { Link, useParams } from "react-router-dom";
+import { Link, useParams, useLocation } from "react-router-dom";
 import { Alert, InputNumberFormat, Loading, RichTextEditor } from "components";
 import { Avatar, Button, IconButton, Paper, Typography } from "@material-ui/core";
 import { KeyboardDatePicker } from "@material-ui/pickers";
@@ -14,6 +14,7 @@ import { unix } from "moment";
 import { decode } from "html-entities";
 import { privateRoute } from "routes";
 import { DDMMYYYY, JOB_STATUS_TYPES, JOB_FORMS, CURRENCY_TYPES } from "utils/constants";
+import { parse } from "query-string";
 import { SelectCompany } from "views/Company/Components";
 
 import NavigateBeforeOutlinedIcon from "@material-ui/icons/NavigateBeforeOutlined";
@@ -22,8 +23,11 @@ import EditOutlinedIcon from "@material-ui/icons/EditOutlined";
 import CloudUploadOutlinedIcon from "@material-ui/icons/CloudUploadOutlined";
 
 const JobCreate = () => {
+  const location = useLocation();
+  const { idCompany } = parse(location.search);
   const { id } = useParams();
   const { isSuper, isAdmin } = useSelector(({ profile }) => profile);
+  console.log(idCompany);
 
   const [form] = Form.useForm();
   const [deadline, setDeadline] = React.useState(null);
@@ -58,7 +62,7 @@ const JobCreate = () => {
               idCompany: company?.id,
             });
           }
-        })
+        });
   }, [id, form]);
 
   const handleUploadAvatar = async ({ file, onSuccess, onError }) => {
@@ -98,57 +102,53 @@ const JobCreate = () => {
   };
 
   const handleClickCreate = () => {
-    form
-      .validateFields()
-      .then((values) => {
-        setIsLoadingCreate(true);
-        jobService
-          .createJob({
-            params_request: {
-              idJobType: 1,
-              ...values,
-              deadline: getUnix(deadline),
-              description,
-              requirement,
-              welfare,
-            },
-          })
-          .then((response) => {
-            Alert.success({ message: t("Create job successfully") });
+    form.validateFields().then((values) => {
+      setIsLoadingCreate(true);
+      jobService
+        .createJob({
+          params_request: {
+            idJobType: 1,
+            ...values,
+            deadline: getUnix(deadline),
+            description,
+            requirement,
+            welfare,
+          },
+        })
+        .then((response) => {
+          Alert.success({ message: t("Create job successfully") });
 
-            browserHistory.push(privateRoute.jobList.path);
-          })
-          .finally(() => {
-            setIsLoadingCreate(false);
-          });
-      });
+          browserHistory.push(privateRoute.jobList.path);
+        })
+        .finally(() => {
+          setIsLoadingCreate(false);
+        });
+    });
   };
 
   const handleClickUpdate = () => {
-    form
-      .validateFields()
-      .then((values) => {
-        setIsLoadingCreate(true);
-        jobService
-          .updateJob({
-            params_request: {
-              idJob: Number(id),
-              ...values,
-              deadline: getUnix(deadline),
-              description,
-              requirement,
-              welfare,
-            },
-          })
-          .then((response) => {
-            Alert.success({ message: t("Update job successfully") });
+    form.validateFields().then((values) => {
+      setIsLoadingCreate(true);
+      jobService
+        .updateJob({
+          params_request: {
+            idJob: Number(id),
+            ...values,
+            deadline: getUnix(deadline),
+            description,
+            requirement,
+            welfare,
+          },
+        })
+        .then((response) => {
+          Alert.success({ message: t("Update job successfully") });
 
-            browserHistory.push(privateRoute.jobView.url(id));
-          })
-          .finally(() => {
-            setIsLoadingCreate(false);
-          });
-      });
+          browserHistory.push(privateRoute.jobView.url(id));
+        })
+        .finally(() => {
+          setIsLoadingCreate(false);
+        });
+    });
   };
 
   React.useEffect(() => {

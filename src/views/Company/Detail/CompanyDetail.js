@@ -2,11 +2,12 @@ import React from "react";
 import { useSelector } from "react-redux";
 import { Link, useParams } from "react-router-dom";
 import { ColorButton } from "components";
-import { Avatar, Divider, IconButton, Paper, Typography } from "@material-ui/core";
+import { Avatar, Divider, Hidden, IconButton, Paper, Typography } from "@material-ui/core";
 import { companyService } from "services/company";
 import { t } from "utils/common";
 import { privateRoute } from "routes";
 import { decode } from "html-entities";
+import { JobList } from "views/Job/List";
 
 import NavigateBeforeOutlinedIcon from "@material-ui/icons/NavigateBeforeOutlined";
 import EditOutlinedIcon from "@material-ui/icons/EditOutlined";
@@ -80,18 +81,25 @@ const CompanyDetail = () => {
   const { isSuper, isAdmin } = useSelector(({ profile }) => profile);
 
   return (
-    <>
-      <Paper elevation={0} className="align-items-center mb-24" style={{ backgroundColor: "transparent" }}>
-        <Link to={privateRoute.companyList.path}>
-          <IconButton>
-            <NavigateBeforeOutlinedIcon />
-          </IconButton>
-        </Link>
-        <Typography variant="h6">{t("Company info")}</Typography>
-      </Paper>
+    <div className="flex-row align-items-start">
+      <div style={{ position: "sticky", top: 84, flex: 1 }}>
+        <Paper elevation={0} className="align-items-center mb-24" style={{ backgroundColor: "transparent" }}>
+          <Link to={privateRoute.companyList.path}>
+            <IconButton>
+              <NavigateBeforeOutlinedIcon />
+            </IconButton>
+          </Link>
+          <Typography variant="h6">{t("Company info")}</Typography>
+        </Paper>
+        <CompanyPaper id={id} isAdmin={isSuper || isAdmin} />
+      </div>
 
-      <CompanyPaper id={id} isAdmin={isSuper || isAdmin} />
-    </>
+      <Hidden mdDown>
+        <div style={{ width: 600, marginLeft: 20 }}>
+          <JobList showSearch={false} searchParams={{ idCompany: Number(id) }} />
+        </div>
+      </Hidden>
+    </div>
   );
 };
 

@@ -87,7 +87,7 @@ const JobView = () => {
         )}
       </Paper>
 
-      <div className="flex-row">
+      <div className="flex-row align-items-start">
         <div className="flex-1">
           <Tabs destroyInactiveTabPane size="middle" defaultActiveKey={active} onChange={handleChangeActiveKey}>
             <Tabs.TabPane tab={t("DETAIL")} key="detail">
@@ -100,7 +100,9 @@ const JobView = () => {
         </div>
 
         <Hidden mdDown>
-          <div hidden={active !== "detail"} style={{ width: 520, paddingTop: 20, marginLeft: 20 }}>
+          <div
+            hidden={active !== "detail"}
+            style={{ width: 600, paddingTop: 20, marginLeft: 20, position: "sticky", top: 60 }}>
             <Typography variant="h6" gutterBottom>
               {t("Company info")}
             </Typography>

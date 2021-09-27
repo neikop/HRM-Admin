@@ -10,7 +10,7 @@ import { t } from "utils/common";
 import { unix } from "moment";
 import { privateRoute } from "routes";
 import { JOB_STATUS_TYPES, JOB_COUNTRIES, DDMMYYYY } from "utils/constants";
-import { parse } from "query-string";
+import { parse, stringify } from "query-string";
 import JobSearch from "./JobSearch";
 
 import WorkOutlineOutlinedIcon from "@material-ui/icons/WorkOutlineOutlined";
@@ -103,7 +103,11 @@ const JobList = ({ showSearch = true, searchParams }) => {
         <div className="flex-1" />
 
         {(isSuper || isAdmin || isCompany) && (
-          <Link to={privateRoute.jobCreate.path}>
+          <Link
+            to={{
+              pathname: privateRoute.jobCreate.path,
+              search: stringify(searchParams),
+            }}>
             <Button variant="contained" color="secondary" startIcon={<AddOutlinedIcon />}>
               {t("Create job")}
             </Button>

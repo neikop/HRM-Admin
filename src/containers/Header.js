@@ -24,7 +24,7 @@ const Header = () => {
   };
 
   return (
-    <Paper component={AppBar} square className="App-Header">
+    <Paper component={AppBar} position="sticky" square className="App-Header">
       <Hidden smDown>
         <AppMenu />
       </Hidden>

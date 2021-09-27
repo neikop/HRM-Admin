@@ -18,7 +18,7 @@ import DirectionsOutlinedIcon from "@material-ui/icons/DirectionsOutlined";
 import AddOutlinedIcon from "@material-ui/icons/AddOutlined";
 import BookmarkBorderOutlinedIcon from "@material-ui/icons/BookmarkBorderOutlined";
 
-const JobList = () => {
+const JobList = ({ showSearch = true, searchParams }) => {
   const location = useLocation();
   const { country } = parse(location.search);
 
@@ -33,7 +33,7 @@ const JobList = () => {
     setDataLoading(true);
     jobService
       .getListInfoJob({
-        search: { ...dataSearch, country },
+        search: { ...dataSearch, country, ...searchParams },
       })
       .then((response) => {
         const { status = 1, data } = response;
@@ -46,7 +46,7 @@ const JobList = () => {
       .finally(() => {
         setDataLoading(false);
       });
-  }, [dataSearch, country]);
+  }, [dataSearch, country, searchParams]);
 
   const handleClickSearch = (nextSearch) => {
     setDataSearch((search) => ({
@@ -110,14 +110,17 @@ const JobList = () => {
           </Link>
         )}
       </Typography>
-      <JobSearch onSearch={handleClickSearch} />
-
-      <Paper className="justify-content-between align-items-center flex-wrap p-16 mb-24">
-        <Typography>
-          {dataCount} {t("jobs matched")}
-        </Typography>
-        <TablePagination />
-      </Paper>
+      {showSearch && (
+        <>
+          <JobSearch onSearch={handleClickSearch} />
+          <Paper className="justify-content-between align-items-center flex-wrap p-16 mb-24">
+            <Typography>
+              {dataCount} {t("jobs matched")}
+            </Typography>
+            <TablePagination />
+          </Paper>
+        </>
+      )}
 
       <Spin spinning={dataLoading}>
         {dataList.map((job) => (
@@ -139,7 +142,7 @@ const JobList = () => {
                 <Select
                   value={job.status}
                   onChange={(status) => handleChangeStatus({ idJob: job.idJob, status })}
-                  style={{ width: 120 }}>
+                  style={{ width: 140 }}>
                   {JOB_STATUS_TYPES.map((item) => (
                     <Select.Option key={item.id} value={item.code}>
                       {item.name}

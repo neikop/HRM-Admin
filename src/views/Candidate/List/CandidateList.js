@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { Alert, Loading } from "components";
 import { Popconfirm, Table, Tag, Select } from "antd";
-import { Button, IconButton, Paper, Tooltip, Typography } from "@material-ui/core";
+import { Button, IconButton, Link as NavLink, Paper, Tooltip, Typography } from "@material-ui/core";
 import { Pagination } from "@material-ui/lab";
 import { candidateService } from "services/candidate";
 import { t } from "utils/common";
@@ -13,6 +13,7 @@ import { CANDIDATE_STATUS_TYPES, DDMMYYYY_HHMM } from "utils/constants";
 import CandidateSearch from "./CandidateSearch";
 import CandidateItem from "./CandidateItem";
 
+import AssignmentOutlinedIcon from "@material-ui/icons/AssignmentOutlined";
 import AssignmentIndOutlinedIcon from "@material-ui/icons/AssignmentIndOutlined";
 import DirectionsOutlinedIcon from "@material-ui/icons/DirectionsOutlined";
 import AddOutlinedIcon from "@material-ui/icons/AddOutlined";
@@ -210,6 +211,13 @@ const CandidateList = () => {
               width: 128,
               render: (_, record) => (
                 <Typography noWrap>
+                  <NavLink hidden={!record.urlCv[0]} href={record.urlCv[0]} target="_blank">
+                    <Tooltip title={t("View CV")}>
+                      <IconButton>
+                        <AssignmentOutlinedIcon />
+                      </IconButton>
+                    </Tooltip>
+                  </NavLink>
                   <Link to={privateRoute.candidateUpdate.url(record.id)}>
                     <Tooltip title={t("View detail")}>
                       <IconButton>

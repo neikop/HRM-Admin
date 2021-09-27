@@ -2,13 +2,14 @@ import React from "react";
 import { useSelector } from "react-redux";
 import { Alert, Loading } from "components";
 import { Popconfirm, Select, Table } from "antd";
-import { Button, IconButton, Paper, Tooltip, Typography } from "@material-ui/core";
+import { Button, IconButton, Link as NavLink, Paper, Tooltip, Typography } from "@material-ui/core";
 import { Pagination } from "@material-ui/lab";
 import { DateTimePicker } from "@material-ui/pickers";
 import { jobService } from "services/job";
 import { t, getUnix } from "utils/common";
 import { DDMMYYYY_HHMM, REFERRAL_STATUS_TYPES } from "utils/constants";
 
+import AssignmentOutlinedIcon from "@material-ui/icons/AssignmentOutlined";
 import DateRangeOutlinedIcon from "@material-ui/icons/DateRangeOutlined";
 import RefreshOutlinedIcon from "@material-ui/icons/RefreshOutlined";
 import DeleteOutlinedIcon from "@material-ui/icons/DeleteOutlined";
@@ -16,7 +17,7 @@ import DeleteOutlinedIcon from "@material-ui/icons/DeleteOutlined";
 import DetailRefer from "./DetailRefer";
 
 const ReferList = () => {
-  const { isUser, isRecruit } = useSelector(({ profile }) => profile);
+  const { isSuper, isAdmin, isRecruit } = useSelector(({ profile }) => profile);
 
   const [dataList, setDataList] = React.useState([]);
   const [dataCount, setDataCount] = React.useState(0);
@@ -134,7 +135,7 @@ const ReferList = () => {
 
       <Paper className="mb-24">
         <Table
-          scroll={{ x: 800 }}
+          scroll={{ x: 1200 }}
           bordered={false}
           loading={dataLoading}
           rowKey={(record) => record.id}
@@ -182,7 +183,7 @@ const ReferList = () => {
               width: 200,
               render: (_, record) => (
                 <Select
-                  disabled={isUser || isRecruit}
+                  disabled={!isSuper && !isAdmin && !isRecruit}
                   value={record.status}
                   onChange={(value) => {
                     setIsLoadingSelect(record.id);
@@ -203,16 +204,25 @@ const ReferList = () => {
               align: "right",
               width: 80,
               render: (_, record) => (
-                <Popconfirm
-                  placement="topRight"
-                  title={t("Are you sure?")}
-                  onConfirm={() => handleConfirmDelete(record)}>
-                  <Tooltip title={t("Delete")}>
-                    <IconButton>
-                      <Loading visible={isLoadingDelete === record.id} icon={<DeleteOutlinedIcon color="error" />} />
-                    </IconButton>
-                  </Tooltip>
-                </Popconfirm>
+                <Typography noWrap>
+                  <NavLink hidden={!record.urlCv[0]} href={record.urlCv[0]} target="_blank">
+                    <Tooltip title={t("View CV")}>
+                      <IconButton>
+                        <AssignmentOutlinedIcon />
+                      </IconButton>
+                    </Tooltip>
+                  </NavLink>
+                  <Popconfirm
+                    placement="topRight"
+                    title={t("Are you sure?")}
+                    onConfirm={() => handleConfirmDelete(record)}>
+                    <Tooltip title={t("Delete")}>
+                      <IconButton>
+                        <Loading visible={isLoadingDelete === record.id} icon={<DeleteOutlinedIcon color="error" />} />
+                      </IconButton>
+                    </Tooltip>
+                  </Popconfirm>
+                </Typography>
               ),
             },
           ]}

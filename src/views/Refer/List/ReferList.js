@@ -148,13 +148,14 @@ const ReferList = () => {
               width: 180,
               render: (_, record) => record.candidateName,
             },
+            { title: t("Manager Candidate"), dataIndex: "nameUserCreate", width: 180 },
             {
               title: t("Skill"),
               dataIndex: "skill",
-              width: 180,
+              width: 120,
               render: (_, record) => record.candidateSkill,
             },
-            { title: t("Job title"), dataIndex: "title", width: 180 },
+            { title: t("Job title"), dataIndex: "title", width: 240 },
             { title: t("Company"), dataIndex: "company", width: 120 },
             {
               title: t("Interview Date"),

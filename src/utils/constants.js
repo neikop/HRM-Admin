@@ -70,3 +70,24 @@ export const DDMMYYYY = "DD/MM/YYYY";
 export const DDMMYYYY_HHMM = "DD/MM/YYYY HH:mm";
 
 export const SKILLS = skills;
+
+
+export const BANK_INFO = [
+  { id: 1, code: "vpbank", name: "VPBank" },
+  { id: 2, code: "techcombank", name: "Techcombank - NH Ky Thuong" },
+  { id: 3, code: "vietcombank", name: "Vietcombank - NH Ngoai Thuong" },
+  { id: 4, code: "viettinbank", name: "Viettinbank - NH Cong Thuong Viet Nam" },
+  { id: 5, code: "bidv", name: "BIDV - NH Dau Tu Va Phat Trien Viet Nam" },
+  { id: 6, code: "agribank", name: "Agribank - NH Nong Nghiep va PTNT VN" },
+  { id: 7, code: "mbbank", name: "Mbbank - NH Quan Doi" },
+  { id: 8, code: "acb", name: "ACB - NH A Chau" },
+  { id: 9, code: "hdbank", name: "NH Phat Trien TP HCM" },
+  { id: 10, code: "tpbank", name: "TPBANK - NH Tien Phong" },
+  { id: 11, code: "sacombank", name: "SACOMBANK - NH Sai Gon Thuong Tin" },
+];
+
+
+
+
+
+

@@ -1,15 +1,15 @@
 import React from "react";
 import { useSelector } from "react-redux";
 import { Alert, Loading } from "components";
-import { Avatar, Box, Button, IconButton, Paper, Typography } from "@material-ui/core";
+import { Avatar, Box, Button, IconButton, Paper, Typography, TextField, MenuItem } from "@material-ui/core";
 import { KeyboardDatePicker } from "@material-ui/pickers";
-import { Col, Form, Input, Row, Tabs, Upload } from "antd";
+import { Col, Form, Input, Row, Tabs, Upload, Select } from "antd";
 import { profileAction } from "actions/profile";
 import { userService } from "services/user";
 import { fileService } from "services/file";
 import { getUnix, t } from "utils/common";
 import { unix } from "moment";
-import { DDMMYYYY, USER_ROLES, USER_TYPES } from "utils/constants";
+import { DDMMYYYY, USER_ROLES, USER_TYPES, BANK_INFO } from "utils/constants";
 import UpdatePassword from "./UpdatePassword";
 
 import PersonOutlinedIcon from "@material-ui/icons/PersonOutlined";
@@ -116,6 +116,11 @@ const Profile = () => {
               { label: t("Email"), value: user.email },
               { label: t("Type"), value: USER_TYPES.find((item) => item.code === user.userType)?.name },
               { label: t("Role"), value: USER_ROLES.find((item) => item.code === user.roleId)?.name },
+              { label: t("Address"), value: user.address },
+              { label: t("CMT/CCCD"), value: user.idCard },
+              { label: t("Introduction"), value: user.introduce },
+              { label: t("Bank account number"), value: user.numberBank },
+              { label: t("Bank Name"), value: user.nameBank },
             ].map(({ label, value }, index) => (
               <Row gutter={24} key={index} className="mb-12">
                 <Col xl={8} lg={24} md={8} span={24}>
@@ -152,6 +157,35 @@ const Profile = () => {
                       <Form.Item name="fullName" label={t("Name")}>
                         <Input />
                       </Form.Item>
+                      <Form.Item name="address" label={t("Address")}>
+                        <Input />
+                      </Form.Item>
+                      <Form.Item name="idCard" label={t("CMT/CCCD")}>
+                        <Input />
+                      </Form.Item>
+
+                      <Form.Item name="introduce" label={t("Introduction")}>
+                        <Input />
+                      </Form.Item>
+
+                      <Form.Item name="numberBank" label={t("Bank account number")}>
+                        <Input />
+                      </Form.Item>
+
+                      <Form.Item name="nameBank" label={t("Bank name")}>
+                    
+                        <Select
+                        value={user.nameBank}
+                        style={{ width: 140 }}>
+                        {BANK_INFO.map((item) => (
+                          <Select.Option key={item.id} value={item.code}>
+                            {item.name}
+                          </Select.Option>
+                        ))}
+                        </Select>
+
+                      </Form.Item>
+
                       <Form.Item name="phone" label={t("Phone")}>
                         <Input />
                       </Form.Item>

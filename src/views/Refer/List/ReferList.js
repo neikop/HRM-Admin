@@ -48,11 +48,11 @@ const ReferList = () => {
   }, [dataSearch]);
 
   const handleChangeStatus = (item, { status = item.status, interviewDate = item.interviewDate }) => {
-    if (!interviewDate) {
-      Alert.error({ message: t("Update Interview Date First") });
-      setIsLoadingPicker();
-      setIsLoadingSelect();
-    } else
+    // if (!interviewDate) {
+    //   Alert.error({ message: t("Update Interview Date First") });
+    //   setIsLoadingPicker();
+    //   setIsLoadingSelect();
+    // } else
       jobService
         .applyCvToJob({
           params_request: {

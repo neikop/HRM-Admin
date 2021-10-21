@@ -83,6 +83,7 @@ const CandidateUpdate = () => {
           <Row gutter={24}>
             <Col lg={12} span={24}>
               <Row gutter={24}>
+                
                 <Col md={12} span={24}>
                   <Form.Item name="candidateName" label={t("Name")}>
                     <Input />
@@ -115,6 +116,7 @@ const CandidateUpdate = () => {
                     <Input />
                   </Form.Item>
                 </Col>
+                
                 <Col md={12} span={24}>
                   <Form.Item label={t("Date of Birth")}>
                     <KeyboardDatePicker
@@ -155,8 +157,12 @@ const CandidateUpdate = () => {
                       helperText=""
                     />
                   </Form.Item>
-                  <Form.Item name="note" label={t("Note")}>
-                    <Input.TextArea />
+                 
+                </Col>
+
+                <Col md={24} span={24}>
+                   <Form.Item name="note" label={t("Note")}>
+                    <Input.TextArea rows={10} />
                   </Form.Item>
                 </Col>
               </Row>

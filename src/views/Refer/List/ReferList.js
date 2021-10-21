@@ -16,7 +16,10 @@ import DeleteOutlinedIcon from "@material-ui/icons/DeleteOutlined";
 
 import DetailRefer from "./DetailRefer";
 
-const ReferList = () => {
+import ReferSearch from "./ReferSearch";
+
+
+const ReferList = ({ showSearch = true, paramsRequest }) => {
   const { isSuper, isAdmin, isRecruit } = useSelector(({ profile }) => profile);
 
   const [dataList, setDataList] = React.useState([]);
@@ -30,9 +33,10 @@ const ReferList = () => {
 
   const fetchData = React.useCallback(() => {
     setDataLoading(true);
+    console.log(dataSearch)
     jobService
       .getListJobCvApplied({
-        params_request: dataSearch,
+        params_request: { ...dataSearch, ...paramsRequest }
       })
       .then((response) => {
         const { status = 1, data } = response;
@@ -45,7 +49,7 @@ const ReferList = () => {
       .finally(() => {
         setDataLoading(false);
       });
-  }, [dataSearch]);
+  }, [dataSearch, paramsRequest]);
 
   const handleChangeStatus = (item, { status = item.status, interviewDate = item.interviewDate }) => {
     // if (!interviewDate) {
@@ -92,6 +96,14 @@ const ReferList = () => {
       });
   };
 
+   const handleClickSearch = (nextSearch) => {
+    setDataSearch((search) => ({
+      ...search,
+      ...nextSearch,
+      page: 0,
+    }));
+  };
+
   const TablePagination = () => (
     <Pagination
       shape="rounded"
@@ -127,11 +139,17 @@ const ReferList = () => {
         </Button>
       </Paper>
 
-      <Paper className="justify-content-between align-items-center p-16 mb-24">
-        <Typography>
-          {dataCount} {t("Referrals")}
-        </Typography>
-      </Paper>
+      {showSearch && (
+        <>
+          <ReferSearch onSearch={handleClickSearch} />
+          <Paper className="justify-content-between align-items-center flex-wrap p-16 mb-24">
+            <Typography>
+              {dataCount} {t("refers matched")}
+            </Typography>
+            <TablePagination />
+          </Paper>
+        </>
+      )}
 
       <Paper className="mb-24">
         <Table

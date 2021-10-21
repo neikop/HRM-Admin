@@ -45,7 +45,7 @@ export const CANDIDATE_STATUS_TYPES = [
 export const REFERRAL_STATUS_TYPES = [
   { id: 1, code: 0, name: t("Approve Pending") },
   { id: 2, code: 1, name: t("CV Passed") },
-  { id: 3, code: -1, name: t("CV Rejected") },
+  { id: 3, code: -1, name: t("CV Rejected"), noFilter: 1 },
   { id: 4, code: 2, name: t("Interview Waiting") },
   { id: 5, code: 3, name: t("Interview Passed") },
   { id: 6, code: -3, name: t("Interview Failed") },

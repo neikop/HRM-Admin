@@ -173,6 +173,27 @@ const CompanyCreate = () => {
                 </Col>
               </Row>
               <Row>
+                <Col flex={1}>
+                  <Form.Item
+                    name="hotline"
+                    label={t("Hotline")}
+                    rules={[{ required: true, message: t("Hotline is required") }]}>
+                    <Input />
+                  </Form.Item>
+                </Col>
+              </Row>
+              <Row>
+                <Col flex={1}>
+                  <Form.Item
+                    name="email"
+                    label={t("Email")}
+                    rules={[{ required: true, message: t("Email is required") }]}>
+                    <Input />
+                  </Form.Item>
+                </Col>
+              </Row>
+
+              <Row>
                 <Col xl={12} span={24}>
                   <Form.Item name="country" label={t("Country")} required initialValue={JOB_COUNTRIES[0].code}>
                     <Select>

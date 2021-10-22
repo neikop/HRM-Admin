@@ -135,6 +135,8 @@ const CompanyList = () => {
               ),
             },
             { title: t("Address"), dataIndex: "address" },
+            { title: t("Hotline"), dataIndex: "hotline" },
+            { title: t("Email"), dataIndex: "email" },
             { title: t("URL"), dataIndex: "link", render: (_, record) => <a href={record.link}>{record.link}</a> },
             {
               dataIndex: "",

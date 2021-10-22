@@ -15,7 +15,7 @@ import GroupOutlinedIcon from "@material-ui/icons/GroupOutlined";
 import DateRangeOutlinedIcon from "@material-ui/icons/DateRangeOutlined";
 import RefreshOutlinedIcon from "@material-ui/icons/RefreshOutlined";
 
-const Board = ({ visible, name = "-", value = 0, extra, Icon, url, color }) => {
+const Board = ({ visible, name = "-", value = 0, extra, extra2, Icon, url, color }) => {
   const classes = useStyles();
   return visible ? (
     <Grid item xs={12} md={6}>
@@ -25,6 +25,7 @@ const Board = ({ visible, name = "-", value = 0, extra, Icon, url, color }) => {
             <Typography variant="h3">{value}</Typography>
             <Typography variant="h5">{name}</Typography>
             <Typography variant="subtitle1">{extra}</Typography>
+            <Typography variant="subtitle2">{extra2}</Typography>
           </div>
           <Icon className={classes.cardIcon} style={{ color: "#FFF" }} />
         </div>
@@ -109,6 +110,8 @@ const Home = () => {
           name={t("Total Users")}
           color="#3949ab"
           value={dashboard.totalUser}
+          extra={`Total HR users: ${dashboard.totalHrUser ?? 0}`}
+          extra2={`Total Company users: ${dashboard.totalCompanyUser ?? 0}`}
           Icon={GroupOutlinedIcon}
           url={privateRoute.userList.path}
         />

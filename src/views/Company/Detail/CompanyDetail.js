@@ -53,6 +53,16 @@ export const CompanyPaper = ({ id, isAdmin }) => {
             {company.address}
           </Typography>
 
+          <Typography color="textSecondary">{t("Hotline")}: </Typography>
+          <Typography variant="subtitle1" gutterBottom>
+            {company.hotline}
+          </Typography>
+
+          <Typography color="textSecondary">{t("Email")}: </Typography>
+          <Typography variant="subtitle1" gutterBottom>
+            {company.email}
+          </Typography>
+
           <Typography color="textSecondary">
             {t("Website")}: <a href={company.link}>{company.link}</a>
           </Typography>

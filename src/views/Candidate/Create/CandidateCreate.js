@@ -21,42 +21,51 @@ const CandidateCreate = () => {
   const [calendarReminder, setCalendarReminder] = React.useState(null);
 
   const [isUpload, setUpload] = React.useState(true);
+  const [isLoading, setIsLoading] = React.useState(false);
   const [isLoadingParser, setIsLoadingParser] = React.useState(false);
   const [isLoadingCreate, setIsLoadingCreate] = React.useState(false);
 
-  const handleFileParser = async ({ file, onSuccess, onError }) => {
-    const formData = new FormData();
-    formData.append("resume", file);
+  // const handleFileParser = async ({ file, onSuccess, onError }) => {
+  //   const formData = new FormData();
+  //   formData.append("resume", file);
 
-    setIsLoadingParser(true);
-    fileService
-      .resumeParser(formData)
-      .then((response) => {
-        const { name, ...data } = response;
-        form.setFieldsValue({
-          ...data,
-          candidateName: name,
-        });
-      })
-      .finally(() => {
-        setIsLoadingParser(false);
-        uploadFile(file);
-      });
-  };
+  //   setIsLoadingParser(true);
+  //   fileService
+  //     .resumeParser(formData)
+  //     .then((response) => {
+  //       const { name, ...data } = response;
+  //       form.setFieldsValue({
+  //         ...data,
+  //         candidateName: name,
+  //       });
+  //     })
+  //     .finally(() => {
+  //       setIsLoadingParser(false);
+  //       uploadFile(file);
+  //     });
+  // };
+  
 
-  const uploadFile = (file) => {
+  const uploadFile = ({ file, onSuccess, onError}) => {
+    
     const formData = new FormData();
     formData.append("cv", file);
+    setIsLoading(true);
+
     fileService
       .uploadFile(formData)
       .then((response) => {
-        const { status = 1, data } = response;
-        if (status) {
-          const { url: urlCv } = data;
-          form.setFieldsValue({ urlCv });
-        }
+        const { data } = response;
+        form.setFieldsValue({
+            urlCv: data.url,
+            candidateName: data.type,
+            address: data.address,
+            email: data.email,
+            phone: data.phone
+        });
       })
       .finally(() => {
+        setIsLoading(false);
         setUpload(false);
       });
   };
@@ -95,7 +104,7 @@ const CandidateCreate = () => {
       </Paper>
 
       {isUpload ? (
-        <Upload.Dragger accept="application/pdf" showUploadList={false} customRequest={handleFileParser}>
+        <Upload.Dragger multiple accept="application/pdf" showUploadList={false} customRequest={uploadFile}>
           <Typography variant="h4" color="textSecondary">
             {t("Upload candidate profile here")}
           </Typography>
@@ -110,7 +119,7 @@ const CandidateCreate = () => {
             disableElevation
             variant="contained"
             color="secondary"
-            startIcon={<Loading visible={isLoadingParser} icon={<CloudUploadIcon />} />}>
+            startIcon={<Loading visible={isLoading} icon={<CloudUploadIcon />} />}>
             {t("Upload FIle (.PDF only)")}
           </Button>
         </Upload.Dragger>

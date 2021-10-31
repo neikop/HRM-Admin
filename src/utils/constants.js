@@ -31,6 +31,11 @@ export const JOB_COUNTRIES = [
   { id: 2, code: "japan", name: "Japan" },
 ];
 
+export const USER_TABS = [
+  { id: 1, code: "user", name: "User" },
+  { id: 2, code: "bxh", name: "BXH" },
+];
+
 export const CANDIDATE_LEVELS = [
   { id: 1, code: "Fresher (Dưới 1 năm kinh nghiệm)", name: t("Fresher (Dưới 1 năm kinh nghiệm)") },
   { id: 2, code: "Junior (Từ 1 đến 3 năm kinh nghiệm)", name: t("Junior (Từ 1 đến 3 năm kinh nghiệm)") },

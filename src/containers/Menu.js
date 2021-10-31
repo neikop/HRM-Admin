@@ -6,6 +6,7 @@ import { Dropdown } from "antd";
 import { makeStyles } from "@material-ui/core/styles";
 import { t } from "utils/common";
 import { JOB_COUNTRIES } from "utils/constants";
+import { USER_TABS } from "utils/constants";
 import { privateRoute } from "routes";
 import { stringify, parse } from "query-string";
 
@@ -21,7 +22,7 @@ const Menu = ({ onClickMenu }) => {
   const history = useHistory();
   const location = useLocation();
 
-  const { country } = parse(location.search);
+  const { country, type } = parse(location.search);
   const { isSuper, isAdmin, isCompany } = useSelector(({ profile }) => profile);
   const { home, jobList, companyList, candidateList, userList, referList } = privateRoute;
 
@@ -96,7 +97,47 @@ const Menu = ({ onClickMenu }) => {
       />
       <MenuItem {...candidateList} name={t("Candidate")} icon={<AssignmentIndOutlinedIcon />} visible={!isCompany} />
       <MenuItem {...referList} name={t("Refer history")} icon={<DateRangeOutlinedIcon />} />
-      <MenuItem {...userList} name={t("User")} icon={<GroupOutlinedIcon />} visible={isSuper || isAdmin} />
+
+      <Hidden mdUp>
+        <MenuItem {...userList} name={t("User")} icon={<GroupOutlinedIcon />} visible={isSuper || isAdmin} />
+      </Hidden>
+
+      <Hidden smDown>
+        <Dropdown
+          placement="bottomLeft"
+          getPopupContainer={(event) => event.parentNode}
+          overlay={
+            <div>
+              <List disablePadding component={Paper}>
+                {USER_TABS.map((item) => (
+                  <ListItem
+                    key={item.id}
+                    button
+                    selected={item.code === type}
+                    onClick={() => {
+                      history.replace({
+                        pathname: privateRoute.userList.path,
+                        search: stringify({ type: item.code }),
+                      });
+                    }}>
+                    <Typography variant="button">{item.name}</Typography>
+                  </ListItem>
+                ))}
+              </List>
+            </div>
+          }>
+          <ListItem
+            button
+            component={Link}
+            to={userList.path}
+            className={classes.item}
+            selected={location.pathname.startsWith(userList.path)}>
+            <ListItemIcon className={classes.icon}>{<GroupOutlinedIcon />}</ListItemIcon>
+            <ListItemText className={classes.text} primary={t("User")} />
+          </ListItem>
+        </Dropdown>
+      </Hidden>
+
     </>
   );
 };

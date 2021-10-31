@@ -13,6 +13,9 @@ import GroupOutlinedIcon from "@material-ui/icons/GroupOutlined";
 import RefreshOutlinedIcon from "@material-ui/icons/RefreshOutlined";
 import DirectionsOutlinedIcon from "@material-ui/icons/DirectionsOutlined";
 import DeleteOutlinedIcon from "@material-ui/icons/DeleteOutlined";
+import {useLocation } from "react-router-dom";
+import { parse, stringify } from "query-string";
+
 
 const UserList = () => {
   const [dataList, setDataList] = React.useState([]);
@@ -21,11 +24,15 @@ const UserList = () => {
   const [isLoadingDelete, setIsLoadingDelete] = React.useState(0);
   const [isLoadingSelect, setIsLoadingSelect] = React.useState(0);
 
+
+  const location = useLocation();
+  const { type } = parse(location.search);
+
   const fetchData = React.useCallback(() => {
     setDataLoading(true);
     userService
       .getListUser({
-        params_request: { page: 0 },
+        params_request: { page: 0, type: type },
       })
       .then((response) => {
         const { status = 1, data } = response;
@@ -37,7 +44,7 @@ const UserList = () => {
       .finally(() => {
         setDataLoading(false);
       });
-  }, []);
+  }, [type]);
 
   const handleChangeRole = (item, roleId) => {
     setIsLoadingSelect(item.userId);
@@ -102,7 +109,79 @@ const UserList = () => {
         </Typography>
       </Paper>
 
-      <Paper className="mb-24">
+      
+
+      {
+        type === 'bxh' ? 
+        <Paper className="mb-24">
+        <Table
+          scroll={{ y: 600, x: 800 }}
+          bordered={false}
+          loading={dataLoading}
+          rowKey={(record) => record.userId}
+          dataSource={dataList}
+          pagination={false}
+          columns={[
+            {
+              title: t("Username"),
+              dataIndex: "username",
+              width: 240,
+              render: (_, record) => (
+                <div className="align-items-center">
+                  <Avatar src={record.avatarUrl} className="mr-12" />
+                  <Typography>{record.username}</Typography>
+                </div>
+              ),
+            },
+            {
+              title: t("Role"),
+              dataIndex: "roleId",
+              width: 160,
+              render: (_, record) => (
+                <Select
+                  value={record.roleId}
+                  onChange={(value) => handleChangeRole(record, value)}
+                  loading={isLoadingSelect === record.userId}
+                  style={{ width: 140 }}>
+                  {USER_ROLES.map((item) => (
+                    <Select.Option key={item.id} value={item.code}>
+                      {item.name}
+                    </Select.Option>
+                  ))}
+                </Select>
+              ),
+            },
+            {
+              title: t("Type"),
+              dataIndex: "userType",
+              width: 120,
+              render: (_, record) => USER_TYPES.find((item) => item.code === record.userType)?.name,
+            },
+            {
+              title: t("Total Refer"),
+              dataIndex: "totalRefer",
+              width: 120,
+              render: (_, record) => record.totalRefer
+            },
+            {
+              dataIndex: "",
+              align: "right",
+              width: 128,
+              render: (_, record) => (
+                <Typography noWrap>
+                  <Link to={privateRoute.userUpdate.url(record.userId)}>
+                    <Tooltip title={t("View detail")}>
+                      <IconButton>
+                        <DirectionsOutlinedIcon color="secondary" />
+                      </IconButton>
+                    </Tooltip>
+                  </Link>
+                </Typography>
+              ),
+            },
+          ]}
+        /></Paper> 
+        : <Paper className="mb-24">
         <Table
           scroll={{ y: 600, x: 800 }}
           bordered={false}
@@ -184,6 +263,11 @@ const UserList = () => {
           ]}
         />
       </Paper>
+
+
+
+      }
+
     </>
   );
 };

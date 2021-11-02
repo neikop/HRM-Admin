@@ -1,7 +1,7 @@
 import React from "react";
 import { useSelector } from "react-redux";
 import { Alert, Loading } from "components";
-import { Avatar, Box, Button, IconButton, Paper, Typography, TextField, MenuItem } from "@material-ui/core";
+import { Avatar, Box, Button, IconButton, Paper, Typography } from "@material-ui/core";
 import { KeyboardDatePicker } from "@material-ui/pickers";
 import { Col, Form, Input, Row, Tabs, Upload, Select } from "antd";
 import { profileAction } from "actions/profile";

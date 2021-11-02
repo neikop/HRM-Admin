@@ -14,7 +14,7 @@ import RefreshOutlinedIcon from "@material-ui/icons/RefreshOutlined";
 import DirectionsOutlinedIcon from "@material-ui/icons/DirectionsOutlined";
 import DeleteOutlinedIcon from "@material-ui/icons/DeleteOutlined";
 import {useLocation } from "react-router-dom";
-import { parse, stringify } from "query-string";
+import { parse } from "query-string";
 
 
 const UserList = () => {

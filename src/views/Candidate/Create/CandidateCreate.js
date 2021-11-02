@@ -24,6 +24,10 @@ const CandidateCreate = () => {
   const [isLoadingParser, setIsLoadingParser] = React.useState(false);
   const [isLoadingCreate, setIsLoadingCreate] = React.useState(false);
 
+  const [emailParser, setEmailParser] = React.useState("");
+  const [phoneParser, setPhoneParser] = React.useState("");
+  const [websiteParser, setWebsiteParser] = React.useState("");
+
   const handleFileParser = async ({ file, onSuccess, onError }) => {
     const formData = new FormData();
     formData.append("resume", file);
@@ -32,7 +36,10 @@ const CandidateCreate = () => {
     fileService
       .resumeParser(formData)
       .then((response) => {
-        const { name, ...data } = response;
+        const {email, phone, website, name, ...data } = response;
+        setEmailParser(email)
+        setPhoneParser(phone)
+        setWebsiteParser(website)
         form.setFieldsValue({
           ...data,
           candidateName: name,
@@ -47,8 +54,11 @@ const CandidateCreate = () => {
 
   const uploadFile = (file) => {
     
-    const formData = new FormData();
+    const formData = new FormData();    
     formData.append("cv", file);
+    formData.append("email", emailParser);
+    formData.append("phone", phoneParser);
+    formData.append("website", websiteParser);
 
     fileService
       .uploadFile(formData)
@@ -58,6 +68,7 @@ const CandidateCreate = () => {
           const { url: urlCv } = data;
           form.setFieldsValue({ urlCv });
         }
+
       })
       .finally(() => {
         setUpload(false);

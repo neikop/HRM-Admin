@@ -103,7 +103,7 @@ const Menu = ({ onClickMenu }) => {
       </Hidden>
 
       <Hidden smDown>
-        <Dropdown
+        <Dropdown 
           placement="bottomLeft"
           getPopupContainer={(event) => event.parentNode}
           overlay={
@@ -126,14 +126,14 @@ const Menu = ({ onClickMenu }) => {
               </List>
             </div>
           }>
-          <ListItem
+          <ListItem hidden={!(isSuper || isAdmin)}
             button
             component={Link}
             to={userList.path}
             className={classes.item}
             selected={location.pathname.startsWith(userList.path)}>
-            <ListItemIcon className={classes.icon}>{<GroupOutlinedIcon />}</ListItemIcon>
-            <ListItemText className={classes.text} primary={t("User")} />
+            <ListItemIcon className={classes.icon}>{<GroupOutlinedIcon />} </ListItemIcon>
+            <ListItemText className={classes.text} primary={t("User")}  />
           </ListItem>
         </Dropdown>
       </Hidden>

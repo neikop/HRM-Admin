@@ -53,7 +53,7 @@ const CandidateCreate = () => {
   };
   
 
-  const uploadFile = ({ file, onSuccess, onError}) => {
+  const uploadFile = ({ file }) => {
     
     const formData = new FormData();
     formData.append("cv", file);
